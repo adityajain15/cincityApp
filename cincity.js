@@ -31,14 +31,18 @@ canvas.call(zoom);
 
 movieData=null
 
+d3.queue()
+    .defer(d3.json,"movie_user_tsne.json")
+    .defer(d3.json,"bigList.json")
+    .await(function(error, file1, file2) { console.log(file1, file2); });
 
 //runs when data is loaded. Draws the initial points and sets up the canvas frame so that everything is centered and zoomed nicely
-d3.json("movie_user_tsne.json",function(error,data){
+/*d3.json("movie_user_tsne.json",function(error,data){
   movieData=data;
   drawPoints();
   zoom.scaleTo(canvas, 1);
   zoom.translateBy(canvas, 00, 480)
-});
+});*/
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
@@ -54,12 +58,12 @@ function zoomed() {
 function drawPoints() {
   stats.begin();
   context.beginPath();
-  movieData['movie_tsne'].forEach(drawPoint);
+  movieData['movie_tsne'].forEach(function(point,index){drawPoint(point,movieData['movie_ids'][index])});
   context.fill();
   stats.end();
 }
 
-function drawPoint(point) {
+function drawPoint(point,movieIndex) {
   context.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
   //context.moveTo(canvasScaleX(point[0]),-canvasScaleY(point[1]));
   //context.arc(canvasScaleX(point[0]), -canvasScaleY(point[1]), radius, 0, 2 * Math.PI);  
