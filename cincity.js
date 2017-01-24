@@ -39,7 +39,7 @@ d3.queue()
 //runs when data is loaded. Draws the initial points and sets up the canvas frame so that everything is centered and zoomed nicely
 /*d3.json("movie_user_tsne.json",function(error,data){
   movieData=data;
-  drawPoints();
+  drawPoints();dsada
   zoom.scaleTo(canvas, 1);
   zoom.translateBy(canvas, 00, 480)
 });*/
