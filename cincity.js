@@ -30,7 +30,12 @@ var zoom = d3.zoom()
 canvas.call(zoom);
 
 moviePoints = null
-movieData = null
+movieData = []
+
+d3.json("bigList.json",function(error,data){
+    movieData = data;
+    drawPoints();
+  });
 
 //runs when data is loaded. Draws the initial points and sets up the canvas frame so that everything is centered and zoomed nicely
 d3.json("movie_user_tsne.json",function(error,data){
@@ -38,10 +43,6 @@ d3.json("movie_user_tsne.json",function(error,data){
   drawPoints();
   zoom.scaleTo(canvas, 1);
   zoom.translateBy(canvas, 00, 480)
-  d3.json("bigList.json",function(error,data){
-    movieData = data;
-    console.log(movieData);
-  });
 });
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
@@ -64,7 +65,7 @@ function drawPoints() {
 }
 
 function drawPoint(point,movieIndex) {
+  if(movieData):
+    context.fillStyle = 'blue';
   context.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
-  //context.moveTo(canvasScaleX(point[0]),-canvasScaleY(point[1]));
-  //context.arc(canvasScaleX(point[0]), -canvasScaleY(point[1]), radius, 0, 2 * Math.PI);  
 }
