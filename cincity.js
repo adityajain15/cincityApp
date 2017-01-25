@@ -64,7 +64,7 @@ function drawPoints() {
 }
 
 function drawPoint(point,movieIndex) {
-  if(movieData)
-    context.fillStyle = 'blue';
+  if(movieData.length!=0){
+    context.fillStyle = 'blue';}
   context.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
 }
