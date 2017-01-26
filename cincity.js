@@ -23,8 +23,23 @@ var canvasScaleY= d3.scaleLinear()
     .range([0, 500]);
 
 var zoom = d3.zoom()
-    .scaleExtent([1 / 2, 4])
+    .scaleExtent([1 / 2, 8])
     .on("zoom", zoomed)
+
+genreLabels=["Drama","Horror","Short","Action","Documentary","Thriller","Comedy","Avant-Garde","Animation","Romance","War","Western"]
+var color = d3.scaleOrdinal(d3.schemePaired);
+color.domain(genreLabels);
+console.log(color("Short"))
+
+function updateLegend(labelArray){
+  labelArray.forEach(function(i,labelArray){
+    d3.select('.legend').append("div").attr("class","legendColor").style('background-color', color(i));
+    d3.select('.legend').append("p").attr("class","legendLabel").text(i);
+    
+  });
+}
+
+updateLegend(genreLabels);
 
 canvas.call(zoom);
 
@@ -34,7 +49,6 @@ movieData = []
 //runs when data is loaded. Draws the initial points and sets up the canvas frame so that everything is centered and zoomed nicely
 d3.json("movie_user_tsne.json",function(error,data){
   moviePoints=data;
-  drawPoints();
   zoom.scaleTo(canvas, 1);
   zoom.translateBy(canvas, 00, 480)
 });
@@ -65,6 +79,14 @@ function drawPoints() {
 
 function drawPoint(point,movieIndex) {
   if(movieData.length!=0){
-    context.fillStyle = 'blue';}
+    if(movieData[movieIndex]!=null){
+      if(genreLabels.includes(movieData[movieIndex]["genres"][0])){
+        context.fillStyle = color(movieData[movieIndex]["genres"][0]);
+      }
+      else{
+        return;
+      }
+    }
+  }
   context.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
 }
