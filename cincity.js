@@ -1,8 +1,11 @@
-var canvas = d3.select("canvas"),
-    context = canvas.node().getContext("2d"),
+var canvas = d3.select("#mainCanvas"),
+    mainContext = canvas.node().getContext("2d"),
     width = canvas.property("width"),
-    height = canvas.property("height"),
-    radius = 2.5;
+    height = canvas.property("height")
+
+var hiddenCanvas = d3.select("#hiddenCanvas"),
+    hiddenContext = hiddenCanvas.node().getContext("2d")
+
 var stats = new Stats();
 stats.setMode( 0 ); // 0: fps, 1: ms, 2: mb
 
@@ -26,6 +29,24 @@ var zoom = d3.zoom()
     .scaleExtent([1 / 2, 8])
     .on("zoom", zoomed)
 
+//runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
+function zoomed() {
+  mainContext.save();
+  hiddenContext.save();
+  mainContext.clearRect(0, 0, width, height);
+  hiddenContext.clearRect(0, 0, width, height);
+  mainContext.translate(d3.event.transform.x, d3.event.transform.y);
+  hiddenContext.translate(d3.event.transform.x, d3.event.transform.y);
+  mainContext.scale(d3.event.transform.k, d3.event.transform.k);
+  hiddenContext.scale(d3.event.transform.k, d3.event.transform.k);
+  drawPoints(mainContext);
+  drawPoints(hiddenContext);
+  mainContext.restore();
+  hiddenContext.restore();
+}
+
+canvas.call(zoom);
+
 genreLabels=["Drama","Horror","Short","Action","Documentary","Thriller","Comedy","Avant-Garde","Animation","Romance","War","Western"]
 var color = d3.scaleOrdinal(d3.schemePaired);
 color.domain(genreLabels);
@@ -35,13 +56,10 @@ function updateLegend(labelArray){
   labelArray.forEach(function(i,labelArray){
     d3.select('.legend').append("div").attr("class","legendColor").style('background-color', color(i));
     d3.select('.legend').append("p").attr("class","legendLabel").text(i);
-    
   });
 }
 
 updateLegend(genreLabels);
-
-canvas.call(zoom);
 
 moviePoints = null
 movieData = []
@@ -50,43 +68,49 @@ movieData = []
 d3.json("movie_user_tsne.json",function(error,data){
   moviePoints=data;
   zoom.scaleTo(canvas, 1);
-  zoom.translateBy(canvas, 00, 480)
+  zoom.translateBy(canvas, 00, 480);
+  zoom.scaleTo(hiddenCanvas, 1);
+  zoom.translateBy(hiddenCanvas, 00, 480);
 });
 
 d3.json("bigList.json",function(error,data){
     movieData = data;
-    drawPoints();
+    //drawPoints();
   });
 
-//runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
-function zoomed() {
-  context.save();
-  context.clearRect(0, 0, width, height);
-  context.translate(d3.event.transform.x, d3.event.transform.y);
-  context.scale(d3.event.transform.k, d3.event.transform.k);
-  drawPoints();
-  context.restore();
-}
-
 //canvas draws itself
-function drawPoints() {
+function drawPoints(theContext) {
   stats.begin();
-  context.beginPath();
-  moviePoints['movie_tsne'].forEach(function(point,index){drawPoint(point,moviePoints['movie_ids'][index])});
-  context.fill();
+  theContext.beginPath();
+  moviePoints['movie_tsne'].forEach(function(point,index){drawPoint(point,moviePoints['movie_ids'][index],theContext)});
+  theContext.fill();
   stats.end();
 }
 
-function drawPoint(point,movieIndex) {
+function drawPoint(point,movieIndex,theContext) {
   if(movieData.length!=0){
-    if(movieData[movieIndex]!=null){
+    if(movieData[movieIndex]!=null){ //some of the movie_ids are not in bigList (which is a bit weird), hence this fix
       if(genreLabels.includes(movieData[movieIndex]["genres"][0])){
-        context.fillStyle = color(movieData[movieIndex]["genres"][0]);
+        theContext.fillStyle = color(movieData[movieIndex]["genres"][0]);
       }
       else{
         return;
       }
     }
   }
-  context.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
+  theContext.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
+  //hiddenContext.fillRect(250,250,30,30);
+  //context.fillRect(Math.floor(canvasScaleX(point[0])), -Math.floor(canvasScaleY(point[1])),2,2);
 }
+
+document.getElementById("mainCanvas").addEventListener("click", function(e){
+    
+    var mouseX = e.layerX;
+    var mouseY = e.layerY;
+    drawPoints(hiddenContext);
+    // Get the corresponding pixel color on the hidden canvas
+    // and look up the node in our map.
+    var col = mainContext.getImageData(mouseX, mouseY, 1, 1).data;
+
+    console.log(col);
+  });
