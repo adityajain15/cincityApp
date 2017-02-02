@@ -1,3 +1,7 @@
+#hiddenCanvas{
+	display: none;
+}
+
 canvas{
 	border-style: solid; 
 }
@@ -11,3 +15,24 @@ canvas{
 	display: inline-block;
 	margin-right: 20px;
 }
+
+#mainCanvas{
+	position: relative;
+}
+
+.tooltip{
+	position: absolute;
+	display: inline-block;
+    border: 3px solid black;
+	width: 250px;
+    background: white;
+}
+
+.tooltipName{
+	display: inline;
+}
+
+.tooltipYear{
+	display: inline;
+}
+
