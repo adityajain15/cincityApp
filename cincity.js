@@ -39,8 +39,7 @@ function zoomed() {
   hiddenContext.translate(d3.event.transform.x, d3.event.transform.y);
   mainContext.scale(d3.event.transform.k, d3.event.transform.k);
   hiddenContext.scale(d3.event.transform.k, d3.event.transform.k);
-  drawPoints(mainContext);
-  drawPoints(hiddenContext);
+  drawPoints();
   mainContext.restore();
   hiddenContext.restore();
 }
@@ -50,7 +49,6 @@ canvas.call(zoom);
 genreLabels=["Drama","Horror","Short","Action","Documentary","Thriller","Comedy","Avant-Garde","Animation","Romance","War","Western"]
 var color = d3.scaleOrdinal(d3.schemePaired);
 color.domain(genreLabels);
-console.log(color("Short"))
 
 function updateLegend(labelArray){
   labelArray.forEach(function(i,labelArray){
@@ -61,12 +59,17 @@ function updateLegend(labelArray){
 
 updateLegend(genreLabels);
 
-moviePoints = null
-movieData = []
+movieIDs = []
+movieList = new MovieList();
+
 
 //runs when data is loaded. Draws the initial points and sets up the canvas frame so that everything is centered and zoomed nicely
 d3.json("movie_user_tsne.json",function(error,data){
-  moviePoints=data;
+  data["movie_ids"].forEach(function(movieID, point){
+    movieObject = new Movie(movieID, data["movie_tsne"][point][0], data["movie_tsne"][point][1]);
+    movieIDs.push(movieID);
+    movieList.addMovie(movieID, movieObject);
+  });
   zoom.scaleTo(canvas, 1);
   zoom.translateBy(canvas, 00, 480);
   zoom.scaleTo(hiddenCanvas, 1);
@@ -74,43 +77,78 @@ d3.json("movie_user_tsne.json",function(error,data){
 });
 
 d3.json("bigList.json",function(error,data){
-    movieData = data;
-    //drawPoints();
+    data.forEach(function(piece){      
+      if(movieList.getMovie(piece["info"]["id"])!=null){
+        movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
+      }
+    });
   });
 
 //canvas draws itself
-function drawPoints(theContext) {
+function drawPoints() {
   stats.begin();
-  theContext.beginPath();
-  moviePoints['movie_tsne'].forEach(function(point,index){drawPoint(point,moviePoints['movie_ids'][index],theContext)});
-  theContext.fill();
+  mainContext.beginPath();
+  hiddenContext.beginPath();
+  movieIDs.forEach(function(movieID){
+    drawPoint(movieID);
+  });
+  mainContext.fill();
+  hiddenContext.fill();
   stats.end();
 }
 
-function drawPoint(point,movieIndex,theContext) {
-  if(movieData.length!=0){
-    if(movieData[movieIndex]!=null){ //some of the movie_ids are not in bigList (which is a bit weird), hence this fix
-      if(genreLabels.includes(movieData[movieIndex]["genres"][0])){
-        theContext.fillStyle = color(movieData[movieIndex]["genres"][0]);
-      }
-      else{
-        return;
-      }
-    }
+function drawPoint(movieIndex){
+  if(movieList.getMainColor(movieIndex)!=undefined){
+    mainContext.fillStyle = movieList.getMainColor(movieIndex);
+    hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
-  theContext.fillRect(canvasScaleX(point[0]), -canvasScaleY(point[1]),2,2);
-  //hiddenContext.fillRect(250,250,30,30);
-  //context.fillRect(Math.floor(canvasScaleX(point[0])), -Math.floor(canvasScaleY(point[1])),2,2);
+  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),2,2);
+  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),2,2);
 }
 
-document.getElementById("mainCanvas").addEventListener("click", function(e){
+document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     
     var mouseX = e.layerX;
     var mouseY = e.layerY;
-    drawPoints(hiddenContext);
+    
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
-    var col = mainContext.getImageData(mouseX, mouseY, 1, 1).data;
+    var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
+    var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
+    hoverNode=colToNode[colString];
+    if(hoverNode){
+      d3.select(".tooltip")
+      .style("top",(mouseY)+"px")
+      .style("left",(20+mouseX)+"px")
+      .style("display","block");
+    
+      console.log(hoverNode);
 
-    console.log(col);
-  });
+      d3.select(".tooltipImage")
+        .attr("src",hoverNode.getImage())
+        .style("width","250px")
+        .style("height","125px");
+
+      d3.select(".tooltipName")
+        .text(hoverNode.getName());
+
+      d3.select(".tooltipYear")
+        .text(hoverNode.getYear());
+
+      d3.select(".tooltipGenre")
+        .text(hoverNode.getGenre());
+
+      d3.select(".tooltipDirector")
+        .text("Directed by "+hoverNode.getDirector());
+
+      d3.select(".tooltipSynopsis")
+        .text(hoverNode.getSynopsis());
+      
+      
+     
+    }
+    else{
+      d3.select(".tooltip")
+      .style("display","none");
+    }
+});
