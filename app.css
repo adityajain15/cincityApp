@@ -28,6 +28,10 @@ canvas{
     background: white;
 }
 
+.tooltipContent{
+	padding:5px;
+}
+
 .tooltipName{
 	display: inline;
 }

@@ -26,7 +26,7 @@ var canvasScaleY= d3.scaleLinear()
     .range([0, 500]);
 
 var zoom = d3.zoom()
-    .scaleExtent([1 / 2, 8])
+    .scaleExtent([2, 20])
     .on("zoom", zoomed)
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
@@ -102,8 +102,8 @@ function drawPoint(movieIndex){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
-  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),2,2);
-  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),2,2);
+  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.3,0.3);
+  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.3,0.3);
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
