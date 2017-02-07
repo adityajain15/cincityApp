@@ -26,7 +26,7 @@ var canvasScaleY= d3.scaleLinear()
     .range([0, 500]);
 
 var zoom = d3.zoom()
-    .scaleExtent([2, 20])
+    .scaleExtent([2, 200])
     .on("zoom", zoomed)
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
@@ -46,18 +46,10 @@ function zoomed() {
 
 canvas.call(zoom);
 
-genreLabels=["Drama","Horror","Short","Action","Documentary","Thriller","Comedy","Avant-Garde","Animation","Romance","War","Western"]
+colorLabels=[];
 var color = d3.scaleOrdinal(d3.schemePaired);
-color.domain(genreLabels);
-
-function updateLegend(labelArray){
-  labelArray.forEach(function(i,labelArray){
-    d3.select('.legend').append("div").attr("class","legendColor").style('background-color', color(i));
-    d3.select('.legend').append("p").attr("class","legendLabel").text(i);
-  });
-}
-
-updateLegend(genreLabels);
+color.unknown("gray");
+color.domain(colorLabels);
 
 movieIDs = []
 movieList = new MovieList();
@@ -102,14 +94,17 @@ function drawPoint(movieIndex){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
-  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.3,0.3);
-  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.3,0.3);
+
+  //mainContext.globalAlpha = 0.1;
+  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.08,0.08);
+  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.08,0.08);
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     
     var mouseX = e.layerX;
     var mouseY = e.layerY;
+
     
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
@@ -122,7 +117,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
       .style("left",(20+mouseX)+"px")
       .style("display","block");
     
-      console.log(hoverNode);
+      console.log(hoverNode.movieData.genres);
 
       d3.select(".tooltipImage")
         .attr("src",hoverNode.getImage())
@@ -151,4 +146,34 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
       d3.select(".tooltip")
       .style("display","none");
     }
+});
+
+var totalLabels=0;
+
+d3.selectAll(".labelButton").on("click",function(e){
+  
+  if(d3.select(this).attr("selected")==="false"){
+    if(totalLabels<12){
+      colorLabels.push(d3.select(this).text());
+      color.domain(colorLabels);
+      d3.select(this).attr("selected","true");
+      d3.select(this).style("background",color(d3.select(this).text()));  
+      totalLabels = totalLabels + 1;
+      movieList.updateColors();
+      drawPoints();
+    }
+    else{
+      //TODO: What happens when user tries to select more than 12 buttons
+    }
+  }
+  else{
+    d3.select(this).attr("selected","false");
+    totalLabels = totalLabels - 1;
+    colorLabels.splice(colorLabels.find(function(element){return element==d3.select(this).text();}),1);
+    color.domain(colorLabels);
+    movieList.updateColors();
+    drawPoints();
+    d3.select(this).style("background","white");
+  }
+  console.log(colorLabels);
 });

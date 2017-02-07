@@ -4,7 +4,9 @@ function Movie(id,xData,yData){
 	this.id=id;
 	this.xData=xData;
 	this.yData=yData;
+	this.mainColor="gray"
 	this.setMetaData=setMetaData;
+	this.updateColor=updateColor;
 	this.getX=getX;
 	this.getY=getY;
 	this.getName=getName;
@@ -25,32 +27,53 @@ function getY(){
 
 function setMetaData(movieData){
 	this.movieData=movieData;
-	this.mainColor=color(movieData["genres"][0]);
 	this.hiddenColor=genColor();
 	colToNode[this.hiddenColor] = this;
 }
 
+function updateColor(){
+	this.mainColor=color(this.getGenre());
+}
+
 function getName(){
+	if(this.movieData==undefined){
+		return;
+	}
 	return this.movieData["info"]["title"];
 }
 
 function getYear(){
+	if(this.movieData==undefined){
+		return;
+	}
 	return this.movieData["year"];
 }
 
 function getImage(){
+	if(this.movieData==undefined){
+		return;
+	}
 	return this.movieData["info"]["stills"]["medium"];
 }
 
 function getGenre(){
+	if(this.movieData==undefined){
+		return;
+	}
 	return this.movieData["genres"][0];
 }
 
 function getDirector(){
+	if(this.movieData==undefined){
+		return;
+	}
 	return this.movieData["director_list"][0];
 }
 
 function getSynopsis(){
+	if(this.movieData==undefined){
+		return;
+	}
 	return this.movieData["synopsis"];
 }
 
@@ -62,6 +85,7 @@ function MovieList(){
 	this.getYcord=getYcord;
 	this.getMainColor=getMainColor;
 	this.getHiddenColor=getHiddenColor;
+	this.updateColors=updateColors;
 }
 
 function addMovie(movieID,movieObject){
@@ -86,6 +110,12 @@ function getMainColor(movieID){
 
 function getHiddenColor(movieID){
 	return this.movieMap[movieID].hiddenColor;
+}
+
+function updateColors(){
+	for(var i in this.movieMap){
+		this.getMovie(i).updateColor();
+	}
 }
 
 /*Credits to Yannick Assogba for the following function which is also available at https://bl.ocks.org/tafsiri/e9016e1b8d36bae56572*/
