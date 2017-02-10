@@ -32,7 +32,7 @@ function setMetaData(movieData){
 }
 
 function updateColor(){
-	this.mainColor=color(this.getGenre());
+	this.mainColor=colorList.getColor(this.getGenre());
 }
 
 function getName(){

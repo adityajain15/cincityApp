@@ -26,8 +26,15 @@ var canvasScaleY= d3.scaleLinear()
     .range([0, 500]);
 
 var zoom = d3.zoom()
-    .scaleExtent([2, 200])
+    .scaleExtent([1, 400])
     .on("zoom", zoomed)
+
+var squareZoomSize = d3.scaleLog()
+    .base(1)
+    .domain([1, 20])
+    .range([2, 0.04])
+    .clamp(true);
+
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
@@ -39,17 +46,15 @@ function zoomed() {
   hiddenContext.translate(d3.event.transform.x, d3.event.transform.y);
   mainContext.scale(d3.event.transform.k, d3.event.transform.k);
   hiddenContext.scale(d3.event.transform.k, d3.event.transform.k);
-  drawPoints();
+  //console.log("Zoom is: "+d3.event.transform.k+" Square size is:"+squareZoomSize(d3.event.transform.k));
+  drawPoints(d3.event.transform.k);
   mainContext.restore();
   hiddenContext.restore();
+  //window.requestAnimationFrame(zoomed);
+  //console.log(zoom.scale(), zoom.translate());
 }
 
 canvas.call(zoom);
-
-colorLabels=[];
-var color = d3.scaleOrdinal(d3.schemePaired);
-color.unknown("gray");
-color.domain(colorLabels);
 
 movieIDs = []
 movieList = new MovieList();
@@ -77,27 +82,27 @@ d3.json("bigList.json",function(error,data){
   });
 
 //canvas draws itself
-function drawPoints() {
+function drawPoints(zoomLevel) {
   stats.begin();
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
-    drawPoint(movieID);
+    drawPoint(movieID,zoomLevel);
   });
   mainContext.fill();
   hiddenContext.fill();
   stats.end();
+  
 }
 
-function drawPoint(movieIndex){
+function drawPoint(movieIndex,zoomLevel){
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
 
-  //mainContext.globalAlpha = 0.1;
-  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.08,0.08);
-  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),0.08,0.08);
+  mainContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),squareZoomSize(zoomLevel),squareZoomSize(zoomLevel));
+  hiddenContext.fillRect(canvasScaleX(movieList.getXcord(movieIndex)), -canvasScaleY(movieList.getYcord(movieIndex)),squareZoomSize(zoomLevel),squareZoomSize(zoomLevel));
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
@@ -117,7 +122,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
       .style("left",(20+mouseX)+"px")
       .style("display","block");
     
-      console.log(hoverNode.movieData.genres);
+      //console.log(hoverNode.movieData.genres);
 
       d3.select(".tooltipImage")
         .attr("src",hoverNode.getImage())
@@ -148,32 +153,33 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     }
 });
 
-var totalLabels=0;
+/*
+[#a6cee3,#1f78b4,#b2df8a,#33a02c,#fb9a99,#e31a1c,#fdbf6f,#ff7f00,#cab2d6,#6a3d9a,#ffff99,#b15928]
+*/
 
-d3.selectAll(".labelButton").on("click",function(e){
-  
+var colorList = new LinkedList();
+colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"gray");
+
+d3.selectAll(".labelButton").on("click",function(e){ 
   if(d3.select(this).attr("selected")==="false"){
-    if(totalLabels<12){
-      colorLabels.push(d3.select(this).text());
-      color.domain(colorLabels);
+    if(colorList.addGenre(d3.select(this).text())){
       d3.select(this).attr("selected","true");
-      d3.select(this).style("background",color(d3.select(this).text()));  
-      totalLabels = totalLabels + 1;
+      d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
       movieList.updateColors();
-      drawPoints();
+      //drawPoints();
     }
     else{
-      //TODO: What happens when user tries to select more than 12 buttons
-    }
+      //when over 12 elements
+    }  
   }
   else{
     d3.select(this).attr("selected","false");
-    totalLabels = totalLabels - 1;
-    colorLabels.splice(colorLabels.find(function(element){return element==d3.select(this).text();}),1);
-    color.domain(colorLabels);
-    movieList.updateColors();
-    drawPoints();
     d3.select(this).style("background","white");
+    colorList.removeGenre(d3.select(this).text());
+    movieList.updateColors();
+    //drawPoints();
   }
-  console.log(colorLabels);
 });
+
+//window.requestAnimationFrame(zoomed);
+
