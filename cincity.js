@@ -39,42 +39,28 @@ movieList = new MovieList();
 var colorList = new LinkedList();
 colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"gray");
 
-var q = d3.queue();
-q.defer(getMovieJSON);
-q.defer(getMetaJSON);
-q.await(function(error) {
-  //if (error) throw error;
-  console.log("done");
-  canvas.call(zoom);
-  zoomed();
-});
+d3.queue()
+  .defer(d3.json, 'movie_user_tsne.json')
+  .defer(d3.json, 'bigList.json')
+  .await(makeList);
 
-
-
-function getMovieJSON(callback){
-  d3.json("movie_user_tsne.json",function(error,data){
-    data["movie_ids"].forEach(function(movieID, point){
-      movieObject = new Movie(movieID, data["movie_tsne"][point][0], data["movie_tsne"][point][1]);
+function makeList(error, movieJSON,metaJSON){
+  movieJSON["movie_ids"].forEach(function(movieID, point){
+      movieObject = new Movie(movieID, movieJSON["movie_tsne"][point][0], movieJSON["movie_tsne"][point][1]);
       movieIDs.push(movieID);
       movieList.addMovie(movieID, movieObject);
     });
-    zoom.scaleTo(canvas, 1.5);
-    zoom.translateBy(canvas, 400, 250);
-    zoom.scaleTo(hiddenCanvas, 1.5);
-    zoom.translateBy(hiddenCanvas, 00, 480);
-  });
-  callback(null);
-}
-
-function getMetaJSON(callback){
-  d3.json("bigList.json",function(error,data){
-    data.forEach(function(piece){      
+  metaJSON.forEach(function(piece){      
       if(movieList.getMovie(piece["info"]["id"])!=null){
         movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
       }
     });
-  });
-  callback(null);
+  
+  canvas.call(zoom);
+
+  zoomed();
+
+
 }
 
 //canvas draws itself
