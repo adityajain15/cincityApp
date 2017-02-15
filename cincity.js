@@ -17,45 +17,18 @@ stats.domElement.style.top = '0px';
 document.body.appendChild( stats.domElement );
 
 //x-Scale for Micha's image to Canvas conversion. [-50,200] was the x-range for Micha's image
-var canvasScaleX = d3.scaleLinear()
-    .domain([-100,500])
-    .range([0, 1400]);
-
-var canvasScaleY= d3.scaleLinear()
-    .domain([-150,200])
-    .range([0, 500]);
 
 var zoom = d3.zoom()
-    .scaleExtent([1, 400])
+    .scaleExtent([1.5, 800])
     .on("zoom", zoomed);
 
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
-
-  mainContext.save();
-  hiddenContext.save();
-  
-  //xRescaled = d3.event.transform.rescaleX(canvasScaleX);
-  //yRescaled = d3.event.transform.rescaleX(canvasScaleY);
-
   mainContext.clearRect(0, 0, width, height);
   hiddenContext.clearRect(0, 0, width, height);
-
-  mainContext.scale(d3.event.transform.k, d3.event.transform.k);
-  hiddenContext.scale(d3.event.transform.k, d3.event.transform.k);  
-
-  mainContext.translate(d3.event.transform.x, d3.event.transform.y);
-  hiddenContext.translate(d3.event.transform.x, d3.event.transform.y);
-  
-  console.log("X transform: "+d3.event.transform.x+" Y transform: "+d3.event.transform.y+" Scale factor: "+d3.event.transform.k);
-
-  drawPoints(canvasScaleX,canvasScaleY);
-  
-  mainContext.restore();
-  hiddenContext.restore();
-  //window.requestAnimationFrame(zoomed);
-  //console.log(zoom.scale(), zoom.translate());
+  var transform = d3.zoomTransform(this);
+  drawPoints(transform);
 }
 
 canvas.call(zoom);
@@ -71,9 +44,9 @@ d3.json("movie_user_tsne.json",function(error,data){
     movieIDs.push(movieID);
     movieList.addMovie(movieID, movieObject);
   });
-   zoom.scaleTo(canvas, 1);
-   zoom.translateBy(canvas, 00, 480);
-   zoom.scaleTo(hiddenCanvas, 1);
+   zoom.scaleTo(canvas, 1.5);
+   zoom.translateBy(canvas, 400, 250);
+   zoom.scaleTo(hiddenCanvas, 1.5);
    zoom.translateBy(hiddenCanvas, 00, 480);
 });
 
@@ -86,12 +59,12 @@ d3.json("bigList.json",function(error,data){
   });
 
 //canvas draws itself
-function drawPoints(transformScaleX,transformScaleY) {
+function drawPoints(transform) {
   stats.begin();
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
-    drawPoint(movieID,transformScaleX,transformScaleY);
+    drawPoint(movieID,transform);
   });
   mainContext.fill();
   hiddenContext.fill();
@@ -99,13 +72,14 @@ function drawPoints(transformScaleX,transformScaleY) {
   
 }
 
-function drawPoint(movieIndex,transformScaleX,transformScaleY){
+function drawPoint(movieIndex,transform){
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
-  mainContext.fillRect(transformScaleX(movieList.getXcord(movieIndex)), -transformScaleY(movieList.getYcord(movieIndex)),3,3);
-  hiddenContext.fillRect(transformScaleX(movieList.getXcord(movieIndex)), -transformScaleY(movieList.getYcord(movieIndex)),3,3);
+  var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)])
+  mainContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
+  hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
