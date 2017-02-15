@@ -19,7 +19,7 @@ document.body.appendChild( stats.domElement );
 //x-Scale for Micha's image to Canvas conversion. [-50,200] was the x-range for Micha's image
 
 var zoom = d3.zoom()
-    .scaleExtent([1.5, 800])
+    .scaleExtent([1, 800])
     .on("zoom", zoomed);
 
 
@@ -31,7 +31,7 @@ function zoomed() {
   drawPoints(transform);
 }
 
-
+canvas.call(zoom);
 
 movieIDs = []
 movieList = new MovieList();
@@ -55,12 +55,10 @@ function makeList(error, movieJSON,metaJSON){
         movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
       }
     });
-  
-  canvas.call(zoom);
 
   zoomed();
-
-
+  zoom.translateBy(canvas, 400, 250);
+  zoom.translateBy(hiddenCanvas, 400, 250);
 }
 
 //canvas draws itself
