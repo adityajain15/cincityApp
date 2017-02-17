@@ -22,13 +22,16 @@ var zoom = d3.zoom()
     .scaleExtent([1, 800])
     .on("zoom", zoomed);
 
+var lastTransform = null;
+var similarLines = [];
+var similarNodeOrigin = null;
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
   mainContext.clearRect(0, 0, width, height);
   hiddenContext.clearRect(0, 0, width, height);
   var transform = d3.zoomTransform(this);
-  drawPoints(transform);
+  lastTransform = transform;
 }
 
 canvas.call(zoom);
@@ -59,20 +62,24 @@ function makeList(error, movieJSON,metaJSON){
   zoomed();
   zoom.translateBy(canvas, 400, 250);
   zoom.translateBy(hiddenCanvas, 400, 250);
+
 }
 
 //canvas draws itself
-function drawPoints(transform) {
+function drawPoints() {
   stats.begin();
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
-    drawPoint(movieID,transform);
+    drawPoint(movieID,lastTransform);
   });
   mainContext.fill();
   hiddenContext.fill();
+  if(similarNodeOrigin!=null){
+    drawSimilarLines();
+  }
   stats.end();
-  
+  window.requestAnimationFrame(drawPoints);
 }
 
 function drawPoint(movieIndex,transform){
@@ -80,9 +87,20 @@ function drawPoint(movieIndex,transform){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
-  var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)])
+  var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)]);
   mainContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
   hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
+}
+
+function drawSimilarLines(){
+  mainContext.beginPath();
+  similarLines.forEach(function(movieObject){
+    var transformedOrigin = lastTransform.apply([similarNodeOrigin.getX(),similarNodeOrigin.getY()]);
+    mainContext.moveTo(transformedOrigin[0],transformedOrigin[1]);
+    var transformedDestination = lastTransform.apply([movieObject.getX(),movieObject.getY()]);
+    mainContext.lineTo(transformedDestination[0],transformedDestination[1]);
+  });
+  mainContext.stroke();
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
@@ -133,6 +151,18 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     }
 });
 
+document.getElementById("mainCanvas").addEventListener("click", function(e){
+  var mouseX = e.layerX;
+  var mouseY = e.layerY;
+  var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
+  var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
+  hoverNode=colToNode[colString];
+  if(hoverNode){
+    similarLines = movieList.getSimilarMovies(hoverNode);
+    similarNodeOrigin = hoverNode;
+    drawPoints();
+  }
+});
 /*
 [#a6cee3,#1f78b4,#b2df8a,#33a02c,#fb9a99,#e31a1c,#fdbf6f,#ff7f00,#cab2d6,#6a3d9a,#ffff99,#b15928]
 */
@@ -158,5 +188,5 @@ d3.selectAll(".labelButton").on("click",function(e){
   }
 });
 
-//window.requestAnimationFrame(zoomed);
+window.requestAnimationFrame(drawPoints);
 

@@ -86,6 +86,7 @@ function MovieList(){
 	this.getMainColor=getMainColor;
 	this.getHiddenColor=getHiddenColor;
 	this.updateColors=updateColors;
+	this.getSimilarMovies=getSimilarMovies;
 }
 
 function addMovie(movieID,movieObject){
@@ -110,6 +111,16 @@ function getMainColor(movieID){
 
 function getHiddenColor(movieID){
 	return this.movieMap[movieID].hiddenColor;
+}
+
+function getSimilarMovies(clickedMovie){
+	var result = [];
+	for(var i in this.movieMap){
+		if((this.getMovie(i).getDirector()==clickedMovie.getDirector())&&(this.getMovie(i).getName()!=clickedMovie.getName())){
+			result.push(this.getMovie(i));
+		}
+	}
+	return result;
 }
 
 function updateColors(){
