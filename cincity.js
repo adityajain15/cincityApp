@@ -28,8 +28,6 @@ var similarNodeOrigin = null;
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
-  mainContext.clearRect(0, 0, width, height);
-  hiddenContext.clearRect(0, 0, width, height);
   var transform = d3.zoomTransform(this);
   lastTransform = transform;
 }
@@ -68,6 +66,8 @@ function makeList(error, movieJSON,metaJSON){
 //canvas draws itself
 function drawPoints() {
   stats.begin();
+  mainContext.clearRect(0, 0, width, height);
+  hiddenContext.clearRect(0, 0, width, height);
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
