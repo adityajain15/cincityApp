@@ -63,9 +63,12 @@ function makeList(error, movieJSON,metaJSON){
 
 }
 
+var numPoints = 0;
+
 //canvas draws itself
 function drawPoints() {
   stats.begin();
+  //console.log(lastTransform);
   mainContext.clearRect(0, 0, width, height);
   hiddenContext.clearRect(0, 0, width, height);
   mainContext.beginPath();
@@ -76,31 +79,34 @@ function drawPoints() {
   mainContext.fill();
   hiddenContext.fill();
   if(similarNodeOrigin!=null){
-    drawSimilarLines();
+    mainContext.beginPath();
+    var transformedOrigin = lastTransform.apply([similarNodeOrigin.getX(),similarNodeOrigin.getY()]);
+    similarLines.forEach(function(movieObject){
+      mainContext.moveTo(transformedOrigin[0],transformedOrigin[1]);
+      var transformedDestination = lastTransform.apply([movieObject.getX(),movieObject.getY()]);
+      mainContext.lineTo(transformedDestination[0],transformedDestination[1]);
+    });
+    mainContext.stroke();
   }
   stats.end();
+  console.log(numPoints);
+  numPoints = 0;
   window.requestAnimationFrame(drawPoints);
 }
 
 function drawPoint(movieIndex,transform){
+  var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)]);
+  if(transformedPoints[0]>900||transformedPoints[0]<0||transformedPoints[1]>500||transformedPoints[1]<0){
+    return;
+  }
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
-  }
-  var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)]);
+  }  
   mainContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
-  hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
-}
-
-function drawSimilarLines(){
-  mainContext.beginPath();
-  similarLines.forEach(function(movieObject){
-    var transformedOrigin = lastTransform.apply([similarNodeOrigin.getX(),similarNodeOrigin.getY()]);
-    mainContext.moveTo(transformedOrigin[0],transformedOrigin[1]);
-    var transformedDestination = lastTransform.apply([movieObject.getX(),movieObject.getY()]);
-    mainContext.lineTo(transformedDestination[0],transformedDestination[1]);
-  });
   mainContext.stroke();
+  hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
+  numPoints = numPoints + 1;
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
@@ -160,7 +166,6 @@ document.getElementById("mainCanvas").addEventListener("click", function(e){
   if(hoverNode){
     similarLines = movieList.getSimilarMovies(hoverNode);
     similarNodeOrigin = hoverNode;
-    drawPoints();
   }
 });
 /*
