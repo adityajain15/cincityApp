@@ -88,7 +88,6 @@ function drawPoints() {
     mainContext.stroke();
   }
   stats.end();
-  //console.log(numPoints);
   numPoints = 0;
   window.requestAnimationFrame(drawPoints);
 }
@@ -109,7 +108,7 @@ function drawPoint(movieIndex,transform){
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
-    d3.select("#mainCanvas").style("cursor","move");
+    //d3.select("#mainCanvas").style("cursor","move");
     var mouseX = e.layerX;
     var mouseY = e.layerY;
 
@@ -120,8 +119,8 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
     hoverNode=colToNode[colString];
     if(hoverNode){
-      d3.select("#mainCanvas").style("cursor","pointer");
-
+      //d3.select("#mainCanvas").style("cursor","pointer");
+      console.log(hoverNode.getCountry());
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
