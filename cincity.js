@@ -68,7 +68,6 @@ var numPoints = 0;
 //canvas draws itself
 function drawPoints() {
   stats.begin();
-  //console.log(lastTransform);
   mainContext.clearRect(0, 0, width, height);
   hiddenContext.clearRect(0, 0, width, height);
   mainContext.beginPath();
@@ -89,7 +88,7 @@ function drawPoints() {
     mainContext.stroke();
   }
   stats.end();
-  console.log(numPoints);
+  //console.log(numPoints);
   numPoints = 0;
   window.requestAnimationFrame(drawPoints);
 }
@@ -103,14 +102,14 @@ function drawPoint(movieIndex,transform){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }  
-  mainContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
+  mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
   mainContext.stroke();
-  hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],5,5);
+  hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
   numPoints = numPoints + 1;
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
-    
+    d3.select("#mainCanvas").style("cursor","move");
     var mouseX = e.layerX;
     var mouseY = e.layerY;
 
@@ -121,13 +120,13 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
     hoverNode=colToNode[colString];
     if(hoverNode){
+      d3.select("#mainCanvas").style("cursor","pointer");
+
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
       .style("display","block");
     
-      //console.log(hoverNode.movieData.genres);
-
       d3.select(".tooltipImage")
         .attr("src",hoverNode.getImage())
         .style("width","250px")
