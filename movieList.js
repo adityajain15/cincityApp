@@ -8,6 +8,7 @@ function MovieList(){
 	this.getHiddenColor=getHiddenColor;
 	this.updateColors=updateColors;
 	this.getSimilarMovies=getSimilarMovies;
+	this.getCountryName=getCountryName;
 }
 
 function addMovie(movieID,movieObject){
@@ -33,6 +34,11 @@ function getMainColor(movieID){
 function getHiddenColor(movieID){
 	return this.movieMap[movieID].hiddenColor;
 }
+
+function getCountryName(movieID){
+	return this.movieMap[movieID].getCountry();
+}
+
 
 function getSimilarMovies(clickedMovie){
 	var result = [];

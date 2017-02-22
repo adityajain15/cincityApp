@@ -4,7 +4,7 @@ function Movie(id,xData,yData){
 	this.id=id;
 	this.xData=xData;
 	this.yData=yData;
-	this.mainColor="gray"
+	this.mainColor="gray";
 	this.setMetaData=setMetaData;
 	this.updateColor=updateColor;
 	this.getX=getX;

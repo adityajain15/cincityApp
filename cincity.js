@@ -7,7 +7,7 @@ var hiddenCanvas = d3.select("#hiddenCanvas"),
     hiddenContext = hiddenCanvas.node().getContext("2d")
 
 var stats = new Stats();
-stats.setMode( 0 ); // 0: fps, 1: ms, 2: mb
+stats.setMode(0); // 0: fps, 1: ms, 2: mb
 
 // align top-left
 stats.domElement.style.position = 'absolute';
@@ -26,6 +26,7 @@ var lastTransform = null;
 var similarLines = [];
 var similarNodeOrigin = null;
 
+
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
   var transform = d3.zoomTransform(this);
@@ -36,6 +37,8 @@ canvas.call(zoom);
 
 movieIDs = []
 movieList = new MovieList();
+var countryNames = null;
+var countries = [];
 
 var colorList = new LinkedList();
 colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"gray");
@@ -56,14 +59,19 @@ function makeList(error, movieJSON,metaJSON){
         movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
       }
     });
-
+  countryNames = new Set(movieIDs.map(function(movieID){return movieList.getCountryName(movieID);}));
+  countryNames.forEach(function(each){
+    var tempCountry = new Image();
+    tempCountry.name = each;
+    tempCountry.src = "flags/"+each+".png";
+    countries.push(tempCountry);
+  });
   zoomed();
   zoom.translateBy(canvas, 400, 250);
   zoom.translateBy(hiddenCanvas, 400, 250);
-
+  window.requestAnimationFrame(drawPoints);
 }
 
-var numPoints = 0;
 
 //canvas draws itself
 function drawPoints() {
@@ -97,14 +105,24 @@ function drawPoint(movieIndex,transform){
   if(transformedPoints[0]>900||transformedPoints[0]<0||transformedPoints[1]>500||transformedPoints[1]<0){
     return;
   }
+  if(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(movieIndex)=="gray"){
+    return;
+  }
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
-  }  
-  mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
-  mainContext.stroke();
-  hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
-  numPoints = numPoints + 1;
+  }
+  if(document.getElementById("showCountries").checked){
+    flag = countries.find(function(e){return e.name==movieList.getCountryName(movieIndex);});
+    if(flag==undefined){ flag = countries.find(function(e){return e.name=="undefined"});}
+    mainContext.drawImage(flag,transformedPoints[0], transformedPoints[1],16,12);
+    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],12,12);
+  }
+  else{
+    mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
+    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
+  }
+
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
@@ -119,8 +137,6 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
     hoverNode=colToNode[colString];
     if(hoverNode){
-      //d3.select("#mainCanvas").style("cursor","pointer");
-      console.log(hoverNode.getCountry());
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
@@ -191,5 +207,5 @@ d3.selectAll(".labelButton").on("click",function(e){
   }
 });
 
-window.requestAnimationFrame(drawPoints);
+
 
