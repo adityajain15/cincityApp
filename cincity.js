@@ -40,8 +40,14 @@ movieList = new MovieList();
 var countryNames = null;
 var countries = [];
 
+var diagram = null,
+    polygons = null;
+
 var colorList = new LinkedList();
 colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"gray");
+
+var voronoi = d3.voronoi()
+    .extent([[-1, -1], [width + 1, height + 1]]);
 
 d3.queue()
   .defer(d3.json, 'movie_user_tsne.json')
@@ -78,6 +84,7 @@ function drawPoints() {
   stats.begin();
   mainContext.clearRect(0, 0, width, height);
   hiddenContext.clearRect(0, 0, width, height);
+  //drawVoronoi();
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
@@ -125,18 +132,48 @@ function drawPoint(movieIndex,transform){
 
 }
 
+function drawVoronoi(){
+  voronoiPoints = movieIDs.map(function(each){
+    var transformedPoints=lastTransform.apply([movieList.getXcord(each),movieList.getYcord(each)]);
+    if(transformedPoints[0]>900||transformedPoints[0]<0||transformedPoints[1]>500||transformedPoints[1]<0){
+      return;
+    }
+    return transformedPoints;
+  });
+  voronoiPoints = voronoiPoints.filter(function(each){return each!=undefined});
+
+  var diagram = voronoi(voronoiPoints),
+      polygons = diagram.polygons();
+
+  mainContext.beginPath();
+  for (var i = 0, n = polygons.length; i < n; ++i) drawCell(polygons[i]);
+  mainContext.strokeStyle = "#000";
+  mainContext.stroke();
+
+}
+
+
+function drawCell(cell) {
+  if (!cell) return false;
+  mainContext.moveTo(cell[0][0], cell[0][1]);
+  for (var j = 1, m = cell.length; j < m; ++j) {
+    mainContext.lineTo(cell[j][0], cell[j][1]);
+  }
+  mainContext.closePath();
+  return true;
+}
+
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     //d3.select("#mainCanvas").style("cursor","move");
     var mouseX = e.layerX;
     var mouseY = e.layerY;
-
-    
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
     var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
     var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
     hoverNode=colToNode[colString];
     if(hoverNode){
+      console.log(hoverNode);
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
