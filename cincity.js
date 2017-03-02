@@ -1,10 +1,12 @@
-var canvas = d3.select("#mainCanvas"),
+var canvas = d3.select("#mainCanvas").attr("height",screen.height/2).attr("width",screen.width/2),
     mainContext = canvas.node().getContext("2d"),
     width = canvas.property("width"),
     height = canvas.property("height")
 
-var hiddenCanvas = d3.select("#hiddenCanvas"),
+var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",screen.height/2).attr("width",screen.width/2),
     hiddenContext = hiddenCanvas.node().getContext("2d")
+
+var HUD = d3.select("#HUD").style("height",screen.height/1.98).style("width",screen.width/2.1);
 
 var stats = new Stats();
 stats.setMode(0); // 0: fps, 1: ms, 2: mb
@@ -25,7 +27,6 @@ var zoom = d3.zoom()
 var lastTransform = null;
 var similarLines = [];
 var similarNodeOrigin = null;
-
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
@@ -72,12 +73,12 @@ function makeList(error, movieJSON,metaJSON){
     tempCountry.src = "flags/"+each+".png";
     countries.push(tempCountry);
   });
+  makeHUD();
   zoomed();
   zoom.translateBy(canvas, 400, 250);
   zoom.translateBy(hiddenCanvas, 400, 250);
   window.requestAnimationFrame(drawPoints);
 }
-
 
 //canvas draws itself
 function drawPoints() {
@@ -109,7 +110,7 @@ function drawPoints() {
 
 function drawPoint(movieIndex,transform){
   var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)]);
-  if(transformedPoints[0]>900||transformedPoints[0]<0||transformedPoints[1]>500||transformedPoints[1]<0){
+  if(transformedPoints[0]>width||transformedPoints[0]<0||transformedPoints[1]>height||transformedPoints[1]<0){
     return;
   }
   if(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(movieIndex)=="gray"){
@@ -127,7 +128,7 @@ function drawPoint(movieIndex,transform){
   }
   else{
     mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
-    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
+    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],13,13);
   }
 
 }
@@ -243,6 +244,53 @@ d3.selectAll(".labelButton").on("click",function(e){
     //drawPoints();
   }
 });
+
+function makeHUD(){
+
+  divNames = [];
+
+  for(let each of movieIDs){
+    if(movieList.getMovie(each).getName()!=undefined){
+      divNames.push([each,movieList.getMovie(each).getName().trim()]);
+    }
+  }
+
+  divNames.sort(function(a,b){
+    if(a[1]>b[1]){return 1;}
+    else if(a[1]<b[1]){return -1;}
+    else return 0;
+  });
+
+  for(let each of divNames){
+    d3.select("#HUDcontent").append("div").text(each[1]).attr("movieid",each[0]).attr("class","movieOption")
+    .on("click",function(){
+      getInfo(d3.select(this).attr("movieid"));
+    });
+  }
+ 
+}
+
+d3.select("#closebutton").on("click",function(){
+  d3.select("#movieInfo").style("display","none");
+  d3.select("#HUDcontent").style("display","block");
+});
+
+function getInfo(movieID){
+  var movieNode = movieList.getMovie(movieID);
+  d3.select("#HUDcontent").style("display","none");
+  d3.select("#movieImage").attr("src",movieNode.getImage());
+  d3.select("#movieTitle").text(movieNode.getName());
+  d3.select("#movieYear").text(movieNode.getYear());
+  d3.select("#movieDirector").text("Directed by "+movieNode.getDirector());
+  if(movieList.getCountryName(movieID)!=undefined){
+    d3.select("#HUDflag").attr("src","flags/"+movieList.getCountryName(movieID)+".png");
+  }
+  else{
+    d3.select("#HUDflag").attr("src","flags/undefined.png");
+  }
+  d3.select("#movieInfo").style("display","block");
+}
+
 
 
 

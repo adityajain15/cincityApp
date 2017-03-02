@@ -4,16 +4,48 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" type="text/css" href="app.css">
 	<script src="http://d3js.org/d3.v4.min.js"></script>
 	<script src="https://d3js.org/d3-color.v1.min.js"></script>
 	<script src="https://d3js.org/d3-interpolate.v1.min.js"></script>
 	<script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
-	<link rel="stylesheet" type="text/css" href="app.css">
 	<script src="https://cdnjs.cloudflare.com/ajax/libs/stats.js/r14/Stats.min.js"></script>
     <title>Cincity</title>
   </head>
   <body>
-    <canvas width="900" height="500" id="mainCanvas"></canvas>
+    <canvas id="mainCanvas"></canvas>
+    <div id="HUD">
+        <div id="titlebar">
+            <div id="titlebarlabel">Movies</div>
+            <div id="closebutton">Close</div>
+        </div>
+        <div id="movieinfo">
+            <img id="movieImage"></img>
+            <div id="HUDcontainer">
+                <div class="HUDtextline">
+                    <span id="movieTitle"></span>
+                    <span id="movieYear"></span>
+                    <span id="movieDirector"></span>
+                </div>
+                <div class="HUDtextline">
+                    <div class="secondInfoLine">
+                        <span id="movieTime"></span>
+                        <span class="movieInfoLabel">Running time</span>
+                    </div>
+                    <div class="secondInfoLine">
+                        <span id="movieAverage"></span>
+                        <span class="movieInfoLabel">Average rating</span>
+                    </div>
+                    <div class="secondInfoLine">
+                        <img id="HUDflag"></img>
+                        <span class="movieInfoLabel">Country of origin</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div id="HUDcontent">
+        </div>
+    </div>
     <div class="tooltip">
     	<img class="tooltipImage" src=""></img>
     	<div class="tooltipContent">
@@ -24,7 +56,7 @@
     		<p class="tooltipSynopsis"></p>
     	</div>
     </div>
-    <canvas width="1400" height="500" id="hiddenCanvas"></canvas>
+    <canvas id="hiddenCanvas"></canvas>
     <div class="legend"></div>
     <div class="labelButton" selected="false">Action</div>
     <div class="labelButton" selected="false">Adventure</div>

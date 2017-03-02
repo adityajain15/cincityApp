@@ -1,3 +1,27 @@
+@font-face {
+    font-family: ChambersSansOT-Black;
+    font-weight: black;
+    src: url(fonts/ChambersSansOT-Black.otf);
+}
+
+@font-face {
+    font-family: ChambersSansOT-Bold;
+    font-weight: bold;
+    src: url(fonts/ChambersSansOT-Bold.otf);
+}
+
+@font-face {
+    font-family: ChambersSansOT-Medium;
+    font-weight: medium;
+    src: url(fonts/ChambersSansOT-Medium.otf);
+}
+
+@font-face{
+	font-family: ChambersSansOT;
+    src: url(fonts/ChambersSansOT.otf);
+}
+
+
 #hiddenCanvas{
 	display: none;
 }
@@ -11,6 +35,90 @@ canvas{
 	margin-right: 15px;
 	margin-bottom: 20px;
 	border: 3px solid black;
+}
+
+#closebutton{
+	cursor: pointer;
+}
+
+#HUD{
+	background-color: black;
+	display: inline-block;
+	overflow: scroll;
+	color: white;
+	font-family: ChambersSansOT;
+}
+
+#movieImage{
+	display: block;
+	margin-right: auto;
+	margin-left: auto;
+	margin-top: 5%;
+	margin-bottom: 5%;
+
+}
+
+#HUDcontainer{
+	width: 75%;
+	margin: auto;
+}
+
+#titlebar{
+	background-color: black;
+	position: fixed;
+	width: auto;
+}
+
+#movieTitle{
+	font-size: 32px;
+	color: #00dcec;
+	display: inline-block;
+	margin-bottom: -4px;
+}
+
+#movieYear{
+	font-size: 18px;
+}
+
+#movieDirector{
+	display: block;
+	font-size: 18px;
+}
+
+.movieOption{
+	border-top: 1px solid gray;
+	padding-top: 2%;
+	padding-bottom: 2%;
+	padding-left: 4%;
+	padding-right: 4%;
+	cursor: pointer;
+}
+
+.movieOption:hover{
+	background-color: #00dcec;
+}
+
+#movieinfo{
+	height: 100%;
+	width: 100%;
+	display: none;
+	overflow: scroll;
+}
+
+.HUDtextline{
+	margin-bottom: 1%;
+}
+
+#HUDflag{
+	width: 15%;
+}
+
+.secondInfoLine{
+	display: inline-block;
+}
+
+.movieInfoLabel{
+	display: block;
 }
 
 .legendColor{
