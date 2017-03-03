@@ -31,10 +31,21 @@ canvas{
 }
 
 .labelButton{
-	display: inline-block;
-	margin-right: 15px;
-	margin-bottom: 20px;
-	border: 3px solid black;
+	font-family: ChambersSansOT-Medium;
+    padding: 5px;
+    display: inline-block;
+    margin-right: 15px;
+    margin-bottom: 2%;
+    min-width: 6%;
+    border: 3px solid black;
+}
+
+.labelButton:hover{
+	cursor:pointer;
+}
+
+#labelButtonContainer{
+	text-align: center;
 }
 
 #closebutton{
