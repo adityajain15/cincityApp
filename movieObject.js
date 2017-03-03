@@ -4,7 +4,7 @@ function Movie(id,xData,yData){
 	this.id=id;
 	this.xData=xData;
 	this.yData=yData;
-	this.mainColor="gray";
+	this.mainColor= "#D3D3D3";
 	this.setMetaData=setMetaData;
 	this.updateColor=updateColor;
 	this.getX=getX;
@@ -16,6 +16,10 @@ function Movie(id,xData,yData){
 	this.getDirector=getDirector;
 	this.getSynopsis=getSynopsis;
 	this.getCountry=getCountry;
+	this.getTime = getTime;
+	this.getAverage = getAverage;
+	this.getTotal = getTotal;
+	this.getID = getID;
 }
 
 function getX(){
@@ -87,9 +91,34 @@ function getSynopsis(){
 	return this.movieData["synopsis"];
 }
 
+function getTime(){
+	if(this.movieData==undefined){
+		return;
+	}	
+	return this.movieData["time"];
+}
+
+function getAverage(){
+	if(this.movieData==undefined){
+		return;
+	}
+	return this.movieData["avg_rating"];
+}
+
 function getCountry(){
 	if(this.movieData==undefined){
 		return;
 	}
 	return this.movieData["country"];
+}
+
+function getTotal(){
+	if(this.movieData==undefined){
+		return;
+	}
+	return this.movieData["total_ratings"];
+}
+
+function getID(){
+	return this.id;
 }

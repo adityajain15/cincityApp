@@ -85,6 +85,11 @@ canvas{
 	font-size: 18px;
 }
 
+#movieGenre{
+	font-size: 26px;
+	color: #00dcec;
+}
+
 .movieOption{
 	border-top: 1px solid gray;
 	padding-top: 2%;
@@ -106,15 +111,44 @@ canvas{
 }
 
 .HUDtextline{
-	margin-bottom: 1%;
+	margin-bottom: 5%;
 }
 
 #HUDflag{
-	width: 15%;
+	width: 35%;
+	border: 1px solid white;
+}
+
+#movieTime{
+	font-size: 26px;
+	color: #00dcec;
+}
+
+#movieAverage{
+	font-size: 26px;
+	color: #00dcec;
+}
+
+#movieTotal{
+	font-size: 26px;
+	color: #00dcec;
+}
+
+.labelDesc{
+	font-size: 16px;
+	color: #00dcec;
 }
 
 .secondInfoLine{
 	display: inline-block;
+	width: 32%;
+	text-align: center;
+}
+
+.thirdInfoLine{
+	display: inline-block;
+	width: 49%;
+	text-align: center;
 }
 
 .movieInfoLabel{
@@ -140,15 +174,25 @@ canvas{
 	display: inline-block;
     border: 3px solid black;
 	width: 250px;
-    background: white;
+    background: black;
+    color: white;
+    font-family: ChambersSansOT-Medium;
+    cursor: pointer;
 }
 
 .tooltipContent{
 	padding:5px;
 }
 
+.tooltipAlert{
+	color: #00dcec;
+}
+
 .tooltipName{
-	display: inline;
+	font-size: 24px;
+	color: #00dcec;
+	display: inline-block;
+	margin-bottom: -4px;
 }
 
 .tooltipYear{

@@ -30,8 +30,7 @@ var similarNodeOrigin = null;
 
 //runs when the canvas captures a zoom event, does some transforms and tells the canvas to redraw itself
 function zoomed() {
-  var transform = d3.zoomTransform(this);
-  lastTransform = transform;
+  lastTransform = d3.zoomTransform(this);
 }
 
 canvas.call(zoom);
@@ -41,14 +40,8 @@ movieList = new MovieList();
 var countryNames = null;
 var countries = [];
 
-var diagram = null,
-    polygons = null;
-
 var colorList = new LinkedList();
-colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"gray");
-
-var voronoi = d3.voronoi()
-    .extent([[-1, -1], [width + 1, height + 1]]);
+colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"#D3D3D3");
 
 d3.queue()
   .defer(d3.json, 'movie_user_tsne.json')
@@ -73,10 +66,23 @@ function makeList(error, movieJSON,metaJSON){
     tempCountry.src = "flags/"+each+".png";
     countries.push(tempCountry);
   });
+
+  d3.selectAll(".labelButton").selectAll(function(d,i){
+  
+    if(d3.select(this).attr("selected")=="true"){
+      colorList.addGenre(d3.select(this).text());
+      d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
+      movieList.updateColors();
+    }
+  
+  });
+  
+
   makeHUD();
+
   zoomed();
-  zoom.translateBy(canvas, 400, 250);
-  zoom.translateBy(hiddenCanvas, 400, 250);
+  zoom.translateBy(canvas, 150, 200);
+  zoom.translateBy(hiddenCanvas, 150, 200);
   window.requestAnimationFrame(drawPoints);
 }
 
@@ -104,7 +110,6 @@ function drawPoints() {
     mainContext.stroke();
   }
   stats.end();
-  numPoints = 0;
   window.requestAnimationFrame(drawPoints);
 }
 
@@ -113,7 +118,7 @@ function drawPoint(movieIndex,transform){
   if(transformedPoints[0]>width||transformedPoints[0]<0||transformedPoints[1]>height||transformedPoints[1]<0){
     return;
   }
-  if(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(movieIndex)=="gray"){
+  if(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
     return;
   }
   if(movieList.getMainColor(movieIndex)!=undefined){
@@ -124,44 +129,13 @@ function drawPoint(movieIndex,transform){
     flag = countries.find(function(e){return e.name==movieList.getCountryName(movieIndex);});
     if(flag==undefined){ flag = countries.find(function(e){return e.name=="undefined"});}
     mainContext.drawImage(flag,transformedPoints[0], transformedPoints[1],16,12);
-    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],12,12);
+    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],16,12);
   }
   else{
     mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
     hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],13,13);
   }
 
-}
-
-function drawVoronoi(){
-  voronoiPoints = movieIDs.map(function(each){
-    var transformedPoints=lastTransform.apply([movieList.getXcord(each),movieList.getYcord(each)]);
-    if(transformedPoints[0]>900||transformedPoints[0]<0||transformedPoints[1]>500||transformedPoints[1]<0){
-      return;
-    }
-    return transformedPoints;
-  });
-  voronoiPoints = voronoiPoints.filter(function(each){return each!=undefined});
-
-  var diagram = voronoi(voronoiPoints),
-      polygons = diagram.polygons();
-
-  mainContext.beginPath();
-  for (var i = 0, n = polygons.length; i < n; ++i) drawCell(polygons[i]);
-  mainContext.strokeStyle = "#000";
-  mainContext.stroke();
-
-}
-
-
-function drawCell(cell) {
-  if (!cell) return false;
-  mainContext.moveTo(cell[0][0], cell[0][1]);
-  for (var j = 1, m = cell.length; j < m; ++j) {
-    mainContext.lineTo(cell[j][0], cell[j][1]);
-  }
-  mainContext.closePath();
-  return true;
 }
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
@@ -179,11 +153,6 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
       .style("display","block");
-    
-      d3.select(".tooltipImage")
-        .attr("src",hoverNode.getImage())
-        .style("width","250px")
-        .style("height","125px");
 
       d3.select(".tooltipName")
         .text(hoverNode.getName());
@@ -197,10 +166,8 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
       d3.select(".tooltipDirector")
         .text("Directed by "+hoverNode.getDirector());
 
-      d3.select(".tooltipSynopsis")
-        .text(hoverNode.getSynopsis());
-      
-      
+      d3.select(".tooltipAlert")
+        .text("Click for details");
      
     }
     else{
@@ -216,13 +183,9 @@ document.getElementById("mainCanvas").addEventListener("click", function(e){
   var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
   hoverNode=colToNode[colString];
   if(hoverNode){
-    similarLines = movieList.getSimilarMovies(hoverNode);
-    similarNodeOrigin = hoverNode;
+    getInfo(hoverNode.getID(),false);
   }
 });
-/*
-[#a6cee3,#1f78b4,#b2df8a,#33a02c,#fb9a99,#e31a1c,#fdbf6f,#ff7f00,#cab2d6,#6a3d9a,#ffff99,#b15928]
-*/
 
 d3.selectAll(".labelButton").on("click",function(e){ 
   if(d3.select(this).attr("selected")==="false"){
@@ -241,33 +204,27 @@ d3.selectAll(".labelButton").on("click",function(e){
     d3.select(this).style("background","white");
     colorList.removeGenre(d3.select(this).text());
     movieList.updateColors();
-    //drawPoints();
   }
 });
 
 function makeHUD(){
-
   divNames = [];
-
   for(let each of movieIDs){
     if(movieList.getMovie(each).getName()!=undefined){
       divNames.push([each,movieList.getMovie(each).getName().trim()]);
     }
   }
-
   divNames.sort(function(a,b){
     if(a[1]>b[1]){return 1;}
     else if(a[1]<b[1]){return -1;}
     else return 0;
   });
-
   for(let each of divNames){
     d3.select("#HUDcontent").append("div").text(each[1]).attr("movieid",each[0]).attr("class","movieOption")
     .on("click",function(){
-      getInfo(d3.select(this).attr("movieid"));
+      getInfo(d3.select(this).attr("movieid"),true);
     });
   }
- 
 }
 
 d3.select("#closebutton").on("click",function(){
@@ -275,13 +232,41 @@ d3.select("#closebutton").on("click",function(){
   d3.select("#HUDcontent").style("display","block");
 });
 
-function getInfo(movieID){
+function getInfo(movieID,zoomToNode){
+  
   var movieNode = movieList.getMovie(movieID);
+  
+  if(zoomToNode){
+    canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
+    .translate(width / 2, height / 2)
+    .scale(500)
+    .translate(-movieNode.getX(),-movieNode.getY()));
+  }
+
+  similarLines = movieList.getSimilarMovies(movieNode);
+  similarNodeOrigin = movieNode;
+
   d3.select("#HUDcontent").style("display","none");
   d3.select("#movieImage").attr("src",movieNode.getImage());
   d3.select("#movieTitle").text(movieNode.getName());
   d3.select("#movieYear").text(movieNode.getYear());
   d3.select("#movieDirector").text("Directed by "+movieNode.getDirector());
+  d3.select("#movieAverage").text(movieNode.getAverage());
+  d3.select("#movieTime").text(movieNode.getTime());
+  d3.select("#movieTotal").text(movieNode.getTotal());
+
+  if(movieNode.getGenre()!=undefined){
+    d3.select("#movieGenre").text(movieNode.getGenre());
+  }
+  else{
+    d3.select("#movieGenre").text("NA");
+  }
+  if(movieNode.getSynopsis()!=undefined){
+    d3.select("#movieSynopsis").text(movieNode.getSynopsis());
+  }
+  else{
+    d3.select("#movieSynopsis").text("Synopsis not available");
+  }
   if(movieList.getCountryName(movieID)!=undefined){
     d3.select("#HUDflag").attr("src","flags/"+movieList.getCountryName(movieID)+".png");
   }
