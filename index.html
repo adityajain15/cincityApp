@@ -119,33 +119,31 @@
     </form>
     <div id="textContainer">
         <div class="para"> 
-            <div class="headline">
-                Abstract 
-            </div>
+            <div class="headline">Abstract</div>
             <div class="paratext">
                 Movie services such as Netflix and Hulu know the cinematic tastes of millions of their users through their movie watching/rating habits and these patterns are used to recommend movies to their userbase. One such method used to recommend movies is called collaborative filtering. Collaborative filtering yields a matrix of movies-users with each cell representing a user’s likely affinity to a movie. For the purpose of this project, we tried to visualize what such a recommendation system looks like. Such a matrix can be visualized using a technique known as t-Distributed Stochastic Neighbor Embedding (Laurens van der Maaten and Geoffrey Hinton)
             </div>
-            <div class="headline">
-                Dataset 
-            </div>
+        </div>
+        <div class="para"> 
+            <div class="headline">Dataset</div>
             <div class="paratext">
                 MUBI is an online service that integrates a subscription video-on-demand service with a massive database of movies from all over the world. Its 8 million users have collectively rated thousands of movies present in its database. 
             </div>
-            <div class="headline">
-                Collecting Data 
-            </div>
+        </div>
+        <div class="para"> 
+            <div class="headline" id="helloThere">Collecting Data</div>
             <div class="paratext">
                 Movie ratings for all users with public profiles were collected through public endpoints on the MUBI API using a multi-threaded Python script. The resulting dataset contained well over a million users. This number was filtered down to a subset of users who had rated at least a certain number of movies.  Metadata for all movies (such as film name, year of release, director name and cast) was scraped from the MUBI film database using beautifulsoup
             </div>
-            <div class="headline">
-                Visualization 
-            </div>
+        </div>
+        <div class="para"> 
+            <div class="headline">Visualization</div>
             <div class="paratext">
                 t-SNE is a technique that can be used to reduce high dimensionality data down to two dimensions, such as x and y coordinates, which enables a cluster visualization. This technique performs well at clustering local aspects of underlying data and we were excited to see some interesting patterns emerge out of the resulting visualization
             </div>
-            <div class="headline">
-                Under the hood 
-            </div>
+        </div>
+        <div class="para"> 
+            <div class="headline">Under the hood</div>
             <div class="paratext">
                 The goal of the project was to create a playful interactive experience that was interesting to a technical and non-technical audience alike. While cookie-cutter libraries for t-SNE visualizations exist, none of them provide mechanics for such interactions. Further, an interactive visualization of this scale (29,000 nodes) requires optimizations that would otherwise slow a browser down. A majority of the code for this visualization was this made from the ground-up and can hopefully be open sourced in the near-future for the good of the community. Some highlights— i. Canvas was chosen over SVGs because of superior performance at scale ii. Dual canvases, one of them a hidden canvas that implements interactions (since events cannot be bound to pixels in a bitmap) iii. Semantic zooming that enables easy viewing at a low zoom level and more granular view at high zoom levels iv. Mouse interactions for each node that reveal something about the underlying data
             </div>

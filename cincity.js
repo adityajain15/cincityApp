@@ -145,7 +145,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     mouseX = e.layerX;
     mouseY = e.layerY-document.body.scrollTop;
 
-    console.log(mouseX+","+mouseY);
+    //console.log(mouseX+","+mouseY);
 
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
