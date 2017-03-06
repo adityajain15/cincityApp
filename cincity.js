@@ -1,12 +1,12 @@
-var canvas = d3.select("#mainCanvas").attr("height",screen.height/2).attr("width",screen.width/2),
+var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2),
     mainContext = canvas.node().getContext("2d"),
     width = canvas.property("width"),
     height = canvas.property("height")
 
-var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",screen.height/2).attr("width",screen.width/2),
+var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2),
     hiddenContext = hiddenCanvas.node().getContext("2d")
 
-var HUD = d3.select("#HUD").style("height",screen.height/1.98).style("width",screen.width/2.1);
+var HUD = d3.select("#HUD").style("height",window.innerHeight/1.98).style("width",window.innerWidth/2.1);
 
 var stats = new Stats();
 stats.setMode(0); // 0: fps, 1: ms, 2: mb
@@ -16,7 +16,7 @@ stats.domElement.style.position = 'absolute';
 stats.domElement.style.left = '0px';
 stats.domElement.style.top = '0px';
 
-document.body.appendChild( stats.domElement );
+document.getElementById("canvasContainer").appendChild( stats.domElement );
 
 //x-Scale for Micha's image to Canvas conversion. [-50,200] was the x-range for Micha's image
 
@@ -38,7 +38,7 @@ canvas.call(zoom);
 movieIDs = []
 movieList = new MovieList();
 var countryNames = null;
-var countries = [];
+var countries = {};
 
 var colorList = new LinkedList();
 colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"#D3D3D3");
@@ -64,7 +64,7 @@ function makeList(error, movieJSON,metaJSON){
     var tempCountry = new Image();
     tempCountry.name = each;
     tempCountry.src = "flags/"+each+".png";
-    countries.push(tempCountry);
+    countries[tempCountry.name]=tempCountry;
   });
 
   d3.selectAll(".labelButton").selectAll(function(d,i){
@@ -95,7 +95,7 @@ function drawPoints() {
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
-    drawPoint(movieID,lastTransform);
+    drawPoint(movieID,lastTransform,document.getElementById("hideUnlabeled").checked,document.getElementById("showCountries").checked);
   });
   mainContext.fill();
   hiddenContext.fill();
@@ -113,21 +113,21 @@ function drawPoints() {
   window.requestAnimationFrame(drawPoints);
 }
 
-function drawPoint(movieIndex,transform){
+function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   var transformedPoints = transform.apply([movieList.getXcord(movieIndex),movieList.getYcord(movieIndex)]);
   if(transformedPoints[0]>width||transformedPoints[0]<0||transformedPoints[1]>height||transformedPoints[1]<0){
     return;
   }
-  if(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
+  if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
     return;
   }
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
     hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
-  if(document.getElementById("showCountries").checked){
-    flag = countries.find(function(e){return e.name==movieList.getCountryName(movieIndex);});
-    if(flag==undefined){ flag = countries.find(function(e){return e.name=="undefined"});}
+  if(flagCheckbox){
+    flag = countries[movieList.getCountryName(movieIndex)];
+    //if(flag==undefined){ flag = countries.find(function(e){return e.name=="undefined"});}
     mainContext.drawImage(flag,transformedPoints[0], transformedPoints[1],16,12);
     hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],16,12);
   }
@@ -276,6 +276,26 @@ function getInfo(movieID,zoomToNode){
   d3.select("#movieInfo").style("display","block");
 }
 
+window.onresize = makeResponsive;
 
+function makeResponsive(){
+  d3.select("#mainCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2);
+  d3.select("#hiddenCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2);
+  d3.select("#HUD").style("height",window.innerHeight/1.98).style("width",window.innerWidth/2.1);
+  width = canvas.property("width");
+  height = canvas.property("height");
+} 
 
+document.getElementById("searchBar").addEventListener("input", logEvent, true);
 
+function logEvent(){
+  d3.selectAll(".movieOption").selectAll(function(){
+    if((d3.select(this).text()).includes(document.getElementById("searchBar").value))
+    {
+      d3.select(this).style("display","block");
+    }
+    else{
+      d3.select(this).style("display","none");
+    }
+  })
+}

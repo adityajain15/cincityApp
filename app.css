@@ -1,16 +1,4 @@
 @font-face {
-    font-family: ChambersSansOT-Black;
-    font-weight: black;
-    src: url(fonts/ChambersSansOT-Black.otf);
-}
-
-@font-face {
-    font-family: ChambersSansOT-Bold;
-    font-weight: bold;
-    src: url(fonts/ChambersSansOT-Bold.otf);
-}
-
-@font-face {
     font-family: ChambersSansOT-Medium;
     font-weight: medium;
     src: url(fonts/ChambersSansOT-Medium.otf);
@@ -30,12 +18,20 @@ canvas{
 	border-style: solid; 
 }
 
+.checkboxContainer{
+	display: inline-block;
+    text-align: center;
+    width: 48%;
+    font-size: 26px;
+    font-family: ChambersSansOT;
+}
+
 .labelButton{
 	font-family: ChambersSansOT-Medium;
     padding: 5px;
     display: inline-block;
     margin-right: 15px;
-    margin-bottom: 2%;
+    margin-bottom: 15px;
     min-width: 6%;
     border: 3px solid black;
 }
@@ -50,14 +46,31 @@ canvas{
 
 #closebutton{
 	cursor: pointer;
+    font-size: 38px;
+    position: absolute;
+    right: 0;
+    border: 3px solid #00dcec;
+    border-radius: 100%;
+    width: 50px;
+    height: 50px;
+    margin: 15px;
+    text-align: center;
+}
+
+#closebutton:hover{
+	background: #00dcec;
+}
+
+#outerHUD{
+	display: inline-block;
 }
 
 #HUD{
 	background-color: black;
-	display: inline-block;
 	overflow: scroll;
 	color: white;
 	font-family: ChambersSansOT;
+	position: relative;
 }
 
 #movieImage{
@@ -72,12 +85,6 @@ canvas{
 #HUDcontainer{
 	width: 75%;
 	margin: auto;
-}
-
-#titlebar{
-	background-color: black;
-	position: fixed;
-	width: auto;
 }
 
 #movieTitle{
@@ -176,13 +183,18 @@ canvas{
 	margin-right: 20px;
 }
 
-#mainCanvas{
+#canvasContainer{
+	display: inline-block;
 	position: relative;
+}
+
+.para{
+	width: 45%;
 }
 
 .tooltip{
 	position: absolute;
-	display: inline-block;
+	display: none;
     border: 3px solid black;
 	width: 250px;
     background: black;
