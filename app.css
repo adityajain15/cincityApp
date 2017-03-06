@@ -185,11 +185,28 @@ canvas{
 
 #canvasContainer{
 	display: inline-block;
-	position: relative;
+	position: fixed;
+}
+
+#textContainer{
+	width: 40%;
+	margin-top: 5%;
+	margin-left: 5%;
 }
 
 .para{
-	width: 45%;
+	margin-bottom: 5%;
+}
+
+.headline{
+	font-family: ChambersSansOT-Medium;
+    font-size: 32px;
+    color: #00dcec;
+}
+
+.paratext{
+	font-family: ChambersSansOT;
+    font-size: 18px;
 }
 
 .tooltip{

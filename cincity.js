@@ -137,18 +137,23 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   }
 
 }
+var mouseX;
+var mouseY;
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     //d3.select("#mainCanvas").style("cursor","move");
-    var mouseX = e.layerX;
-    var mouseY = e.layerY;
+    mouseX = e.layerX;
+    mouseY = e.layerY-document.body.scrollTop;
+
+    console.log(mouseX+","+mouseY);
+
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
     var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
     var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
     hoverNode=colToNode[colString];
     if(hoverNode){
-      console.log(hoverNode);
+      //console.log(hoverNode);
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
@@ -178,7 +183,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
 
 document.getElementById("mainCanvas").addEventListener("click", function(e){
   var mouseX = e.layerX;
-  var mouseY = e.layerY;
+  var mouseY = e.layerY-document.body.scrollTop;;
   var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
   var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
   hoverNode=colToNode[colString];
