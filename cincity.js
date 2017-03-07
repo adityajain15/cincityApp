@@ -237,15 +237,19 @@ d3.select("#closebutton").on("click",function(){
   d3.select("#HUDcontent").style("display","block");
 });
 
-function getInfo(movieID,zoomToNode){
-  
-  var movieNode = movieList.getMovie(movieID);
-  
-  if(zoomToNode){
-    canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
+function zoomToNode(){
+  canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
     .translate(width / 2, height / 2)
     .scale(500)
     .translate(-movieNode.getX(),-movieNode.getY()));
+}
+
+function getInfo(movieID,zoomFlag){
+  
+  var movieNode = movieList.getMovie(movieID);
+  
+  if(zoomFlag){
+    zoomToNode(movieNode);
   }
 
   similarLines = movieList.getSimilarMovies(movieNode);

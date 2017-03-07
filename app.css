@@ -207,6 +207,7 @@ canvas{
 .paratext{
 	font-family: ChambersSansOT;
     font-size: 18px;
+    word-wrap: break-word;
 }
 
 .tooltip{
