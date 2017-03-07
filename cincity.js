@@ -293,6 +293,13 @@ function makeResponsive(){
 
 document.getElementById("searchBar").addEventListener("input", logEvent, true);
 
+var waypoint = new Waypoint({
+  element: document.getElementById('helloThere'),
+  handler: function(direction) {
+    console.log('Scrolled to waypoint!')
+  }
+})
+
 function logEvent(){
   d3.selectAll(".movieOption").selectAll(function(){
     if((d3.select(this).text()).includes(document.getElementById("searchBar").value))
