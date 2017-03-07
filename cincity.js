@@ -145,15 +145,13 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     mouseX = e.layerX;
     mouseY = e.layerY-document.body.scrollTop;
 
-    //console.log(mouseX+","+mouseY);
-
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
     var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
     var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
     hoverNode=colToNode[colString];
     if(hoverNode){
-      //console.log(hoverNode);
+      console.log(hoverNode);
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
@@ -237,10 +235,10 @@ d3.select("#closebutton").on("click",function(){
   d3.select("#HUDcontent").style("display","block");
 });
 
-function zoomToNode(){
+function zoomToNode(movieNode,zoomLevel){
   canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
     .translate(width / 2, height / 2)
-    .scale(500)
+    .scale(zoomLevel)
     .translate(-movieNode.getX(),-movieNode.getY()));
 }
 
@@ -249,7 +247,7 @@ function getInfo(movieID,zoomFlag){
   var movieNode = movieList.getMovie(movieID);
   
   if(zoomFlag){
-    zoomToNode(movieNode);
+    zoomToNode(movieNode,500);
   }
 
   similarLines = movieList.getSimilarMovies(movieNode);
@@ -300,7 +298,14 @@ document.getElementById("searchBar").addEventListener("input", logEvent, true);
 var waypoint = new Waypoint({
   element: document.getElementById('helloThere'),
   handler: function(direction) {
-    console.log('Scrolled to waypoint!')
+    zoomToNode(movieList.getMovie(45068),500);
+  }
+})
+
+var waypoint = new Waypoint({
+  element: document.getElementById('testtwo'),
+  handler: function(direction) {
+    zoomToNode(movieList.getMovie(39572),45);
   }
 })
 
