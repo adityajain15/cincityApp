@@ -14,7 +14,7 @@ var waypoint = new Waypoint({
     if(direction==='down'){
       d3.select("#canvasContainer").style('position','fixed');
       d3.select("#canvasContainer").style('top','20px');
-      zoomToNode(movieList.getMovie(45068),500);
+      //zoomToNode(movieList.getMovie(45068),500);
     }
     else if(direction==='up'){
       d3.select("#canvasContainer").style('position','absolute');
@@ -41,6 +41,10 @@ var awful = new Waypoint({
     return document.getElementById('canvasContainer').clientHeight+20-this.element.clientHeight;
   }
 })
+
+function createWaypoints(){
+
+}
 
 var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
