@@ -178,9 +178,14 @@ var mouseY;
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     //d3.select("#mainCanvas").style("cursor","move");
-    mouseX = e.layerX;
-    mouseY = e.layerY-document.body.scrollTop;
-    console.log(mouseX+" "+mouseY);
+    var mouseX = e.layerX;
+    
+    if(d3.select("#canvasContainer").style('position')==='fixed'){
+      var mouseY = e.layerY-document.body.scrollTop;;
+    }
+    else{
+      var mouseY = e.layerY;
+    }
     // Get the corresponding pixel color on the hidden canvas
     // and look up the node in our map.
     var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
@@ -194,30 +199,38 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
       .style("display","block");
 
       d3.select(".tooltipName")
-        .text(hoverNode.getName());
+      .text(hoverNode.getName());
 
       d3.select(".tooltipYear")
-        .text(hoverNode.getYear());
+      .text(hoverNode.getYear());
 
       d3.select(".tooltipGenre")
-        .text(hoverNode.getGenre());
+      .text(hoverNode.getGenre());
 
       d3.select(".tooltipDirector")
-        .text("Directed by "+hoverNode.getDirector());
+      .text("Directed by "+hoverNode.getDirector());
 
       d3.select(".tooltipAlert")
-        .text("Click for details");
-     
+      .text("Click for details");
+      
     }
     else{
       d3.select(".tooltip")
       .style("display","none");
     }
-});
+  });
 
 document.getElementById("mainCanvas").addEventListener("click", function(e){
+  
   var mouseX = e.layerX;
-  var mouseY = e.layerY-document.body.scrollTop;;
+  
+  if(d3.select("#canvasContainer").style('position')==='fixed'){
+    var mouseY = e.layerY-document.body.scrollTop;;
+  }
+  else{
+    var mouseY = e.layerY;
+  }
+
   var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
   var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
   hoverNode=colToNode[colString];
