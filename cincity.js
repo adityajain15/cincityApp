@@ -1,12 +1,12 @@
-var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2),
+var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
     mainContext = canvas.node().getContext("2d"),
     width = canvas.property("width"),
     height = canvas.property("height")
 
-var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2),
+var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
     hiddenContext = hiddenCanvas.node().getContext("2d")
 
-var HUD = d3.select("#HUD").style("height",window.innerHeight/1.98).style("width",window.innerWidth/2.1);
+var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
 var stats = new Stats();
 stats.setMode(0); // 0: fps, 1: ms, 2: mb
@@ -17,8 +17,6 @@ stats.domElement.style.left = '0px';
 stats.domElement.style.top = '0px';
 
 document.getElementById("canvasContainer").appendChild( stats.domElement );
-
-//x-Scale for Micha's image to Canvas conversion. [-50,200] was the x-range for Micha's image
 
 var zoom = d3.zoom()
     .scaleExtent([1, 800])
@@ -190,51 +188,6 @@ document.getElementById("mainCanvas").addEventListener("click", function(e){
   }
 });
 
-d3.selectAll(".labelButton").on("click",function(e){ 
-  if(d3.select(this).attr("selected")==="false"){
-    if(colorList.addGenre(d3.select(this).text())){
-      d3.select(this).attr("selected","true");
-      d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
-      movieList.updateColors();
-      //drawPoints();
-    }
-    else{
-      //when over 12 elements
-    }  
-  }
-  else{
-    d3.select(this).attr("selected","false");
-    d3.select(this).style("background","white");
-    colorList.removeGenre(d3.select(this).text());
-    movieList.updateColors();
-  }
-});
-
-function makeHUD(){
-  divNames = [];
-  for(let each of movieIDs){
-    if(movieList.getMovie(each).getName()!=undefined){
-      divNames.push([each,movieList.getMovie(each).getName().trim()]);
-    }
-  }
-  divNames.sort(function(a,b){
-    if(a[1]>b[1]){return 1;}
-    else if(a[1]<b[1]){return -1;}
-    else return 0;
-  });
-  for(let each of divNames){
-    d3.select("#HUDcontent").append("div").text(each[1]).attr("movieid",each[0]).attr("class","movieOption")
-    .on("click",function(){
-      getInfo(d3.select(this).attr("movieid"),true);
-    });
-  }
-}
-
-d3.select("#closebutton").on("click",function(){
-  d3.select("#movieInfo").style("display","none");
-  d3.select("#HUDcontent").style("display","block");
-});
-
 function zoomToNode(movieNode,zoomLevel){
   canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
     .translate(width / 2, height / 2)
@@ -285,38 +238,15 @@ function getInfo(movieID,zoomFlag){
 
 window.onresize = makeResponsive;
 
+function halfWidth() {
+  var width = (window.innerWidth/2) - 20;
+  return width;
+}
+
 function makeResponsive(){
-  d3.select("#mainCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2);
-  d3.select("#hiddenCanvas").attr("height",window.innerHeight/2).attr("width",window.innerWidth/2);
-  d3.select("#HUD").style("height",window.innerHeight/1.98).style("width",window.innerWidth/2.1);
+  d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).attr("width",halfWidth() - 8);
+  d3.select("#hiddenCanvas").attr("height",window.innerHeight/2 - 8).attr("width",halfWidth() - 8);
+  d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
   width = canvas.property("width");
   height = canvas.property("height");
 } 
-
-document.getElementById("searchBar").addEventListener("input", logEvent, true);
-
-var waypoint = new Waypoint({
-  element: document.getElementById('helloThere'),
-  handler: function(direction) {
-    zoomToNode(movieList.getMovie(45068),500);
-  }
-})
-
-var waypoint = new Waypoint({
-  element: document.getElementById('testtwo'),
-  handler: function(direction) {
-    zoomToNode(movieList.getMovie(39572),45);
-  }
-})
-
-function logEvent(){
-  d3.selectAll(".movieOption").selectAll(function(){
-    if((d3.select(this).text()).includes(document.getElementById("searchBar").value))
-    {
-      d3.select(this).style("display","block");
-    }
-    else{
-      d3.select(this).style("display","none");
-    }
-  })
-}

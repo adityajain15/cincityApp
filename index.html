@@ -14,168 +14,53 @@
     <title>Cincity</title>
   </head>
   <body>
-    <div id="outerHUD">
-        <input type="text" placeholder="Search for movie..." id="searchBar">
-        <div id="HUD">
-            <div id="movieinfo">
-                <div id="closebutton">&#x2716;</div>
-                <img id="movieImage"></img>
-                <div id="HUDcontainer">
-                    <div class="HUDtextline">
-                        <span id="movieTitle"></span>
-                        <span id="movieYear"></span>
-                        <span id="movieDirector"></span>
-                    </div>
-                    <div class="HUDtextline">
-                        <span id="movieSynopsis"></span>
-                    </div>
-                    <div class="HUDtextline">
-                        <div class="secondInfoLine">
-                            <span id="movieTime"></span><span class="labelDesc"> min</span>
-                            <span class="movieInfoLabel">Running time</span>
-                        </div>
-                        <div class="secondInfoLine">
-                            <span id="movieGenre"></span>
-                            <span class="movieInfoLabel">Genre</span>
-                        </div>
-                        <div class="secondInfoLine">
-                            <img id="HUDflag"></img>
-                            <span class="movieInfoLabel">Country of origin</span>
-                        </div>
-                    </div>
-                    <div class="HUDtextline">
-                        <div class="thirdInfoLine">
-                            <span id="movieAverage"></span><span class="labelDesc"> /5</span>
-                            <span class="movieInfoLabel">Average rating</span>
-                        </div>
-                        <div class="thirdInfoLine">
-                            <span id="movieTotal"></span>
-                            <span class="movieInfoLabel">Total ratings</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div id="HUDcontent">
-            </div>
-        </div>
-    </div>
-    <div id="canvasContainer">
-        <canvas id="mainCanvas"></canvas>
-        <canvas id="hiddenCanvas"></canvas>
-        <div class="tooltip">
-            <div class="tooltipContent">
-                <div class="tooltipName"></div>
-                <div class="tooltipYear"></div>
-                <div class="tooltipDirector"></div>
-                <div class="tooltipGenre"></div>
-                <div class="tooltipAlert"></div>
-            </div>
-        </div>
-    </div>
-    
-    
-    <div class="legend"></div>
-    <div id="labelButtonContainer">
-        <div class="labelButton" selected="true">Action</div>
-        <div class="labelButton" selected="true">Adventure</div>
-        <div class="labelButton" selected="true">Animation</div>
-        <div class="labelButton" selected="false">Anthology</div>
-        <div class="labelButton" selected="true">Avant-Garde</div>
-        <div class="labelButton" selected="false">Biography</div>
-        <div class="labelButton" selected="true">Comedy</div>
-        <div class="labelButton" selected="false">Commercial</div>
-        <div class="labelButton" selected="true">Crime</div>
-        <div class="labelButton" selected="false">Cult</div>
-        <div class="labelButton" selected="true">Documentary</div>
-        <div class="labelButton" selected="true">Drama</div>
-        <div class="labelButton" selected="false">Erotica</div>
-        <div class="labelButton" selected="false">Fantasy</div>
-        <div class="labelButton" selected="false">Family</div>
-        <div class="labelButton" selected="false">Film noir</div>
-        <div class="labelButton" selected="false">Gay & Lesbian</div>
-        <div class="labelButton" selected="false">History</div>
-        <div class="labelButton" selected="false">Horror</div>
-        <div class="labelButton" selected="false">Music</div>
-        <div class="labelButton" selected="false">Musical</div>
-        <div class="labelButton" selected="true">Music Video</div>
-        <div class="labelButton" selected="false">Mystery</div>
-        <div class="labelButton" selected="true">Romance</div>
-        <div class="labelButton" selected="false">Sci-Fi</div>
-        <div class="labelButton" selected="true">Short</div>
-        <div class="labelButton" selected="false">Silent</div>
-        <div class="labelButton" selected="false">Sport</div>
-        <div class="labelButton" selected="true">Thriller</div>
-        <div class="labelButton" selected="false">TV Mini-series</div>
-        <div class="labelButton" selected="false">TV Movie</div>
-        <div class="labelButton" selected="false">War</div>
-        <div class="labelButton" selected="false">Western</div>
-    </div>
-    <form>
-        <div class="checkboxContainer">
-            <input type="checkbox" id="hideUnlabeled" checked>Only show selected genres</input>
-        </div>
-        <div class="checkboxContainer">
-            <input type="checkbox" id="showCountries">Show country flags</input>
-        </div>
-    </form>
+
     <div id="textContainer">
         <div class="para"> 
-            <div class="headline">Abstract</div>
+            <div class="headline">Introduction</div>
             <div class="paratext">
-                Movie services such as Netflix and Hulu know the cinematic tastes of millions of their users through their movie watching/rating habits and these patterns are used to recommend movies to their userbase. One such method used to recommend movies is called collaborative filtering. Collaborative filtering yields a matrix of movies-users with each cell representing a user’s likely affinity to a movie. For the purpose of this project, we tried to visualize what such a recommendation system looks like. Such a matrix can be visualized using a technique known as t-Distributed Stochastic Neighbor Embedding (Laurens van der Maaten and Geoffrey Hinton)
+                There is something special happening in the digital sphere today, something that has its humble beginnings in the 80s as USENET—People, in large numbers, are coming together from different walks of life to form communities on the Internet based on what they like and the content they consume. <br><br>
+                        
+While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) <br><br>
+
+Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group can be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. <br><br>
+
+These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs.
             </div>
         </div>
         <div class="para"> 
-            <div class="headline">Dataset</div>
+            <div class="headline">The Dataset</div>
             <div class="paratext">
-                MUBI is an online service that integrates a subscription video-on-demand service with a massive database of movies from all over the world. Its 8 million users have collectively rated thousands of movies present in its database. 
+                MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world.Its 8 million users have collectively rated and reviewed thousands of movies present in its database. <br><br>
+
+It can be argued that a visualization of these ratings would be a good indicator of community taste, but before we can build such a visualization we face a challenge—How does one visually represent thousands of movies with each of them containing thousands of reviews?<br><br>
+
+In this blogpost we’re going to look at a technique called t-SNE that can help us visualize this data.
             </div>
         </div>
         <div class="para"> 
-            <div class="headline" id="helloThere">Collecting Data</div>
+            <div class="headline" id="helloThere">Introduction to t-SNEs</div>
             <div class="paratext">
-                Movie ratings for all users with public profiles were collected through public endpoints on the MUBI API using a multi-threaded Python script. The resulting dataset contained well over a million users. This number was filtered down to a subset of users who had rated at least a certain number of movies.  Metadata for all movies (such as film name, year of release, director name and cast) was scraped from the MUBI film database using beautifulsoup
+                Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label. <br><br>
+
+                For example, consider the graphic on the right which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, images and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.  <br><br>
+
+This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm developed by Geoffrey Hinton and Laurens van der Maaten which helps one to reduce the dimensionality of one’s data. It is popularly used to reduce high dimensionality data to a fewer number of dimensions, usually two or three, that enables one to draw scatterplots in which similar datum are placed in close proximity. 
             </div>
         </div>
         <div class="para"> 
-            <div class="headline">Visualization</div>
+            <div class="headline">Process</div>
             <div class="paratext">
-                t-SNE is a technique that can be used to reduce high dimensionality data down to two dimensions, such as x and y coordinates, which enables a cluster visualization. This technique performs well at clustering local aspects of underlying data and we were excited to see some interesting patterns emerge out of the resulting visualization
+                For the purpose of this blogpost we selected a subset of users who had rated at least 20 movies. An adjacency matrix can be constructed for this subset of users, where each row is a user and each column is a user’s rating for a particular movie. <br><br>
+
+This matrix can be transposed to yield a matrix where each row represents a movie, and each column represents the various ratings for that movie. This is the matrix that will serve as our t-SNE’s input. <br><br>
+
+Our t-SNE will reduce the number of dimensions to just two: which we will use as x-y coordinates for an interactive scatterplot.
             </div>
         </div>
         <div class="para"> 
-            <div class="headline">Under the hood</div>
-            <div class="paratext">
-                The goal of the project was to create a playful interactive experience that was interesting to a technical and non-technical audience alike. While cookie-cutter libraries for t-SNE visualizations exist, none of them provide mechanics for such interactions. Further, an interactive visualization of this scale (29,000 nodes) requires optimizations that would otherwise slow a browser down. A majority of the code for this visualization was this made from the ground-up and can hopefully be open sourced in the near-future for the good of the community. Some highlights— i. Canvas was chosen over SVGs because of superior performance at scale ii. Dual canvases, one of them a hidden canvas that implements interactions (since events cannot be bound to pixels in a bitmap) iii. Semantic zooming that enables easy viewing at a low zoom level and more granular view at high zoom levels iv. Mouse interactions for each node that reveal something about the underlying data
-            </div>
-        </div>
-        <div class="para"> 
-            <div class="headline" id="testtwo">Test one</div>
-            <div class="paratext">
-                Clownlike, happiest on your hands,<br>   
-                Feet to the stars, and moon-skulled,<br>   
-                Gilled like a fish. A common-sense   <br>
-                Thumbs-down on the dodo’s mode.   <br>
-                Wrapped up in yourself like a spool,  <br> 
-                Trawling your dark as owls do.   <br>
-                Mute as a turnip from the Fourth   <br>
-                Of July to All Fools’ Day, <br>
-                O high-riser, my little loaf. <br>
-                <br>
-                Vague as fog and looked for like mail. <br>  
-                Farther off than Australia. <br>
-                Bent-backed Atlas, our traveled prawn. <br>   
-                Snug as a bud and at home   <br>
-                Like a sprat in a pickle jug.   <br>
-                A creel of eels, all ripples.   <br>
-                Jumpy as a Mexican bean.   <br>
-                Right, like a well-done sum.   <br>
-                A clean slate, with your own face on<br>
-            </div>
-        </div>
-        <div class="para"> 
-            <div class="headline">Test two</div>
-            <div class="paratext">
+            <div class="headline" id="testtwo">Test two</div>
+            <div class="paratext" id="testthree">
                 Whose woods these are I think I know. <br>  
                 His house is in the village though;   <br>
                 He will not see me stopping here   <br>
@@ -204,9 +89,120 @@
             </div>
         </div>
     </div>
+
+    <div id="canvasContainer">
+        <canvas id="mainCanvas"></canvas>
+        <canvas id="hiddenCanvas"></canvas>
+        <div class="tooltip">
+            <div class="tooltipContent">
+                <div class="tooltipName"></div>
+                <div class="tooltipYear"></div>
+                <div class="tooltipDirector"></div>
+                <div class="tooltipGenre"></div>
+                <div class="tooltipAlert"></div>
+            </div>
+        </div>
+    </div>
+
+    <img id="testimage" src="testimage.png"></img>
+
+    <div id="demo">
+        <div id="outerHUD">
+            <input type="text" placeholder="Search for movie..." id="searchBar">
+            <div id="HUD">
+                <div id="movieinfo">
+                    <div id="closebutton">&#x2716;</div>
+                    <img id="movieImage"></img>
+                    <div id="HUDcontainer">
+                        <div class="HUDtextline">
+                            <span id="movieTitle"></span>
+                            <span id="movieYear"></span>
+                            <span id="movieDirector"></span>
+                        </div>
+                        <div class="HUDtextline">
+                            <span id="movieSynopsis"></span>
+                        </div>
+                        <div class="HUDtextline">
+                            <div class="secondInfoLine">
+                                <span id="movieTime"></span><span class="labelDesc"> min</span>
+                                <span class="movieInfoLabel">Running time</span>
+                            </div>
+                            <div class="secondInfoLine">
+                                <span id="movieGenre"></span>
+                                <span class="movieInfoLabel">Genre</span>
+                            </div>
+                            <div class="secondInfoLine">
+                                <img id="HUDflag"></img>
+                                <span class="movieInfoLabel">Country of origin</span>
+                            </div>
+                        </div>
+                        <div class="HUDtextline">
+                            <div class="thirdInfoLine">
+                                <span id="movieAverage"></span><span class="labelDesc"> /5</span>
+                                <span class="movieInfoLabel">Average rating</span>
+                            </div>
+                            <div class="thirdInfoLine">
+                                <span id="movieTotal"></span>
+                                <span class="movieInfoLabel">Total ratings</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div id="HUDcontent">
+                </div>
+            </div>
+        </div>
+        
+        
+        <div id="labelButtonContainer">
+            <div class="labelButton" selected="true">Action</div>
+            <div class="labelButton" selected="true">Adventure</div>
+            <div class="labelButton" selected="true">Animation</div>
+            <div class="labelButton" selected="false">Anthology</div>
+            <div class="labelButton" selected="true">Avant-Garde</div>
+            <div class="labelButton" selected="false">Biography</div>
+            <div class="labelButton" selected="true">Comedy</div>
+            <div class="labelButton" selected="false">Commercial</div>
+            <div class="labelButton" selected="true">Crime</div>
+            <div class="labelButton" selected="false">Cult</div>
+            <div class="labelButton" selected="true">Documentary</div>
+            <div class="labelButton" selected="true">Drama</div>
+            <div class="labelButton" selected="false">Erotica</div>
+            <div class="labelButton" selected="false">Fantasy</div>
+            <div class="labelButton" selected="false">Family</div>
+            <div class="labelButton" selected="false">Film noir</div>
+            <div class="labelButton" selected="false">Gay & Lesbian</div>
+            <div class="labelButton" selected="false">History</div>
+            <div class="labelButton" selected="false">Horror</div>
+            <div class="labelButton" selected="false">Music</div>
+            <div class="labelButton" selected="false">Musical</div>
+            <div class="labelButton" selected="true">Music Video</div>
+            <div class="labelButton" selected="false">Mystery</div>
+            <div class="labelButton" selected="true">Romance</div>
+            <div class="labelButton" selected="false">Sci-Fi</div>
+            <div class="labelButton" selected="true">Short</div>
+            <div class="labelButton" selected="false">Silent</div>
+            <div class="labelButton" selected="false">Sport</div>
+            <div class="labelButton" selected="true">Thriller</div>
+            <div class="labelButton" selected="false">TV Mini-series</div>
+            <div class="labelButton" selected="false">TV Movie</div>
+            <div class="labelButton" selected="false">War</div>
+            <div class="labelButton" selected="false">Western</div>
+        </div>
+        <form>
+            <div class="checkboxContainer">
+                <input type="checkbox" id="hideUnlabeled" checked>Only show selected genres</input>
+            </div>
+            <div class="checkboxContainer">
+                <input type="checkbox" id="showCountries">Show country flags</input>
+            </div>
+        </form>
+    </div>
+
     <script type="text/javascript" src="ListNode.js"></script> 
     <script type="text/javascript" src="movieObject.js"></script>  
-    <script type="text/javascript" src="movieList.js"></script>  
+    <script type="text/javascript" src="movieList.js"></script> 
+    <script type="text/javascript" src="interface.js"></script> 
     <script type="text/javascript" src="cincity.js"></script>  
   </body>
 </html>
