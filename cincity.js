@@ -6,46 +6,6 @@ var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).at
 var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
     hiddenContext = hiddenCanvas.node().getContext("2d")
 
-d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
-
-var waypoint = new Waypoint({
-  element: document.getElementById('helloThere'),
-  handler: function(direction) {
-    if(direction==='down'){
-      d3.select("#canvasContainer").style('position','fixed');
-      d3.select("#canvasContainer").style('top','20px');
-      //zoomToNode(movieList.getMovie(45068),500);
-    }
-    else if(direction==='up'){
-      d3.select("#canvasContainer").style('position','absolute');
-      d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
-    }
-  },
-  offset: 20 
-})
-
-var awful = new Waypoint({
-  element: document.getElementById('testthree'),
-  handler: function(direction) {
-    if(direction==='down'){
-      d3.select("#canvasContainer").style('position','absolute');
-      d3.select("#canvasContainer").style('top',document.getElementById('testthree').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
-      
-    }
-    else if(direction==='up'){
-      d3.select("#canvasContainer").style('position','fixed');
-      d3.select("#canvasContainer").style('top','20px');
-    }
-  },
-  offset: function(){
-    return document.getElementById('canvasContainer').clientHeight+20-this.element.clientHeight;
-  }
-})
-
-function createWaypoints(){
-
-}
-
 var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
 var stats = new Stats();
@@ -88,15 +48,15 @@ d3.queue()
 
 function makeList(error, movieJSON,metaJSON){
   movieJSON["movie_ids"].forEach(function(movieID, point){
-      movieObject = new Movie(movieID, movieJSON["movie_tsne"][point][0], movieJSON["movie_tsne"][point][1]);
-      movieIDs.push(movieID);
-      movieList.addMovie(movieID, movieObject);
-    });
+    movieObject = new Movie(movieID, movieJSON["movie_tsne"][point][0], movieJSON["movie_tsne"][point][1]);
+    movieIDs.push(movieID);
+    movieList.addMovie(movieID, movieObject);
+  });
   metaJSON.forEach(function(piece){      
-      if(movieList.getMovie(piece["info"]["id"])!=null){
-        movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
-      }
-    });
+    if(movieList.getMovie(piece["info"]["id"])!=null){
+      movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
+    }
+  });
   countryNames = new Set(movieIDs.map(function(movieID){return movieList.getCountryName(movieID);}));
   countryNames.forEach(function(each){
     var tempCountry = new Image();
@@ -106,15 +66,15 @@ function makeList(error, movieJSON,metaJSON){
   });
 
   d3.selectAll(".labelButton").selectAll(function(d,i){
-  
+
     if(d3.select(this).attr("selected")=="true"){
       colorList.addGenre(d3.select(this).text());
       d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
       movieList.updateColors();
     }
-  
+
   });
-  
+
 
   makeHUD();
 
@@ -179,7 +139,7 @@ var mouseY;
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     //d3.select("#mainCanvas").style("cursor","move");
     var mouseX = e.layerX;
-    
+
     if(d3.select("#canvasContainer").style('position')==='fixed'){
       var mouseY = e.layerY-document.body.scrollTop;;
     }
@@ -212,7 +172,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
 
       d3.select(".tooltipAlert")
       .text("Click for details");
-      
+
     }
     else{
       d3.select(".tooltip")
@@ -221,7 +181,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
   });
 
 document.getElementById("mainCanvas").addEventListener("click", function(e){
-  
+
   var mouseX = e.layerX;
   
   if(d3.select("#canvasContainer").style('position')==='fixed'){
