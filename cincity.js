@@ -8,6 +8,40 @@ var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2
 
 d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
 
+var waypoint = new Waypoint({
+  element: document.getElementById('helloThere'),
+  handler: function(direction) {
+    if(direction==='down'){
+      d3.select("#canvasContainer").style('position','fixed');
+      d3.select("#canvasContainer").style('top','20px');
+      zoomToNode(movieList.getMovie(45068),500);
+    }
+    else if(direction==='up'){
+      d3.select("#canvasContainer").style('position','absolute');
+      d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
+    }
+  },
+  offset: 20 
+})
+
+var awful = new Waypoint({
+  element: document.getElementById('testthree'),
+  handler: function(direction) {
+    if(direction==='down'){
+      d3.select("#canvasContainer").style('position','absolute');
+      d3.select("#canvasContainer").style('top',document.getElementById('testthree').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
+      
+    }
+    else if(direction==='up'){
+      d3.select("#canvasContainer").style('position','fixed');
+      d3.select("#canvasContainer").style('top','20px');
+    }
+  },
+  offset: function(){
+    return document.getElementById('canvasContainer').clientHeight+20-this.element.clientHeight;
+  }
+})
+
 var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
 var stats = new Stats();
