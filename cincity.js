@@ -6,6 +6,8 @@ var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).at
 var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
     hiddenContext = hiddenCanvas.node().getContext("2d")
 
+d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
+
 var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
 var stats = new Stats();
@@ -89,7 +91,6 @@ function drawPoints() {
   stats.begin();
   mainContext.clearRect(0, 0, width, height);
   hiddenContext.clearRect(0, 0, width, height);
-  //drawVoronoi();
   mainContext.beginPath();
   hiddenContext.beginPath();
   movieIDs.forEach(function(movieID){
@@ -125,7 +126,6 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   }
   if(flagCheckbox){
     flag = countries[movieList.getCountryName(movieIndex)];
-    //if(flag==undefined){ flag = countries.find(function(e){return e.name=="undefined"});}
     mainContext.drawImage(flag,transformedPoints[0], transformedPoints[1],16,12);
     hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],16,12);
   }

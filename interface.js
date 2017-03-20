@@ -63,8 +63,6 @@ d3.selectAll(".labelButton").on("click",function(e){
 The following code positions the graphics and the interactive at the right place
 */ 
 
-d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
-
 var waypoint = new Waypoint({
   element: document.getElementById('helloThere'),
   handler: function(direction) {
