@@ -3,9 +3,6 @@ var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).at
     width = canvas.property("width"),
     height = canvas.property("height")
 
-var hiddenCanvas = d3.select("#hiddenCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
-    hiddenContext = hiddenCanvas.node().getContext("2d")
-
 var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
 var stats = new Stats();
@@ -21,6 +18,18 @@ document.getElementById("canvasContainer").appendChild( stats.domElement );
 var zoom = d3.zoom()
     .scaleExtent([1, 800])
     .on("zoom", zoomed);
+
+zoom.on('end',function(){
+  movieList.quadtreeReset();
+  for (var i = 0, len = movieIDs.length; i < len; i++){
+    var transPoints = transformedPoints(lastTransform,movieList.getMovie(movieIDs[i]).getX(),movieList.getMovie(movieIDs[i]).getY())
+    movieList.quadtreeAdd([transPoints[0],transPoints[1],movieIDs[i]]); 
+  }
+});
+
+function transformedPoints(transform,x,y){
+  return transform.apply([x,y]);
+}
 
 var lastTransform = null;
 var similarLines = [];
@@ -80,7 +89,6 @@ function makeList(error, movieJSON,metaJSON){
 
   zoomed();
   zoom.translateBy(canvas, 150, 200);
-  zoom.translateBy(hiddenCanvas, 150, 200);
   window.requestAnimationFrame(drawPoints);
 }
 
@@ -89,9 +97,7 @@ function drawPoints() {
   stats.begin();
 
   mainContext.clearRect(0, 0, width, height);
-  //hiddenContext.clearRect(0, 0, width, height);
   mainContext.beginPath();
-  //hiddenContext.beginPath();
   var option1 = document.getElementById("hideUnlabeled").checked;
   var option2 = document.getElementById("showCountries").checked;
   for (var i = 0, len = movieIDs.length; i < len; i++){
@@ -99,7 +105,7 @@ function drawPoints() {
   }
   
   mainContext.fill();
-  //hiddenContext.fill();
+  
   if(similarNodeOrigin!=null){
     mainContext.beginPath();
     var transformedOrigin = lastTransform.apply([similarNodeOrigin.getX(),similarNodeOrigin.getY()]);
@@ -122,41 +128,31 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
     return;
   }
-  //count= count +1 ;
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
-    //hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
   if(flagCheckbox){
     flag = countries[movieList.getCountryName(movieIndex)];
     mainContext.drawImage(flag,transformedPoints[0], transformedPoints[1],16,12);
-    //hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],16,12);
   }
   else{
     mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
-    //hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],13,13);
   }
-
 }
 
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
-    //d3.select("#mainCanvas").style("cursor","move");
-    var mouseX = e.layerX;
-
-    if(d3.select("#canvasContainer").style('position')==='fixed'){
-      var mouseY = e.layerY-document.body.scrollTop;;
-    }
-    else{
-      var mouseY = e.layerY;
-    }
-    // Get the corresponding pixel color on the hidden canvas
-    // and look up the node in our map.
-    var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
-    var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
-    hoverNode=colToNode[colString];
-    if(hoverNode){
-      //console.log(hoverNode);
+  var mouseX = e.layerX;
+  if(d3.select("#canvasContainer").style('position')==='fixed'){
+    var mouseY = e.layerY-document.body.scrollTop;;
+  }
+  else{
+    var mouseY = e.layerY;
+  }
+  searchNode = movieList.quadtree.find(mouseX-8,mouseY-8,8);
+  if(searchNode!=undefined){
+    hoverNode=movieList.getMovie(searchNode[2]);
+    if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3")){
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
@@ -176,30 +172,28 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
 
       d3.select(".tooltipAlert")
       .text("Click for details");
-
     }
-    else{
-      d3.select(".tooltip")
-      .style("display","none");
-    }
-  });
+  }
+  else{
+    d3.select(".tooltip")
+    .style("display","none");
+  }
+});
 
 document.getElementById("mainCanvas").addEventListener("click", function(e){
-
   var mouseX = e.layerX;
-  
   if(d3.select("#canvasContainer").style('position')==='fixed'){
     var mouseY = e.layerY-document.body.scrollTop;;
   }
   else{
     var mouseY = e.layerY;
   }
-
-  var col = hiddenContext.getImageData(mouseX, mouseY, 1, 1).data;
-  var colString = "rgb(" + col[0] + "," + col[1] + ","+ col[2] + ")";
-  hoverNode=colToNode[colString];
-  if(hoverNode){
-    getInfo(hoverNode.getID(),false);
+  searchNode = movieList.quadtree.find(mouseX-8,mouseY-8,8);
+  if(searchNode!=undefined){
+    hoverNode=movieList.getMovie(searchNode[2]);
+    if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3")){
+      getInfo(hoverNode.getID(),false);
+    }
   }
 });
 
@@ -260,7 +254,6 @@ function halfWidth() {
 
 function makeResponsive(){
   d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).attr("width",halfWidth() - 8);
-  d3.select("#hiddenCanvas").attr("height",window.innerHeight/2 - 8).attr("width",halfWidth() - 8);
   d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
   width = canvas.property("width");
   height = canvas.property("height");

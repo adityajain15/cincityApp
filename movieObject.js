@@ -1,5 +1,3 @@
-var colToNode = {}
-
 function Movie(id,xData,yData){
 	this.id=id;
 	this.xData=xData;
@@ -32,8 +30,6 @@ function getY(){
 
 function setMetaData(movieData){
 	this.movieData=movieData;
-	this.hiddenColor=genColor();
-	colToNode[this.hiddenColor] = this;
 }
 
 function updateColor(){

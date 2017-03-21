@@ -1,18 +1,28 @@
 function MovieList(){
+	this.quadtree=d3.quadtree();
 	this.movieMap={};
 	this.addMovie=addMovie;
 	this.getMovie=getMovie;
 	this.getXcord=getXcord;
 	this.getYcord=getYcord;
 	this.getMainColor=getMainColor;
-	this.getHiddenColor=getHiddenColor;
 	this.updateColors=updateColors;
 	this.getSimilarMovies=getSimilarMovies;
 	this.getCountryName=getCountryName;
+	this.quadtreeReset=quadtreeReset;
+	this.quadtreeAdd=quadtreeAdd;
 }
 
 function addMovie(movieID,movieObject){
 	this.movieMap[movieID]=movieObject;
+}
+
+function quadtreeReset(){
+	this.quadtree=d3.quadtree();
+}
+
+function quadtreeAdd(data){
+	this.quadtree.add(data);
 }
 
 function getMovie(movieID){
@@ -29,10 +39,6 @@ function getYcord(movieID){
 
 function getMainColor(movieID){
 	return this.movieMap[movieID].mainColor;
-}
-
-function getHiddenColor(movieID){
-	return this.movieMap[movieID].hiddenColor;
 }
 
 function getCountryName(movieID){
@@ -55,20 +61,3 @@ function updateColors(){
 		this.getMovie(i).updateColor();
 	}
 }
-
-/*Credits to Yannick Assogba for the following function which is also available at https://bl.ocks.org/tafsiri/e9016e1b8d36bae56572*/
-var nextCol = 1;
-function genColor(){
-	var ret = [];
-    // via http://stackoverflow.com/a/15804183
-    if(nextCol < 16777215){
-      ret.push(nextCol & 0xff); // R
-      ret.push((nextCol & 0xff00) >> 8); // G 
-      ret.push((nextCol & 0xff0000) >> 16); // B
-
-      nextCol += 100; // This is exagerated for this example and would ordinarily be 1.
-  }
-  var col = "rgb(" + ret.join(',') + ")";
-  return col;
-}
-

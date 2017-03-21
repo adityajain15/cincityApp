@@ -63,11 +63,6 @@ table {
     src: url(fonts/ChambersSansOT.otf);
 }
 
-
-#hiddenCanvas{
-	display: none;
-}
-
 canvas{
 	border: solid 4px black; 
 }
