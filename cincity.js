@@ -87,15 +87,19 @@ function makeList(error, movieJSON,metaJSON){
 //canvas draws itself
 function drawPoints() {
   stats.begin();
+
   mainContext.clearRect(0, 0, width, height);
-  hiddenContext.clearRect(0, 0, width, height);
+  //hiddenContext.clearRect(0, 0, width, height);
   mainContext.beginPath();
-  hiddenContext.beginPath();
-  movieIDs.forEach(function(movieID){
-    drawPoint(movieID,lastTransform,document.getElementById("hideUnlabeled").checked,document.getElementById("showCountries").checked);
-  });
+  //hiddenContext.beginPath();
+  var option1 = document.getElementById("hideUnlabeled").checked;
+  var option2 = document.getElementById("showCountries").checked;
+  for (var i = 0, len = movieIDs.length; i < len; i++){
+    drawPoint(movieIDs[i],lastTransform,option1,option2);
+  }
+  
   mainContext.fill();
-  hiddenContext.fill();
+  //hiddenContext.fill();
   if(similarNodeOrigin!=null){
     mainContext.beginPath();
     var transformedOrigin = lastTransform.apply([similarNodeOrigin.getX(),similarNodeOrigin.getY()]);
@@ -118,23 +122,23 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
     return;
   }
+  //count= count +1 ;
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
-    hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
+    //hiddenContext.fillStyle = movieList.getHiddenColor(movieIndex); 
   }
   if(flagCheckbox){
     flag = countries[movieList.getCountryName(movieIndex)];
     mainContext.drawImage(flag,transformedPoints[0], transformedPoints[1],16,12);
-    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],16,12);
+    //hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],16,12);
   }
   else{
     mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
-    hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],13,13);
+    //hiddenContext.fillRect(transformedPoints[0],transformedPoints[1],13,13);
   }
 
 }
-var mouseX;
-var mouseY;
+
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
     //d3.select("#mainCanvas").style("cursor","move");
