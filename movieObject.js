@@ -28,8 +28,19 @@ function getY(){
 	return this.yData;
 }
 
-function setMetaData(movieData){
-	this.movieData=movieData;
+function setMetaData(data){
+	this.movieData={};
+	this.movieData['avg_rating']=data[0];
+	this.movieData['country']=data[1];
+	this.movieData['director_list']=data[2];
+	this.movieData["genres"]=data[3];
+	this.movieData['synopsis']=data[4];
+	this.movieData['time']=data[5];
+	this.movieData['total_ratings']=data[6];
+	this.movieData["year"]=data[7];
+	this.movieData["canonical_url"]=data[8];
+	this.movieData["title"]=data[9];
+	this.movieData["image"]=data[10];
 }
 
 function updateColor(){
@@ -40,7 +51,7 @@ function getName(){
 	if(this.movieData==undefined){
 		return;
 	}
-	return this.movieData["info"]["title"];
+	return this.movieData["title"];
 }
 
 function getYear(){
@@ -54,12 +65,13 @@ function getImage(){
 	if(this.movieData==undefined){
 		return;
 	}
-	return this.movieData["info"]["stills"]["medium"];
+	return this.movieData["image"];
 }
 
 var genrePreferences = ["Commercial","Anthology","Music","TV Mini-series","Cult","History","Sport","Film noir","Gay & Lesbian","Erotica","War","TV Movie","Mystery","Family","Silent","Musical","Western"
 ,"Biography","Music Video", "Fantasy","Adventure","Sci-Fi","Romance","Thriller","Crime"
 ,"Avant-Garde","Horror","Action","Animation","Short","Documentary","Comedy","Drama"];
+
 
 function getGenre(){
 	if(this.movieData==undefined){

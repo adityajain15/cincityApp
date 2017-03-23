@@ -52,8 +52,10 @@ colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c
 
 d3.queue()
   .defer(d3.json, 'movie_user_tsne.json')
-  .defer(d3.json, 'bigList.json')
+  .defer(d3.json, 'babyList.json')
   .await(makeList);
+
+var joke=0;
 
 function makeList(error, movieJSON,metaJSON){
   movieJSON["movie_ids"].forEach(function(movieID, point){
@@ -61,11 +63,11 @@ function makeList(error, movieJSON,metaJSON){
     movieIDs.push(movieID);
     movieList.addMovie(movieID, movieObject);
   });
-  metaJSON.forEach(function(piece){      
-    if(movieList.getMovie(piece["info"]["id"])!=null){
-      movieList.getMovie(piece["info"]["id"]).setMetaData(piece);
+  for(i in metaJSON){
+    for(key in metaJSON[i]){
+      movieList.getMovie(key).setMetaData(metaJSON[i][key]);
     }
-  });
+  }
   countryNames = new Set(movieIDs.map(function(movieID){return movieList.getCountryName(movieID);}));
   countryNames.forEach(function(each){
     var tempCountry = new Image();

@@ -1,6 +1,8 @@
 function MovieList(){
 	this.quadtree=d3.quadtree();
+	this.size=0;
 	this.movieMap={};
+	this.getSize=getSize;
 	this.addMovie=addMovie;
 	this.getMovie=getMovie;
 	this.getXcord=getXcord;
@@ -15,6 +17,11 @@ function MovieList(){
 
 function addMovie(movieID,movieObject){
 	this.movieMap[movieID]=movieObject;
+	this.size+=1
+}
+
+function getSize(){
+	return this.size;
 }
 
 function quadtreeReset(){
