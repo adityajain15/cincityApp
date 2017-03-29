@@ -31,7 +31,8 @@ These insights are not only culturally significant, but also valuable from a bus
         </div>
         <div class="para"> 
             <div class="headline">The Dataset</div>
-            <div class="paratext">
+            <div class="imageContainer" id="mubi"><img src="images/MUBI.png" class="images"></img><div class="imageCaption"><a href="http://www.mubi.com">(Source)</a></div></div>
+            <div class="paratext" id="mubiHeadline">
                 MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
 <br><br><br>
 In this blogpost we decided visualize this eclectic community of cinephiles. We wanted to build a visualization that would help us learn about the aesthetic taste of individuals behind this community, and reveal smaller cliques that are biased in favor of certain category of movies
@@ -40,8 +41,9 @@ But before we could build such a visualization we faced a challenge—How does o
             </div>
         </div>
         <div class="para"> 
-            <div class="headline" id="helloThere">Introduction to t-SNEs</div>
-            <div class="paratext">
+            <div class="headline">Introduction to t-SNEs</div>
+            <div class="imageContainer" id="dreduction"><img src="images/dreduction.png" class="images"></img><div class="imageCaption">An example of a dimensionality reduction operation <a href="http://axon.cs.byu.edu/papers/gashler2011smc.pdf">(Source)</a></div></div>
+            <div class="paratext" id="helloThere">
                 Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label. <br><br>
 
                 <table>
@@ -49,7 +51,7 @@ But before we could build such a visualization we faced a challenge—How does o
                         <th>Type of Fruit</th>
                         <th>Weight</th> 
                         <th>Cost</th>
-                        <th>Amount of Sugar per cup</th>
+                        <th>Sugar per cup</th>
 
                     </tr>
                     <tr>
@@ -78,10 +80,12 @@ But before we could build such a visualization we faced a challenge—How does o
                     </tr>
                 </table>
 
-
-                For example, consider the graphic on the right which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, images and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.  <br><br>
-
+<br>
+For example, consider the graphic on the right based on the above data which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, symbols and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.  
+<br><br><br>
 This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm developed by Geoffrey Hinton and Laurens van der Maaten which helps one to reduce the dimensionality of one’s data. It is popularly used to reduce high dimensionality data to a fewer number of dimensions, usually two or three, that enables one to draw scatterplots in which similar datum are placed in close proximity. 
+<br><br><br>
+This sort of dimensional reduction has been around for quite a while. One particularly popular method, PCA, has solved this sort of problem since 1901. However, t-SNE does something that may other schemes do not: it keeps maintains as much global and local structure as it can. As a result, the dimensional reduction is ideal for both clustering and visualization. This is done by explicitly trying to maintain the distance between points from before and after the algorithm has been applied.
             </div>
         </div>
         <div class="para"> 
@@ -113,12 +117,6 @@ Our t-SNE will reduce the number of dimensions to just two: which we will use as
 
             <div class="paratext" id="testseven">
                 There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie. 
-            </div>
-        </div>
-        <div class="para"> 
-            <div class="headline">Example 3</div>
-            <div class="paratext">
-                The goal of the project was to create a playful interactive experience that was interesting to a technical and non-technical audience alike. While cookie-cutter libraries for t-SNE visualizations exist, none of them provide mechanics for such interactions. Further, an interactive visualization of this scale (29,000 nodes) requires optimizations that would otherwise slow a browser down. A majority of the code for this visualization was this made from the ground-up and can hopefully be open sourced in the near-future for the good of the community. Some highlights— i. Canvas was chosen over SVGs because of superior performance at scale ii. Dual canvases, one of them a hidden canvas that implements interactions (since events cannot be bound to pixels in a bitmap) iii. Semantic zooming that enables easy viewing at a low zoom level and more granular view at high zoom levels iv. Mouse interactions for each node that reveal something about the underlying data
             </div>
         </div>
     </div>

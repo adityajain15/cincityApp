@@ -97,3 +97,6 @@ var awful = new Waypoint({
   }
 })
 
+d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop)
+d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop)
+

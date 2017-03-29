@@ -259,4 +259,6 @@ function makeResponsive(){
   d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
   width = canvas.property("width");
   height = canvas.property("height");
+  d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
+  d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
 } 
