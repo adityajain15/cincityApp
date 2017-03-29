@@ -20,29 +20,64 @@
         <div class="para"> 
             <div class="headline">Introduction</div>
             <div class="paratext">
-                There is something special happening in the digital sphere today, something that has its humble beginnings in the 80s as USENET—People, in large numbers, are coming together from different walks of life to form communities on the Internet based on what they like and the content they consume. <br><br>
-                        
-While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) <br><br>
-
-Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group can be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. <br><br>
-
-These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs.
+                As the internet becomes ubiquitous we are beginning to see the fruition of something that has its humble beginnings as USENET in the 80s; people from all walks of life are breaking barriers of the physical world and coming together on the internet to form large communities based on the ideas that resonate with them
+                        <br><br><br>
+While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) 
+<br><br><br>
+Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. 
+<br><br><br>
+These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs?
             </div>
         </div>
         <div class="para"> 
             <div class="headline">The Dataset</div>
             <div class="paratext">
-                MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world.Its 8 million users have collectively rated and reviewed thousands of movies present in its database. <br><br>
-
-It can be argued that a visualization of these ratings would be a good indicator of community taste, but before we can build such a visualization we face a challenge—How does one visually represent thousands of movies with each of them containing thousands of reviews?<br><br>
-
-In this blogpost we’re going to look at a technique called t-SNE that can help us visualize this data.
+                MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
+<br><br><br>
+In this blogpost we decided visualize this eclectic community of cinephiles. We wanted to build a visualization that would help us learn about the aesthetic taste of individuals behind this community, and reveal smaller cliques that are biased in favor of certain category of movies
+<br><br><br>
+But before we could build such a visualization we faced a challenge—How does one visually represent the relationship between thousands of users and the thousands of movies that they have rated? Lets take a look at a technique called t-SNE that can help us solve this problem.
             </div>
         </div>
         <div class="para"> 
             <div class="headline" id="helloThere">Introduction to t-SNEs</div>
             <div class="paratext">
                 Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label. <br><br>
+
+                <table>
+                    <tr>
+                        <th>Type of Fruit</th>
+                        <th>Weight</th> 
+                        <th>Cost</th>
+                        <th>Amount of Sugar per cup</th>
+
+                    </tr>
+                    <tr>
+                        <td>Banana</td>
+                        <td>0.3</td>
+                        <td>1</td>
+                        <td>17</td>
+                    </tr>
+                    <tr>
+                        <td>Pineapple</td>
+                        <td>1.9</td>
+                        <td>4</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>Apple</td>
+                        <td>0.4</td>
+                        <td>5</td>
+                        <td>9</td>
+                    </tr>
+                    <tr>
+                        <td>Orange</td>
+                        <td>0.4</td>
+                        <td>2</td>
+                        <td>23</td>
+                    </tr>
+                </table>
+
 
                 For example, consider the graphic on the right which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, images and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.  <br><br>
 
@@ -60,27 +95,24 @@ Our t-SNE will reduce the number of dimensions to just two: which we will use as
             </div>
         </div>
         <div class="para"> 
-            <div class="headline" id="testtwo">Test two</div>
+            <div class="headline" id="guidedHandle">Guided tour</div>
             <div class="paratext" id="testthree">
-                Whose woods these are I think I know. <br>  
-                His house is in the village though;   <br>
-                He will not see me stopping here   <br>
-                To watch his woods fill up with snow.  <br> 
-                <br>
-                My little horse must think it queer   <br>
-                To stop without a farmhouse near   <br>
-                Between the woods and frozen lake   <br>
-                The darkest evening of the year.   <br>
+                In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Somethings to keep in mind—our t-SNE only accepts movie ratings as an input. It is agnostic to meta data such genre and country of origin. 
+            </div>
+            <div class="paratext" id="testfour">
+                There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie. 
+            </div>
 
-                He gives his harness bells a shake   <br>
-                To ask if there is some mistake.   <br>
-                The only other sound’s the sweep   <br>
-                Of easy wind and downy flake.   <br>
+            <div class="paratext" id="testfive">
+                Since this is a dataset of cinephiles from all over the world, it is reasonable to expect that one could observe clusters of movies from different countries. Indeed,we observe many such clusters from countries with strong cinematic traditions such as Italy, Iran, India, Turkey and Japan. 
+            </div>
 
-                The woods are lovely, dark and deep, <br>   
-                But I have promises to keep,   <br>
-                And miles to go before I sleep,   <br>
-                And miles to go before I sleep.<br>
+            <div class="paratext" id="testsix">
+                Sometimes clusters form around cinematic time periods. One such cluster of short black-and-white movies from the 1900s in quite apparent
+            </div>
+
+            <div class="paratext" id="testseven">
+                There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie. 
             </div>
         </div>
         <div class="para"> 

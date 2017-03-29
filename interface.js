@@ -57,22 +57,24 @@ d3.selectAll(".labelButton").on("click",function(e){
   }
 });
 
-d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
+var scrollOffset = window.innerHeight / 5; 
+
+d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
 
 var waypoint = new Waypoint({
-  element: document.getElementById('helloThere'),
+  element: document.getElementById('guidedHandle'),
   handler: function(direction) {
     if(direction==='down'){
       d3.select("#canvasContainer").style('position','fixed');
-      d3.select("#canvasContainer").style('top','20px');
+      d3.select("#canvasContainer").style('top',scrollOffset+"px");
       //zoomToNode(movieList.getMovie(45068),500);
     }
     else if(direction==='up'){
       d3.select("#canvasContainer").style('position','absolute');
-      d3.select("#canvasContainer").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
+      d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
     }
   },
-  offset: 20 
+  offset: scrollOffset 
 })
 
 
@@ -87,11 +89,11 @@ var awful = new Waypoint({
     }
     else if(direction==='up'){
       d3.select("#canvasContainer").style('position','fixed');
-      d3.select("#canvasContainer").style('top','20px');
+      d3.select("#canvasContainer").style('top',scrollOffset+"px");
     }
   },
   offset: function(){
-    return document.getElementById('canvasContainer').clientHeight+20-this.element.clientHeight;
+    return document.getElementById('canvasContainer').clientHeight+scrollOffset-this.element.clientHeight;
   }
 })
 
