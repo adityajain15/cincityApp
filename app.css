@@ -266,7 +266,7 @@ canvas{
 }
 
 .paratext + .paratext{
-	margin-top: 50%;
+	margin-top: 40%;
 }
 
 .tooltip{
@@ -308,6 +308,8 @@ canvas{
 
 table{
 	    border: 3px solid black;
+	    margin-bottom: 40px;
+	    margin-top: 40px;
 }
 th{
 	    padding-right: 10px;

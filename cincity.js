@@ -154,6 +154,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
   searchNode = movieList.quadtree.find(mouseX-8,mouseY-8,8);
   if(searchNode!=undefined){
     hoverNode=movieList.getMovie(searchNode[2]);
+    console.log(hoverNode);
     if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3")){
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
@@ -204,6 +205,20 @@ function zoomToNode(movieNode,zoomLevel){
     .translate(width / 2, height / 2)
     .scale(zoomLevel)
     .translate(-movieNode.getX(),-movieNode.getY()));
+}
+
+function guidedZoom(movieNodes,zoomLevels,current=0){
+  if(current<movieNodes.length){
+    canvas.transition().delay(1000).duration(2500).call(zoom.transform, d3.zoomIdentity
+    .translate(width / 2, height / 2)
+    .scale(zoomLevels[current])
+    .translate(-movieNodes[current].getX(),-movieNodes[current].getY()))
+    .on("end",function(){guidedZoom(movieNodes,zoomLevels,current+1)});
+  }
+}
+
+function stopZoom(){
+  canvas.transition();
 }
 
 function getInfo(movieID,zoomFlag){
@@ -261,4 +276,5 @@ function makeResponsive(){
   height = canvas.property("height");
   d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
+  d3.select("#graph").style('top',document.getElementById('graphpara').getBoundingClientRect().top+document.body.scrollTop);
 } 

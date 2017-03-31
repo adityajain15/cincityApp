@@ -31,7 +31,7 @@ These insights are not only culturally significant, but also valuable from a bus
         </div>
         <div class="para"> 
             <div class="headline">The Dataset</div>
-            <div class="imageContainer" id="mubi"><img src="images/MUBI.png" class="images"></img><div class="imageCaption"><a href="http://www.mubi.com">(Source)</a></div></div>
+            <div class="imageContainer" id="mubi"><img src="images/MUBI.png" class="images"></img><div class="imageCaption"><a href="http://www.mubi.com" target="_blank">(Source)</a></div></div>
             <div class="paratext" id="mubiHeadline">
                 MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
 <br><br><br>
@@ -42,10 +42,10 @@ But before we could build such a visualization we faced a challenge—How does o
         </div>
         <div class="para"> 
             <div class="headline">Introduction to t-SNEs</div>
-            <div class="imageContainer" id="dreduction"><img src="images/dreduction.png" class="images"></img><div class="imageCaption">An example of a dimensionality reduction operation <a href="http://axon.cs.byu.edu/papers/gashler2011smc.pdf">(Source)</a></div></div>
-            <div class="paratext" id="helloThere">
-                Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label. <br><br>
-
+            <div class="imageContainer" id="dreduction"><img src="images/dreduction.png" class="images"></img><div class="imageCaption">An example of a dimensionality reduction operation <br><a href="http://axon.cs.byu.edu/papers/gashler2011smc.pdf" target="_blank">(Source)</a></div></div>
+            <div class="imageContainer" id="graph"><img src="images/graph.png" class="images"></img><div class="imageCaption">A graph that visualizes 4 dimensions. Sugar per cup is encoded as the size of an icon<br><a href="http://www.flaticon.com/authors/madebyoliver" target="_blank">(Cute SVG illustrations source)</a></div></div>
+            <div class="paratext" id="graphpara">
+                Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label.
                 <table>
                     <tr>
                         <th>Type of Fruit</th>
@@ -79,13 +79,12 @@ But before we could build such a visualization we faced a challenge—How does o
                         <td>23</td>
                     </tr>
                 </table>
-
-<br>
-For example, consider the graphic on the right based on the above data which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, symbols and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.  
-<br><br><br>
-This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm developed by Geoffrey Hinton and Laurens van der Maaten which helps one to reduce the dimensionality of one’s data. It is popularly used to reduce high dimensionality data to a fewer number of dimensions, usually two or three, that enables one to draw scatterplots in which similar datum are placed in close proximity. 
-<br><br><br>
-This sort of dimensional reduction has been around for quite a while. One particularly popular method, PCA, has solved this sort of problem since 1901. However, t-SNE does something that may other schemes do not: it keeps maintains as much global and local structure as it can. As a result, the dimensional reduction is ideal for both clustering and visualization. This is done by explicitly trying to maintain the distance between points from before and after the algorithm has been applied.
+                For example, consider the graphic on the right based on the above data which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, symbols and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.
+                </div>
+                <div class="paratext" id="helloThere">  
+                This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm developed by Geoffrey Hinton and Laurens van der Maaten which helps one to reduce the dimensionality of one’s data. It is popularly used to reduce high dimensionality data to a fewer number of dimensions, usually two or three, that enables one to draw scatterplots in which similar datum are placed in close proximity. 
+                <br><br><br>
+                This sort of dimensional reduction has been around for quite a while. One particularly popular method, PCA, has solved this sort of problem since 1901. However, t-SNE does something that may other schemes do not: it keeps maintains as much global and local structure as it can. As a result, the dimensional reduction is ideal for both clustering and visualization. This is done by explicitly trying to maintain the distance between points from before and after the algorithm has been applied.
             </div>
         </div>
         <div class="para"> 
@@ -99,24 +98,24 @@ Our t-SNE will reduce the number of dimensions to just two: which we will use as
             </div>
         </div>
         <div class="para"> 
-            <div class="headline" id="guidedHandle">Guided tour</div>
-            <div class="paratext" id="testthree">
+            <div class="headline">Guided tour</div>
+            <div class="paratext" id="guidedHandle">
                 In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Somethings to keep in mind—our t-SNE only accepts movie ratings as an input. It is agnostic to meta data such genre and country of origin. 
             </div>
-            <div class="paratext" id="testfour">
+            <div class="paratext" id="tour1">
                 There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie. 
             </div>
 
-            <div class="paratext" id="testfive">
+            <div class="paratext" id="tour2">
                 Since this is a dataset of cinephiles from all over the world, it is reasonable to expect that one could observe clusters of movies from different countries. Indeed,we observe many such clusters from countries with strong cinematic traditions such as Italy, Iran, India, Turkey and Japan. 
             </div>
 
-            <div class="paratext" id="testsix">
+            <div class="paratext" id="tour3">
                 Sometimes clusters form around cinematic time periods. One such cluster of short black-and-white movies from the 1900s in quite apparent
             </div>
 
-            <div class="paratext" id="testseven">
-                There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie. 
+            <div class="paratext" id="tour4">
+                It is observed that as we go from the left to the right the number of reviews of a movie increases; As a consequence, movies ingrained in pop culture stand out by themselves far away from the crowd. TODO:
             </div>
         </div>
     </div>
