@@ -52,12 +52,4 @@ It is observed that as we go from the left to the right the number of reviews of
 
 #Footer
 (There will be a footer here, with credits and perhaps a description of what Fast Forward does. I can also put in any marketing material that you would like)
-=======
-As the internet becomes ubiquitous we are beginning to see the fruition of something that has its humble beginnings as USENET in the 80s; people from all walks of life are breaking barriers of the physical world and coming together on the internet to form large communities based on the ideas that resonate with them
-                        <br><br><br>
-While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) 
-<br><br><br>
-Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. 
-<br><br><br>
-These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs?
->>>>>>> 3e7df4c4728d7fcfa4dd89920458a1900ac2d4aa
+
