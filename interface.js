@@ -59,134 +59,137 @@ d3.selectAll(".labelButton").on("click",function(e){
 
 var scrollOffset = window.innerHeight / 5; 
 
-d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
+window.onload = function(){
+  d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
+  d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
+  d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
+  d3.select("#graph").style('top',document.getElementById('graphpara').getBoundingClientRect().top+document.body.scrollTop);
 
-var canvasDown = new Waypoint({
-  element: document.getElementById('guidedHandle'),
-  handler: function(direction) {
-    if(direction==='down'){
-      d3.select("#canvasContainer").style('position','fixed');
-      d3.select("#canvasContainer").style('top',scrollOffset+"px");
+  var canvasDown = new Waypoint({
+    element: document.getElementById('guidedHandle'),
+    handler: function(direction) {
+      if(direction==='down'){
+        d3.select("#canvasContainer").style('position','fixed');
+        d3.select("#canvasContainer").style('top',scrollOffset+"px");
+      }
+      else if(direction==='up'){
+        d3.select("#canvasContainer").style('position','absolute');
+        d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
+      }
+    },
+    offset: scrollOffset 
+  })
+
+  var canvasUp = new Waypoint({
+    element: document.getElementById('outerHUD'),
+    handler: function(direction) {
+      if(direction==='down'){
+        d3.select("#canvasLabel").text("");
+        d3.select("#canvasContainer").style('position','absolute');
+        d3.select("#canvasContainer").style('top',document.getElementById('outerHUD').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
+
+      }
+      else if(direction==='up'){
+        d3.select("#canvasContainer").style('position','fixed');
+        d3.select("#canvasContainer").style('top',scrollOffset+"px");
+      }
+    },
+    offset: function(){
+      return document.getElementById('canvasContainer').clientHeight+scrollOffset-this.element.clientHeight;
     }
-    else if(direction==='up'){
-      d3.select("#canvasContainer").style('position','absolute');
-      d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
-    }
-  },
-  offset: scrollOffset 
-})
+  })
+
+  var tour1pointdown = new Waypoint({
+    element: document.getElementById('tour1'),
+    handler: function(direction){
+      if(direction==="down"){
+        d3.select("#tour1").style("border-right","3px solid #00dcec");
+        guidedZoom([movieList.getMovie(45068),movieList.getMovie(111345)],[500,589],"Showing a strong cluster of ",["Animation movies","Music videos"])
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
+  })
+
+  var tour1pointup = new Waypoint({
+    element: document.getElementById('tour1'),
+    handler: function(direction){
+      if(direction==="up"){
+        d3.select("#tour1").style("border-right","3px solid #00dcec");
+        d3.select("#tour2").style("border-right","none");
+        d3.select("#canvasLabel").text("");
+        document.getElementById("showCountries").checked = false;
+        document.getElementById("hideUnlabeled").checked = true;
+        stopZoom();
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour1').clientHeight
+  })
+
+  var tour2pointdown = new Waypoint({
+    element: document.getElementById('tour2'),
+    handler: function(direction){
+      if(direction==="down"){
+        guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800],"Showing a strong cluster of movies from ",["Poland","Turkey","India and South Korea","Japan and Lithuania","France, Mexico and Portugal","Iran"]);
+        d3.select("#tour1").style("border-right","none");
+        d3.select("#tour2").style("border-right","3px solid #00dcec");
+        document.getElementById("showCountries").checked = true;
+        document.getElementById("hideUnlabeled").checked = false;
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
+  })
+
+  var tour2pointup = new Waypoint({
+    element: document.getElementById('tour2'),
+    handler: function(direction){
+      if(direction==="up"){
+        d3.select("#tour2").style("border-right","3px solid #00dcec");
+        d3.select("#tour3").style("border-right","none");
+        document.getElementById("showCountries").checked = true;
+        document.getElementById("hideUnlabeled").checked = false;
+        stopZoom();
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour2').clientHeight
+  })
+
+  var tour3pointdown = new Waypoint({
+    element: document.getElementById('tour3'),
+    handler: function(direction){
+      if(direction==="down"){
+        d3.select("#tour2").style("border-right","none");
+        d3.select("#tour3").style("border-right","3px solid #00dcec");
+        document.getElementById("showCountries").checked = false;
+        document.getElementById("hideUnlabeled").checked = true;
+        guidedZoom([movieList.getMovie(93081)],[800],"Showing a strong cluster of short movies from the early 20th century",[""]);
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
+  })
+
+  var tour3pointup = new Waypoint({
+    element: document.getElementById('tour3'),
+    handler: function(direction){
+      if(direction==="up"){
+        d3.select("#tour3").style("border-right","3px solid #00dcec");
+        d3.select("#tour4").style("border-right","none");
+        stopZoom();
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour3').clientHeight
+  })
+
+  var sandbox = new Waypoint({
+    element: document.getElementById('sandbox'),
+    handler: function(direction){
+      if(direction==="down"){
+        d3.select("#canvasLabel").text("");
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
+  })
+}
 
 
 
-var canvasUp = new Waypoint({
-  element: document.getElementById('outerHUD'),
-  handler: function(direction) {
-    if(direction==='down'){
-      d3.select("#canvasLabel").text("");
-      d3.select("#canvasContainer").style('position','absolute');
-      d3.select("#canvasContainer").style('top',document.getElementById('outerHUD').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
-      
-    }
-    else if(direction==='up'){
-      d3.select("#canvasContainer").style('position','fixed');
-      d3.select("#canvasContainer").style('top',scrollOffset+"px");
-    }
-  },
-  offset: function(){
-    return document.getElementById('canvasContainer').clientHeight+scrollOffset-this.element.clientHeight;
-  }
-})
 
-var tour1pointdown = new Waypoint({
-  element: document.getElementById('tour1'),
-  handler: function(direction){
-    if(direction==="down"){
-      d3.select("#tour1").style("border-right","3px solid #00dcec");
-      guidedZoom([movieList.getMovie(45068),movieList.getMovie(111345)],[500,589],"Showing a strong cluster of ",["Animation movies","Music videos"])
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
-})
-
-var tour1pointup = new Waypoint({
-  element: document.getElementById('tour1'),
-  handler: function(direction){
-    if(direction==="up"){
-      d3.select("#tour1").style("border-right","3px solid #00dcec");
-      d3.select("#tour2").style("border-right","none");
-      d3.select("#canvasLabel").text("");
-      document.getElementById("showCountries").checked = false;
-      document.getElementById("hideUnlabeled").checked = true;
-      stopZoom();
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour1').clientHeight
-})
-
-var tour2pointdown = new Waypoint({
-  element: document.getElementById('tour2'),
-  handler: function(direction){
-    if(direction==="down"){
-      guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800],"Showing a strong cluster of movies from ",["Poland","Turkey","India and South Korea","Japan and Lithuania","France, Mexico and Portugal","Iran"]);
-      d3.select("#tour1").style("border-right","none");
-      d3.select("#tour2").style("border-right","3px solid #00dcec");
-      document.getElementById("showCountries").checked = true;
-      document.getElementById("hideUnlabeled").checked = false;
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
-})
-
-var tour2pointup = new Waypoint({
-  element: document.getElementById('tour2'),
-  handler: function(direction){
-    if(direction==="up"){
-      d3.select("#tour2").style("border-right","3px solid #00dcec");
-      d3.select("#tour3").style("border-right","none");
-      document.getElementById("showCountries").checked = true;
-      document.getElementById("hideUnlabeled").checked = false;
-      stopZoom();
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour2').clientHeight
-})
-
-var tour3pointdown = new Waypoint({
-  element: document.getElementById('tour3'),
-  handler: function(direction){
-    if(direction==="down"){
-      d3.select("#tour2").style("border-right","none");
-      d3.select("#tour3").style("border-right","3px solid #00dcec");
-      document.getElementById("showCountries").checked = false;
-      document.getElementById("hideUnlabeled").checked = true;
-      guidedZoom([movieList.getMovie(93081)],[800],"Showing a strong cluster of short movies from the early 20th century",[""]);
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
-})
-
-var tour3pointup = new Waypoint({
-  element: document.getElementById('tour3'),
-  handler: function(direction){
-    if(direction==="up"){
-      d3.select("#tour3").style("border-right","3px solid #00dcec");
-      d3.select("#tour4").style("border-right","none");
-      stopZoom();
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour3').clientHeight
-})
-
-var sandbox = new Waypoint({
-  element: document.getElementById('sandbox'),
-  handler: function(direction){
-    if(direction==="down"){
-      d3.select("#canvasLabel").text("");
-    }
-  },
-  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
-})
-
-d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
-d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
-d3.select("#graph").style('top',document.getElementById('graphpara').getBoundingClientRect().top+document.body.scrollTop);
