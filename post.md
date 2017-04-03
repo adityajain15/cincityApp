@@ -4,19 +4,15 @@ As the internet becomes ubiquitous we are beginning to see the fruition of somet
 
 While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) 
 
-Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. 
+Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs.
 
-These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs?
+In this post we are going to look at an interactive visualization that clusters movies together based on their ratings by a set of users. This visualization will give us a glimpse into the aesthetic tastes of a community of cinephiles. 
 
 # The Dataset
 
 MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
 
-
-In this blogpost we decided visualize this eclectic community of cinephiles. We wanted to build a visualization that would help us learn about the aesthetic taste of individuals behind this community, and reveal smaller cliques that are biased in favor of certain category of movies 
-
-
-But before we could build such a visualization we faced a challenge—How does one visually represent the relationship between thousands of users and the thousands of movies that they have rated? Lets take a look at a technique called t-SNE that can help us solve this problem.
+Once we obtain a dataset of movie ratings from this community, we'd like to create the visualization that we desire but before we can do that we face a challenge&#8212How does one visually represent the relationship between thousands of users and the thousands of movies that they have rated? Lets take a look at a technique called t-SNE that can help us solve this problem.
 
 # Introduction to t-SNEs
 
