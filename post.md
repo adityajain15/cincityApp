@@ -53,3 +53,23 @@ It is observed that as we go from the left to the right the number of reviews of
 # Footer
 (There will be a footer here, with credits and perhaps a description of what Fast Forward does. I can also put in any marketing material that you would like)
 
+
+# Grant's feedback on copy that I'm working on right now
+"I have some styling wording nitpicks that we can address another time. I want to focus on getting the main structure set up.
+## Introduction 
+Looks good, I would add a last paragraph that is very explicit about what this post is going to do show. (In this post we’ll look at how T-SNE can help us visualize movie data clusters…, something like that).
+## Dataset 
+looks good
+## Introduction to t-SNEs 
+good introduction, will be strong with the illustration in there
+## Process
+looks good, maybe we can go over with micha sometime to flesh it out a little more. I’d like to read the advantages of this approach versus others (trade-offs), why we did it this way. I wonder if there could be an illustration of the adjacency matrix to give people a better picture of what is going on?
+I think after the process section there should be another quick section called *The Visualization*  or something that is again just more explicit about what you’re going to show what is going on (these are movies clustered according to user ratings…). Mention that the coloring corresponds to genres. Then also be explicit that you are going to take them through a guided tour and then drop them into the sandbox where they can explore it on their own. And some instructions like you can zoom in and hover for info.
+##Guided Tour  
+is looking good, would be good to explicitly point out one or two genres that cluster. I would also be interested in seeing a director highlighted, where you could mention the popularity spectrum from left to right – and mention the technical reason for that (I’m not sure I understand the technical reason but we should nail it down).
+
+[10:22]  
+Then there should be another section letting them know they’re transitioning into the sandbox and suggesting some methods of exploration they could try out.
+
+[10:24]  
+So it basically boils down to being more explicit about what you’re showing/going to show (which is the type of stuff you generally add in at this point in the process). Once you have the structure finished out then we can go over more nitpicky stuff for the finishing touches. 
