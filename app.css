@@ -243,6 +243,12 @@ canvas{
 	top: 20px;
 }
 
+#canvasLabel{
+	text-align: center;
+	font-family: ChambersSansOT;
+	opacity: 0;
+}
+
 #textContainer{
 	width: 40%;
 	margin-top: 5%;

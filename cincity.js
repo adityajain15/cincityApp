@@ -207,13 +207,28 @@ function zoomToNode(movieNode,zoomLevel){
     .translate(-movieNode.getX(),-movieNode.getY()));
 }
 
-function guidedZoom(movieNodes,zoomLevels,current=0){
+function guidedZoom(movieNodes,zoomLevels,description,labels,current=0){
   if(current<movieNodes.length){
-    canvas.transition().delay(1000).duration(2500).call(zoom.transform, d3.zoomIdentity
+
+    canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
     .translate(width / 2, height / 2)
     .scale(zoomLevels[current])
-    .translate(-movieNodes[current].getX(),-movieNodes[current].getY()))
-    .on("end",function(){guidedZoom(movieNodes,zoomLevels,current+1)});
+    .translate(-movieNodes[current].getX(),-movieNodes[current].getY()));
+
+    d3.select("#canvasLabel")
+      .transition()
+      .duration(500)
+      .style("opacity",0)
+      .ease(d3.easeLinear)
+      .on("end",function(){
+        d3.select(this)
+        .text(description+labels[current])
+        .transition()
+        .duration(2500)
+        .style("opacity",1)
+        .ease(d3.easeLinear)
+        .on("end",function(){guidedZoom(movieNodes,zoomLevels,description,labels,current+1)});
+      });
   }
 }
 

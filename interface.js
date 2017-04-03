@@ -101,7 +101,7 @@ var tour1pointdown = new Waypoint({
   handler: function(direction){
     if(direction==="down"){
       d3.select("#tour1").style("border-right","3px solid #00dcec");
-      guidedZoom([movieList.getMovie(45068),movieList.getMovie(111345)],[500,589]);
+      guidedZoom([movieList.getMovie(45068),movieList.getMovie(111345)],[500,589],"Showing a strong cluster of ",["Animation movies","Music videos"])
     }
   },
   offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
@@ -113,6 +113,7 @@ var tour1pointup = new Waypoint({
     if(direction==="up"){
       d3.select("#tour1").style("border-right","3px solid #00dcec");
       d3.select("#tour2").style("border-right","none");
+      d3.select("#canvasLabel").text("");
       document.getElementById("showCountries").checked = false;
       document.getElementById("hideUnlabeled").checked = true;
       stopZoom();
@@ -125,7 +126,7 @@ var tour2pointdown = new Waypoint({
   element: document.getElementById('tour2'),
   handler: function(direction){
     if(direction==="down"){
-      guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800]);
+      guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800],"Showing a strong cluster of movies from ",["Poland","Turkey","India, South Korea and Lithuania","Japan","France, Mexico and Portugal","Iran"]);
       d3.select("#tour1").style("border-right","none");
       d3.select("#tour2").style("border-right","3px solid #00dcec");
       document.getElementById("showCountries").checked = true;
@@ -157,7 +158,7 @@ var tour3pointdown = new Waypoint({
       d3.select("#tour3").style("border-right","3px solid #00dcec");
       document.getElementById("showCountries").checked = false;
       document.getElementById("hideUnlabeled").checked = true;
-      guidedZoom([movieList.getMovie(93081)],[800]);
+      guidedZoom([movieList.getMovie(93081)],[800],"Showing a strong cluster of short movies from the early 20th century",[""]);
     }
   },
   offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
