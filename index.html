@@ -25,20 +25,17 @@
                         <br><br><br>
 While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) 
 <br><br><br>
-Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. 
+Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs.
 <br><br><br>
-These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs?
-            </div>
+In this post we are going to look at an interactive visualization that clusters movies together based on their ratings by a set of users. This visualization will give us a glimpse into the aesthetic tastes of a community of cinephiles.             </div>
         </div>
         <div class="para"> 
             <div class="headline">The Dataset</div>
             <div class="imageContainer" id="mubi"><img src="images/MUBI.png" class="images"></img><div class="imageCaption"><a href="http://www.mubi.com" target="_blank">(Source)</a></div></div>
             <div class="paratext" id="mubiHeadline">
-                MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
+MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
 <br><br><br>
-In this blogpost we decided visualize this eclectic community of cinephiles. We wanted to build a visualization that would help us learn about the aesthetic taste of individuals behind this community, and reveal smaller cliques that are biased in favor of certain category of movies
-<br><br><br>
-But before we could build such a visualization we faced a challenge—How does one visually represent the relationship between thousands of users and the thousands of movies that they have rated? Lets take a look at a technique called t-SNE that can help us solve this problem.
+Once we obtain a dataset of movie ratings from this community, we'd like to create the visualization that we desire but before we can do that we face a challenge&#8212How does one visually represent the relationship between thousands of users and the thousands of movies that they have rated? Lets take a look at a technique called t-SNE that can help us solve this problem.
             </div>
         </div>
         <div class="para"> 
@@ -99,9 +96,19 @@ Our t-SNE will reduce the number of dimensions to just two: which we will use as
             </div>
         </div>
         <div class="para"> 
-            <div class="headline">Guided tour</div>
+            <div class="headline">The Visualization</div>
             <div class="paratext" id="guidedHandle">
-                In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Somethings to keep in mind—our t-SNE only accepts movie ratings as an input. It is agnostic to meta data such genre and country of origin. 
+                Without further ado, here is what our visualization looks like.<br><br>
+
+Each movie in the visualization is represented as square and the color of the square represents the movie's genre. The position of each square is determined by the t-SNE algorithm which only takes movie ratings by users as an input; the algorithm is agnostic to the metadata of the movie itself such as genre, director and year of release. <br><br>
+
+You can zoom into the visualization to get a more granular view of the clusters and hovering over a movie will give you more information about the movie (but you'll get a chance for a deeper dive in the sandbox section) 
+            </div>
+        </div>
+        <div class="para"> 
+            <div class="headline">Guided tour</div>
+            <div class="paratext">
+                In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Scroll along to trigger zoom interactions that will lead you to interesting parts of the visualization!
             </div>
             <div class="paratext" id="tour1">
                 There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie. 
@@ -119,8 +126,14 @@ Our t-SNE will reduce the number of dimensions to just two: which we will use as
                 It is observed that as we go from the left to the right the number of reviews of a movie increases; As a consequence, movies ingrained in pop culture stand out by themselves far away from the crowd. TODO:
             </div>
         </div>
+        <div class="para"> 
+            <div class="headline" id="sandbox">Sandbox</div>
+            <div class="paratext">
+                Time to get your hands dirty in the sandbox! You can play around with different settings to turn different genres on/off or search for your favorite movie. You can also click a movie to view some more information about it
+            </div>
+        </div>
     </div>
-
+    
     <div id="canvasContainer">
         <canvas id="mainCanvas"></canvas>
         <div class="tooltip">

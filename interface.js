@@ -82,6 +82,7 @@ var canvasUp = new Waypoint({
   element: document.getElementById('outerHUD'),
   handler: function(direction) {
     if(direction==='down'){
+      d3.select("#canvasLabel").text("");
       d3.select("#canvasContainer").style('position','absolute');
       d3.select("#canvasContainer").style('top',document.getElementById('outerHUD').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
       
@@ -126,7 +127,7 @@ var tour2pointdown = new Waypoint({
   element: document.getElementById('tour2'),
   handler: function(direction){
     if(direction==="down"){
-      guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800],"Showing a strong cluster of movies from ",["Poland","Turkey","India, South Korea and Lithuania","Japan","France, Mexico and Portugal","Iran"]);
+      guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800],"Showing a strong cluster of movies from ",["Poland","Turkey","India and South Korea","Japan and Lithuania","France, Mexico and Portugal","Iran"]);
       d3.select("#tour1").style("border-right","none");
       d3.select("#tour2").style("border-right","3px solid #00dcec");
       document.getElementById("showCountries").checked = true;
@@ -176,7 +177,15 @@ var tour3pointup = new Waypoint({
   offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour3').clientHeight
 })
 
-
+var sandbox = new Waypoint({
+  element: document.getElementById('sandbox'),
+  handler: function(direction){
+    if(direction==="down"){
+      d3.select("#canvasLabel").text("");
+    }
+  },
+  offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
+})
 
 d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
 d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);

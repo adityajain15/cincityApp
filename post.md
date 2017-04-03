@@ -33,9 +33,16 @@ This matrix can be transposed to yield a matrix where each row represents a movi
 
 Our t-SNE will reduce the number of dimensions to just two: which we will use as x-y coordinates for an interactive scatterplot.
 
+# The Visualization
+Without further ado, here is what our visualization looks like.
+
+Each movie in the visualization is represented as square and the color of the square represents the movie's genre. The position of each square is determined by the t-SNE algorithm which only takes movie ratings by users as an input; the algorithm is agnostic to the metadata of the movie itself such as genre, director and year of release. 
+
+You can zoom into the visualization to get a more granular view of the clusters and hovering over a movie will give you more information about the movie (but you'll get a chance for a deeper dive in the sandbox section) 
+
 # Guided Tour
 
-In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Somethings to keep in mind—our t-SNE only accepts movie ratings as an input. It is agnostic to meta data such genre and country of origin.
+In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Scroll along to trigger zoom interactions that will lead you to interesting parts of the visualization!
 
 There are some genres in the visualization that show strong clustering. Clusters of movies of the same genre or same country of origin usually indicates a subset of users affinity towards that particular type of movie.
 
@@ -44,6 +51,10 @@ Since this is a dataset of cinephiles from all over the world, it is reasonable 
 Sometimes clusters form around cinematic time periods. One such cluster of short black-and-white movies from the 1900s in quite apparent
 
 It is observed that as we go from the left to the right the number of reviews of a movie increases; As a consequence, movies ingrained in pop culture stand out by themselves far away from the crowd. 
+
+# Sandbox
+
+Time to get your hands dirty in the sandbox! You can play around with different settings to turn different genres on/off or search for your favorite movie. You can also click a movie to view some more information about it
 
 
 # Footer

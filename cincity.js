@@ -210,7 +210,7 @@ function zoomToNode(movieNode,zoomLevel){
 function guidedZoom(movieNodes,zoomLevels,description,labels,current=0){
   if(current<movieNodes.length){
 
-    canvas.transition().duration(2500).call(zoom.transform, d3.zoomIdentity
+    canvas.transition().duration(3500).call(zoom.transform, d3.zoomIdentity
     .translate(width / 2, height / 2)
     .scale(zoomLevels[current])
     .translate(-movieNodes[current].getX(),-movieNodes[current].getY()));
@@ -224,7 +224,7 @@ function guidedZoom(movieNodes,zoomLevels,description,labels,current=0){
         d3.select(this)
         .text(description+labels[current])
         .transition()
-        .duration(2500)
+        .duration(3500)
         .style("opacity",1)
         .ease(d3.easeLinear)
         .on("end",function(){guidedZoom(movieNodes,zoomLevels,description,labels,current+1)});
