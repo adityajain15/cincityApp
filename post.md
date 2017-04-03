@@ -1,4 +1,4 @@
-#Introduction
+# Introduction
 
 As the internet becomes ubiquitous we are beginning to see the fruition of something that has its humble beginnings as USENET in the 80s; people from all walks of life are breaking barriers of the physical world and coming together on the internet to form large communities based on the ideas that resonate with them
 
@@ -8,7 +8,7 @@ Defining such relationships enables us to gain cultural insight into the communi
 
 These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs?
 
-#The Dataset
+# The Dataset
 
 MUBI is an online service that integrates a subscription video-on-demand service with a massive database. The service has a truly diverse selection of content from underground cult classics to Tarantino blockbusters that attracts cinephiles from all over the world. Its 8 million users have collectively rated and reviewed thousands of movies present in its database. 
 
@@ -18,7 +18,7 @@ In this blogpost we decided visualize this eclectic community of cinephiles. We 
 
 But before we could build such a visualization we faced a challenge—How does one visually represent the relationship between thousands of users and the thousands of movies that they have rated? Lets take a look at a technique called t-SNE that can help us solve this problem.
 
-#Introduction to t-SNEs
+# Introduction to t-SNEs
 
 Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label.
 
@@ -30,14 +30,14 @@ This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embe
 
 This sort of dimensional reduction has been around for quite a while. One particularly popular method, PCA, has solved this sort of problem since 1901. However, t-SNE does something that may other schemes do not: it keeps maintains as much global and local structure as it can. As a result, the dimensional reduction is ideal for both clustering and visualization. This is done by explicitly trying to maintain the distance between points from before and after the algorithm has been applied.
 
-#Process
+# Process
 For the purpose of this blogpost we selected a subset of users who had rated at least 20 movies. An adjacency matrix can be constructed for this subset of users, where each row is a user and each column is a user’s rating for a particular movie. 
 
 This matrix can be transposed to yield a matrix where each row represents a movie, and each column represents the various ratings for that movie. This is the matrix that will serve as our t-SNE’s input. 
 
 Our t-SNE will reduce the number of dimensions to just two: which we will use as x-y coordinates for an interactive scatterplot.
 
-#Guided Tour
+# Guided Tour
 
 In this section we’ll give you a guided tour through some interesting trends that we can observe in our visualization. Somethings to keep in mind—our t-SNE only accepts movie ratings as an input. It is agnostic to meta data such genre and country of origin.
 
@@ -50,6 +50,6 @@ Sometimes clusters form around cinematic time periods. One such cluster of short
 It is observed that as we go from the left to the right the number of reviews of a movie increases; As a consequence, movies ingrained in pop culture stand out by themselves far away from the crowd. 
 
 
-#Footer
+# Footer
 (There will be a footer here, with credits and perhaps a description of what Fast Forward does. I can also put in any marketing material that you would like)
 
