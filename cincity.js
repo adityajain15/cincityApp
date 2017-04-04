@@ -55,8 +55,6 @@ d3.queue()
   .defer(d3.json, 'babyList.json')
   .await(makeList);
 
-var joke=0;
-
 function makeList(error, movieJSON,metaJSON){
   movieJSON["movie_ids"].forEach(function(movieID, point){
     movieObject = new Movie(movieID, movieJSON["movie_tsne"][point][0], movieJSON["movie_tsne"][point][1]);
@@ -292,4 +290,5 @@ function makeResponsive(){
   d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#graph").style('top',document.getElementById('graphpara').getBoundingClientRect().top+document.body.scrollTop);
+  d3.select("#admatrix").style('top',document.getElementById('process').getBoundingClientRect().top+document.body.scrollTop);
 } 

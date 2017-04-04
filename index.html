@@ -87,7 +87,8 @@ Once we obtain a dataset of movie ratings from this community, we'd like to crea
         </div>
         <div class="para"> 
             <div class="headline">Process</div>
-            <div class="paratext">
+            <div class="imageContainer" id="admatrix"><img src="images/adjmatrix.png" class="images"></img><div class="imageCaption">A matrix with m number of columns and n number of rows</div></div>
+            <div class="paratext" id="process">
                 For the purpose of this blogpost we selected a subset of users who had rated at least 20 movies. An adjacency matrix can be constructed for this subset of users, where each row is a user and each column is a user’s rating for a particular movie. <br><br>
 
 This matrix can be transposed to yield a matrix where each row represents a movie, and each column represents the various ratings for that movie. This is the matrix that will serve as our t-SNE’s input. <br><br>
