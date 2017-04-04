@@ -351,3 +351,36 @@ td{
 	margin-top: 10px;
 	font-family: ChambersSansOT;
 }
+
+footer{
+	width: 100%;
+	background-color:black;
+	color: white;
+	font-family: ChambersSansOT;
+    font-size: 18px;
+}
+
+#footWrapper{
+	width: 75%;
+	margin-right: auto;
+	margin-left: auto;
+	padding-bottom: 30px;
+    padding-top: 30px;
+}
+
+.footBox{
+	display: inline-block;
+	width: 20%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.footerHeadline{
+	font-size: 22px;
+	color: #00dcec;
+}
+
+.aboutBox{
+	display: inline-block;
+	width: 55%;
+}
