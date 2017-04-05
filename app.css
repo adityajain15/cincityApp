@@ -54,25 +54,25 @@ table {
 
 @font-face {
   font-family: "SeravekWebBasic";
-  src: url("Fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.eot?#iefix") format("embedded-opentype"), url("Fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.woff2") format("woff2"), url("Fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.woff") format("woff");
+  src: url("fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.eot?#iefix") format("embedded-opentype"), url("fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.woff2") format("woff2"), url("fonts/SeravekWebBasicRegular/SeravekWebBasicRegular.woff") format("woff");
   font-weight: 400;
   font-style: normal; }
 /* Seravek Web Basic Regular Italic */
 @font-face {
   font-family: "SeravekWebBasicRegularItalic";
-  src: url("Fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.eot?#iefix") format("embedded-opentype"), url("Fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.woff2") format("woff2"), url("Fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.woff") format("woff");
+  src: url("fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.eot?#iefix") format("embedded-opentype"), url("fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.woff2") format("woff2"), url("fonts/SeravekWebBasicRegularItalic/SeravekWebBasicRegularItalic.woff") format("woff");
   font-weight: 400;
   font-style: italic; }
 /* Seravek Web Basic Bold */
 @font-face {
   font-family: "SeravekWebBasicBold";
-  src: url("Fonts/SeravekWebBasicBold/SeravekWebBasicBold.eot?#iefix") format("embedded-opentype"), url("Fonts/SeravekWebBasicBold/SeravekWebBasicBold.woff2") format("woff2"), url("Fonts/SeravekWebBasicBold/SeravekWebBasicBold.woff") format("woff");
+  src: url("fonts/SeravekWebBasicBold/SeravekWebBasicBold.eot?#iefix") format("embedded-opentype"), url("fonts/SeravekWebBasicBold/SeravekWebBasicBold.woff2") format("woff2"), url("fonts/SeravekWebBasicBold/SeravekWebBasicBold.woff") format("woff");
   font-weight: 700;
   font-style: normal; }
 /* Seravek Web Basic Bold Italic */
 @font-face {
   font-family: "SeravekWebBasicBoldItalic";
-  src: url("Fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.eot?#iefix") format("embedded-opentype"), url("Fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.woff2") format("woff2"), url("Fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.woff") format("woff");
+  src: url("fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.eot?#iefix") format("embedded-opentype"), url("fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.woff2") format("woff2"), url("fonts/SeravekWebBasicBoldItalic/SeravekWebBasicBoldItalic.woff") format("woff");
   font-weight: 700;
   font-style: italic; }
 
