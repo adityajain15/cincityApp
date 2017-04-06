@@ -4,6 +4,11 @@
   <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:site" content="@FastForwardLabs">
+    <meta name="twitter:title" content="Visualizing ">
+    <meta name="twitter:description" content="NEWARK - The guest list and parade of limousines with celebrities emerging from them seemed more suited to a red carpet event in Hollywood or New York than than a gritty stretch of Sussex Avenue near the former site of the James M. Baxter Terrace public housing project here.">
+    <meta name="twitter:image" content="http://graphics8.nytimes.com/images/2012/02/19/us/19whitney-span/19whitney-span-articleLarge.jpg">
     <link rel="stylesheet" type="text/css" href="app.css">
     <link rel="shortcut icon" type="image/png" href="favicon.png"/>
 	<script src="http://d3js.org/d3.v4.min.js"></script>
@@ -16,6 +21,7 @@
     <title>Cincity</title>
   </head>
   <body>
+    <div class="coverImageWrapper"><img src="images/Cover.png" class="coverImage"><span id="coverTitle">dude this is a cool article you should read it</span></img></div>
     <div id="textContainer">
         <div class="para"> 
             <div class="headline">Introduction</div>
@@ -40,7 +46,7 @@ In this post we are going to look at an interactive visualization that clusters 
         <div class="para"> 
             <div class="headline">Introduction to t-SNEs</div>
             <div class="imageContainer" id="dreduction"><img src="images/dreduction.png" class="images"></img><div class="imageCaption">An example of a dimensionality reduction operation <br><a href="http://axon.cs.byu.edu/papers/gashler2011smc.pdf" target="_blank">(Source)</a></div></div>
-            <div class="imageContainer" id="graph"><img src="images/graph.png" class="images"></img><div class="imageCaption">A graph that visualizes 4 dimensions. Sugar per cup is encoded as the size of an icon<br><a href="http://www.flaticon.com/authors/madebyoliver" target="_blank">(Cute SVG illustrations source)</a></div></div>
+            <div class="imageContainer" id="graph"><img src="images/graph.png" class="images specialImage"></img><div class="imageCaption">A graph that visualizes 4 dimensions. Sugar per cup is encoded as the size of an icon<br><a href="http://www.flaticon.com/authors/madebyoliver" target="_blank">(Cute SVG illustrations source)</a></div></div>
                 <p class="paragraphText" id="graphpara">Data-Visualization designers use a number of techniques and tricks to visualize the difference between two datums in a dataset. Datum can be sized as larger/smaller geometrical shapes depending on a quantifiable dimension, and can be assigned a color from a set of colors to signify a label.<p>
                 <table>
                     <tr>
@@ -51,26 +57,26 @@ In this post we are going to look at an interactive visualization that clusters 
 
                     </tr>
                     <tr>
-                        <td>Banana</td>
-                        <td>0.3</td>
-                        <td>1</td>
-                        <td>17</td>
+                        <td>Watermelon</td>
+                        <td>280</td>
+                        <td>13.50</td>
+                        <td>18</td>
                     </tr>
                     <tr>
-                        <td>Pineapple</td>
-                        <td>1.9</td>
-                        <td>4</td>
-                        <td>9</td>
+                        <td>Strawberry</td>
+                        <td>7</td>
+                        <td>2</td>
+                        <td>7</td>
                     </tr>
                     <tr>
-                        <td>Apple</td>
-                        <td>0.4</td>
+                        <td>Strawberry</td>
                         <td>5</td>
-                        <td>9</td>
+                        <td>1</td>
+                        <td>7</td>
                     </tr>
                     <tr>
                         <td>Orange</td>
-                        <td>0.4</td>
+                        <td>131</td>
                         <td>2</td>
                         <td>23</td>
                     </tr>
@@ -85,7 +91,7 @@ In this post we are going to look at an interactive visualization that clusters 
         </div>
         <div class="para"> 
             <div class="headline">Process</div>
-            <div class="imageContainer" id="admatrix"><img src="images/adjmatrix.png" class="images"></img><div class="imageCaption">A matrix with m number of columns and n number of rows. <br>Notice that not all users rate every movie</div></div>
+            <div class="imageContainer" id="admatrix"><img src="images/adjmatrix.png" class="images specialImage"></img><div class="imageCaption">A matrix with m number of columns and n number of rows. <br>Notice that not all users rate every movie</div></div>
             <p class="paragraphText" id="process">
                 For the purpose of this blogpost we selected a subset of users who had rated at least 20 movies. An adjacency matrix can be constructed for this subset of users, where each row is a user and each column is a user’s rating for a particular movie.</p>
 <p class="paragraphText">
@@ -252,7 +258,7 @@ You can zoom into the visualization to get a more granular view of the clusters 
         <div class="footBox">
             <span class="footerHeadline">Thanks to</span>
             <div><span>Grant Custer</span><a href="https://twitter.com/GrantCuster"><div class="logoContainer"><img class="twitlogo" src="images/twitter.png"></img></div></a></div>
-            <p>The MUBI Team</p>
+            <span>The MUBI Team</span>
         </div>
         <div class="aboutBox">
             <span class="footerHeadline">About us</span><br>
@@ -262,5 +268,5 @@ You can zoom into the visualization to get a more granular view of the clusters 
     </div>
   </footer>
   </body>
-  
+  <script type="text/javascript" src="googleanal.js"></script>
 </html>
