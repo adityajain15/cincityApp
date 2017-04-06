@@ -60,6 +60,7 @@ d3.selectAll(".labelButton").on("click",function(e){
 var scrollOffset = window.innerHeight / 5; 
 
 window.onload = function(){
+  d3.select("#canvasContainer").style('display','block');
   d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
