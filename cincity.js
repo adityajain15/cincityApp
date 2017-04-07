@@ -16,7 +16,7 @@ stats.domElement.style.top = '0px';
 document.getElementById("canvasContainer").appendChild( stats.domElement );
 
 var zoom = d3.zoom()
-    .scaleExtent([1, 800])
+    .scaleExtent([1, 5800])
     .on("zoom", zoomed);
 
 zoom.on('end',function(){
@@ -51,7 +51,7 @@ var colorList = new LinkedList();
 colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"#D3D3D3");
 
 d3.queue()
-  .defer(d3.json, 'movie_user_tsne.json')
+  .defer(d3.json, 'movie_user_tsne_alt.json')
   .defer(d3.json, 'babyList.json')
   .await(makeList);
 
@@ -91,7 +91,7 @@ function makeList(error, movieJSON,metaJSON){
   zoom.translateBy(canvas, 150, 200);
   window.requestAnimationFrame(drawPoints);
 }
-
+var countMovies=0;
 //canvas draws itself
 function drawPoints() {
   stats.begin();
@@ -117,6 +117,8 @@ function drawPoints() {
     mainContext.stroke();
   }
   stats.end();
+  console.log("Number of movs "+countMovies);
+  countMovies=0;
   window.requestAnimationFrame(drawPoints);
 }
 
@@ -128,6 +130,7 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
     return;
   }
+  countMovies+=1;
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
   }
