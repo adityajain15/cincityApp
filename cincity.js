@@ -89,7 +89,7 @@ function makeList(error, movieJSON,metaJSON){
 
   zoomed();
   zoom.translateBy(canvas, 150, 200);
-  console.log("Done")
+  d3.select(".loadingBar").style("display","none");
   window.requestAnimationFrame(drawPoints);
 }
 //canvas draws itself
