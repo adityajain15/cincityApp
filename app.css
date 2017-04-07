@@ -11,10 +11,6 @@ a:visited{
 	color:gray;
 }
 
-html{
-	line-height: 1.5;
-}
-
 html, body, div, span, applet, object, iframe,
 h1, h2, h3, h4, h5, h6, p, blockquote, pre,
 a, abbr, acronym, address, big, cite, code,
@@ -98,6 +94,10 @@ table {
 @font-face{
 	font-family: ChambersSansOT;
     src: url(fonts/ChambersSansOT.otf);
+}
+
+html{
+	line-height: 1.5;
 }
 
 .coverImage{
@@ -330,6 +330,7 @@ canvas{
 
 #canvasLabel{
 	text-align: center;
+	margin-top: 10px;
 	font-family: ChambersSansOT;
 	opacity: 0;
 }
