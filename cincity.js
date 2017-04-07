@@ -16,7 +16,7 @@ stats.domElement.style.top = '0px';
 document.getElementById("canvasContainer").appendChild( stats.domElement );
 
 var zoom = d3.zoom()
-    .scaleExtent([1, 5800])
+    .scaleExtent([1, 800])
     .on("zoom", zoomed);
 
 zoom.on('end',function(){
@@ -51,7 +51,7 @@ var colorList = new LinkedList();
 colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c","#fdbf6f","#ff7f00","#cab2d6","#6a3d9a","#ffff99","#b15928"],"#D3D3D3");
 
 d3.queue()
-  .defer(d3.json, 'movie_user_tsne_alt.json')
+  .defer(d3.json, 'movie_user_tsne.json')
   .defer(d3.json, 'babyList.json')
   .await(makeList);
 
@@ -91,7 +91,6 @@ function makeList(error, movieJSON,metaJSON){
   zoom.translateBy(canvas, 150, 200);
   window.requestAnimationFrame(drawPoints);
 }
-var countMovies=0;
 //canvas draws itself
 function drawPoints() {
   stats.begin();
@@ -117,8 +116,6 @@ function drawPoints() {
     mainContext.stroke();
   }
   stats.end();
-  console.log("Number of movs "+countMovies);
-  countMovies=0;
   window.requestAnimationFrame(drawPoints);
 }
 
@@ -127,10 +124,9 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   if(transformedPoints[0]>width||transformedPoints[0]<0||transformedPoints[1]>height||transformedPoints[1]<0){
     return;
   }
-  if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"){
+  if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"&&notInSimilarLines(movieIndex)){
     return;
   }
-  countMovies+=1;
   if(movieList.getMainColor(movieIndex)!=undefined){
     mainContext.fillStyle = movieList.getMainColor(movieIndex);
   }
@@ -143,6 +139,16 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   }
 }
 
+function notInSimilarLines(movieIndex){
+
+  for (var i = 0, len = similarLines.length; i < len; i++){
+
+    if(similarLines[i].getID()==movieIndex){
+      return false;
+    }
+  }
+  return true;
+}
 
 document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
   var mouseX = e.layerX;
@@ -156,7 +162,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
   if(searchNode!=undefined){
     hoverNode=movieList.getMovie(searchNode[2]);
     console.log(hoverNode);
-    if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3")){
+    if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3"&&notInSimilarLines(searchNode[2]))){
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")
@@ -208,13 +214,18 @@ function zoomToNode(movieNode,zoomLevel){
     .translate(-movieNode.getX(),-movieNode.getY()));
 }
 
-function guidedZoom(movieNodes,zoomLevels,description,labels,current=0){
+function guidedZoom(movieNodes,zoomLevels,description,labels,similarNodes=[],current=0){
   if(current<movieNodes.length){
 
     canvas.transition().duration(3500).call(zoom.transform, d3.zoomIdentity
     .translate(width / 2, height / 2)
     .scale(zoomLevels[current])
     .translate(-movieNodes[current].getX(),-movieNodes[current].getY()));
+
+    if(!(similarNodes.length==0)){
+      similarNodeOrigin = similarNodes[current];
+      similarLines = movieList.getSimilarMovies(similarNodes[current]);
+    }
 
     d3.select("#canvasLabel")
       .transition()
@@ -228,7 +239,7 @@ function guidedZoom(movieNodes,zoomLevels,description,labels,current=0){
         .duration(3500)
         .style("opacity",1)
         .ease(d3.easeLinear)
-        .on("end",function(){guidedZoom(movieNodes,zoomLevels,description,labels,current+1)});
+        .on("end",function(){guidedZoom(movieNodes,zoomLevels,description,labels,similarNodes,current+1)});
       });
   }
 }

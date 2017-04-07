@@ -50,7 +50,7 @@ Since this is a dataset of cinephiles from all over the world, it is reasonable 
 
 Sometimes clusters form around cinematic time periods. One such cluster of short black-and-white movies from the 1900s in quite apparent
 
-It is observed that as we go from the left to the right the number of reviews of a movie increases; As a consequence, movies ingrained in pop culture stand out by themselves far away from the crowd. 
+It is observed that as we go from the left to the right the number of reviews of a movie increases; As a consequence, movies ingrained in pop culture stand out by themselves, far away from the crowd. Similarly filmographies of popular directors, denoted by a web of lines in the visualization, such as Quentin Tarantino or Stanley Kubrick tend to reside towards the right side of the visualization.
 
 # Sandbox
 

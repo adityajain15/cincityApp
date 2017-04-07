@@ -125,6 +125,7 @@ table {
 	margin-right: auto;
 	margin-left: auto;
 	display: inline-block;
+	text-align: center;
 	width: 60%;
 	position: absolute;
   	left: 50%;
@@ -361,6 +362,7 @@ canvas{
 	font-family: SeravekWebBasic;
     font-size: 18px;
     line-height: 1.3;
+    padding-right: 10px;
 }
 
 .guidedText + .guidedText{

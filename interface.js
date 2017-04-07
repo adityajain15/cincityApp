@@ -43,7 +43,6 @@ d3.selectAll(".labelButton").on("click",function(e){
       d3.select(this).attr("selected","true");
       d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
       movieList.updateColors();
-      //drawPoints();
     }
     else{
       //when over 12 elements
@@ -61,13 +60,14 @@ var scrollOffset = window.innerHeight / 5;
 
 window.onload = function(){
   d3.select("#canvasContainer").style('display','block');
+  d3.select("#canvasLabel").style('width',document.getElementById('mainCanvas').width);
   d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#dreduction").style('top',document.getElementById('helloThere').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#mubi").style('top',document.getElementById('mubiHeadline').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#graph").style('top',document.getElementById('graphpara').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#admatrix").style('top',document.getElementById('process').getBoundingClientRect().top+document.body.scrollTop);
 
-  var canvasDown = new Waypoint({
+  var canvasTop = new Waypoint({
     element: document.getElementById('guidedHandle'),
     handler: function(direction) {
       if(direction==='down'){
@@ -82,11 +82,15 @@ window.onload = function(){
     offset: scrollOffset 
   })
 
-  var canvasUp = new Waypoint({
+  var canvasBottom = new Waypoint({
     element: document.getElementById('outerHUD'),
     handler: function(direction) {
       if(direction==='down'){
+        d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
+        stopZoom();
+        similarLines = [];
+        similarNodeOrigin = null;
         d3.select("#canvasContainer").style('position','absolute');
         d3.select("#canvasContainer").style('top',document.getElementById('outerHUD').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
 
@@ -122,6 +126,8 @@ window.onload = function(){
         document.getElementById("showCountries").checked = false;
         document.getElementById("hideUnlabeled").checked = true;
         stopZoom();
+        guidedZoom([movieList.getMovie(45068),movieList.getMovie(111345)],[500,589],"Showing a strong cluster of ",["Animation movies","Music videos"])
+
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour1').clientHeight
@@ -150,6 +156,8 @@ window.onload = function(){
         document.getElementById("showCountries").checked = true;
         document.getElementById("hideUnlabeled").checked = false;
         stopZoom();
+        guidedZoom([movieList.getMovie(48254),movieList.getMovie(120394),movieList.getMovie(13255),movieList.getMovie(87498),movieList.getMovie(106257),movieList.getMovie(41317)],[338,281,436,629,504,800],"Showing a strong cluster of movies from ",["Poland","Turkey","India and South Korea","Japan and Lithuania","France, Mexico and Portugal","Iran"]);
+
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour2').clientHeight
@@ -176,16 +184,47 @@ window.onload = function(){
         d3.select("#tour3").style("border-right","3px solid #00dcec");
         d3.select("#tour4").style("border-right","none");
         stopZoom();
+        guidedZoom([movieList.getMovie(93081)],[800],"Showing a strong cluster of short movies from the early 20th century",[""]);
+        similarLines = [];
+        similarNodeOrigin = null;
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour3').clientHeight
+  })
+
+  var tour4pointdown = new Waypoint({
+    element: document.getElementById('tour4'),
+    handler: function(direction){
+      if(direction==="down"){
+        d3.select("#tour3").style("border-right","none");
+        d3.select("#tour4").style("border-right","3px solid #00dcec");
+        guidedZoom([movieList.getMovie(505),movieList.getMovie(505)],[1,1],"",["Stanley Kubrick's filmography denoted by a web of lines","Quentin Tarantino's filmography denoted by a web of lines. His most well known work, Pulp Fiction, is found at the extreme right of the visualization"],[movieList.getMovie(322),movieList.getMovie(161)]);
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
+  })
+
+  var tour4pointup = new Waypoint({
+    element: document.getElementById('tour4'),
+    handler: function(direction){
+      if(direction==="up"){
+        d3.select("#tour4").style("border-right","3px solid #00dcec");
+        guidedZoom([movieList.getMovie(505),movieList.getMovie(505)],[1,1],"",["Stanley Kubrick's filmography denoted by a web of lines","Quentin Tarantino's filmography denoted by a web of lines. His most well known work, Pulp Fiction, is found at the extreme right of the visualization"],[movieList.getMovie(322),movieList.getMovie(161)]);
+      }
+    },
+    offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour4').clientHeight
   })
 
   var sandbox = new Waypoint({
     element: document.getElementById('sandbox'),
     handler: function(direction){
       if(direction==="down"){
+        d3.select("#tour4").style("border-right","none");
+        d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
+        stopZoom();
+        similarLines = [];
+        similarNodeOrigin = null;
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
