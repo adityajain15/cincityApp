@@ -85,10 +85,11 @@ function makeList(error, movieJSON,metaJSON){
   });
 
 
-  //makeHUD();
+  makeHUD();
 
   zoomed();
   zoom.translateBy(canvas, 150, 200);
+  console.log("Done")
   window.requestAnimationFrame(drawPoints);
 }
 //canvas draws itself
