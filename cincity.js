@@ -77,8 +77,8 @@ function makeList(error, movieJSON,metaJSON_1,metaJSON_2,metaJSON_3,metaJSON_4,m
   countryNames = ["Argentina","Germany","Iran","France","UnitedStates","Belgium","Russia","Austria","UnitedKingdom","Japan","Portugal","Brazil","Turkey","China","Canada","Italy","Mexico","SouthKorea","HongKong","Thailand","Switzerland","Denmark","SovietUnion","Romania","Spain","Taiwan","WestGermany","Sweden","Czechoslovakia","Poland","Israel","Colombia","Uruguay","CzechRepublic","Malaysia","Hungary","NewZealand","Yugoslavia","Australia","Norway","Jamaica","Netherlands","India","Macedonia","Finland","PalestinianTerritory","Mauritania","Ireland","Singapore","Greece","Algeria","Iceland","Kyrgyzstan","Coted'Ivoire","Lebanon","Tajikistan","SouthAfrica","Croatia","Kazakhstan","Slovakia","Serbia","Vietnam","Morocco","Mali","Mongolia","Senegal","Ethiopia","Egypt","Cuba","Bhutan","Luxembourg","Philippines","Rwanda","undefined","Bulgaria","EastGermany","Ukraine","Chad","BurkinaFaso","SyrianArabRepublic","Chile","Lithuania","SriLanka","Tunisia","Haiti","Jordan","Indonesia","Armenia","Moldova","Estonia","Venezuela","Peru","Greenland","Pakistan","BosniaandHerzegovina","Slovenia","NorthKorea","Georgia","PuertoRico","Liberia","Cambodia","UnitedArabEmirates","Kenya","Bolivia","Latvia","Paraguay","Cyprus","Monaco","Cameroon","Liechtenstein","Albania","Guinea-Bissau","Nigeria","Zimbabwe","Uzbekistan","SaudiArabia","Iraq","LibyanArabJamahiriya","Scotland","Yemen","Azerbaijan","Angola","Belarus","Nepal","Panama","Tanzania","Sudan","Samoa","Bahamas","DominicanRepublic","Malta","Guatemala","Congo","Botswana","Aruba","Martinique"];
   for(each in countryNames){
     var tempCountry = new Image();
-    tempCountry.name = each;
-    tempCountry.src = "flags/"+each+".png";
+    tempCountry.name = countryNames[each];
+    tempCountry.src = "flags/"+countryNames[each]+".png";
     countries[tempCountry.name]=tempCountry;
   }
 
