@@ -389,6 +389,7 @@ canvas{
     color: white;
     font-family: ChambersSansOT-Medium;
     cursor: pointer;
+    line-height: 1.3;
 }
 
 .tooltipContent{
@@ -397,9 +398,11 @@ canvas{
 
 .tooltipAlert{
 	color: #00dcec;
+	display: none;
 }
 
 .tooltipName{
+	line-height: 1.1;
 	font-size: 24px;
 	color: #00dcec;
 	display: inline-block;

@@ -75,8 +75,13 @@ window.onload = function(){
         d3.select("#canvasContainer").style('top',scrollOffset+"px");
       }
       else if(direction==='up'){
+        stopZoom();
+        d3.select("#canvasLabel").transition();
+        d3.select("#canvasLabel").text("");
+        zoomToNode(movieList.getMovie(505),1);
         d3.select("#canvasContainer").style('position','absolute');
         d3.select("#canvasContainer").style('top',document.getElementById('guidedHandle').getBoundingClientRect().top+document.body.scrollTop);
+        
       }
     },
     offset: scrollOffset 
@@ -88,12 +93,12 @@ window.onload = function(){
       if(direction==='down'){
         d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
-        stopZoom();
         similarLines = [];
         similarNodeOrigin = null;
         d3.select("#canvasContainer").style('position','absolute');
         d3.select("#canvasContainer").style('top',document.getElementById('outerHUD').getBoundingClientRect().bottom+document.body.scrollTop-document.getElementById('canvasContainer').clientHeight);
-
+        d3.select(".tooltipAlert").style("display","block");
+        enableZoom();
       }
       else if(direction==='up'){
         d3.select("#canvasContainer").style('position','fixed');
@@ -210,6 +215,8 @@ window.onload = function(){
       if(direction==="up"){
         d3.select("#tour4").style("border-right","3px solid #00dcec");
         guidedZoom([movieList.getMovie(505),movieList.getMovie(505)],[1,1],"",["Stanley Kubrick's filmography denoted by a web of lines","Quentin Tarantino's filmography denoted by a web of lines. His most well known work, Pulp Fiction, is found at the extreme right of the visualization"],[movieList.getMovie(322),movieList.getMovie(161)]);
+        d3.select(".tooltipAlert").style("display","none");
+        disableZoom();
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)-document.getElementById('tour4').clientHeight
@@ -222,9 +229,10 @@ window.onload = function(){
         d3.select("#tour4").style("border-right","none");
         d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
-        stopZoom();
         similarLines = [];
         similarNodeOrigin = null;
+        d3.select(".tooltipAlert").style("display","block");
+        enableZoom();
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)

@@ -5,27 +5,25 @@ var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).at
 
 var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
 
-var stats = new Stats();
-stats.setMode(0); // 0: fps, 1: ms, 2: mb
-
-// align top-left
-stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0px';
-stats.domElement.style.top = '0px';
-
-document.getElementById("canvasContainer").appendChild( stats.domElement );
-
 var zoom = d3.zoom()
-    .scaleExtent([1, 800])
-    .on("zoom", zoomed);
-
-zoom.on('end',function(){
+.scaleExtent([1, 800])
+.on("zoom", zoomed)
+.on('end',function(){
   movieList.quadtreeReset();
   for (var i = 0, len = movieIDs.length; i < len; i++){
     var transPoints = transformedPoints(lastTransform,movieList.getMovie(movieIDs[i]).getX(),movieList.getMovie(movieIDs[i]).getY())
     movieList.quadtreeAdd([transPoints[0],transPoints[1],movieIDs[i]]); 
   }
 });
+disableZoom();
+
+function enableZoom(){
+  zoom.filter(function(){return true;});
+}
+
+function disableZoom(){
+  zoom.filter(function() { return event.type !== 'dblclick'&&event.type !== 'wheel'&&event.type !== 'mousedown'&&event.type !== 'touchstart'&&event.type !== 'touchmove'&&event.type !== 'touchend';});
+}
 
 function transformedPoints(transform,x,y){
   return transform.apply([x,y]);
@@ -41,6 +39,8 @@ function zoomed() {
 }
 
 canvas.call(zoom);
+
+
 
 movieIDs = []
 movieList = new MovieList();
@@ -94,8 +94,6 @@ function makeList(error, movieJSON,metaJSON){
 }
 //canvas draws itself
 function drawPoints() {
-  stats.begin();
-
   mainContext.clearRect(0, 0, width, height);
   mainContext.beginPath();
   var option1 = document.getElementById("hideUnlabeled").checked;
@@ -116,7 +114,6 @@ function drawPoints() {
     });
     mainContext.stroke();
   }
-  stats.end();
   window.requestAnimationFrame(drawPoints);
 }
 
