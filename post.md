@@ -2,11 +2,11 @@
 
 As the internet becomes ubiquitous we are beginning to see the fruition of something that has its humble beginnings as USENET in the 80s; people from all walks of life are breaking barriers of the physical world and coming together on the internet to form large communities based on the ideas that resonate with them
 
-While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify) 
+While some of these communities are explicitly created for social interaction between members (such as Facebook and Twitter), we also see the emergence of passive communities that arise due to implicit relationships between its members which are defined by the members’ interactions with the service (such as Netflix and Spotify)
 
 Defining such relationships enables us to gain cultural insight into the community and the subject that it is centered about. For instance, users of a music streaming service can be grouped together based on the kind of music they like. The behavior of such a group could be used to document shifting trends of the musical genre they’re interested in, and to note the emergence and decline of subcultures. These insights are not only culturally significant, but also valuable from a business perspective. Movie/music streaming companies spend millions of dollars each year to acquire content. Can we build tools that help them to study their userbase and optimize their catalogue for operational costs.
 
-In this post we are going to look at an interactive visualization that clusters movies together based on their ratings by a set of users. This visualization will give us a glimpse into the aesthetic tastes of a community of cinephiles. 
+In this post we are going to look at an interactive visualization that clusters movies together based on their ratings by a set of users. This visualization will give us a glimpse into the aesthetic tastes of a community of cinephiles.
 
 # The Dataset
 
@@ -21,8 +21,8 @@ Data-Visualization designers use a number of techniques and tricks to visualize 
 (This is where the table goes)
 
 For example, consider the graphic on the right based on the above data which has 4 dimensions. Each of these 4 dimensions are visualized in different ways by using size, symbols and coordinates. What if we have a thousand dimensions that need to be visualized? Not only would a designer start running out of ways to visualize dimensions, the resulting visualization would probably be cognitively taxing to say the least.
-This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm developed by Geoffrey Hinton and Laurens van der Maaten which helps one to reduce the dimensionality of one’s data. It is popularly used to reduce high dimensionality data to a fewer number of dimensions, usually two or three, that enables one to draw scatterplots in which similar datum are placed in close proximity. 
 
+This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor embedding) is a machine learning algorithm developed by Geoffrey Hinton and Laurens van der Maaten which helps one to reduce the dimensionality of one’s data. It is popularly used to reduce high dimensionality data to a fewer number of dimensions, usually two or three, that enables one to draw scatterplots in which similar datum are placed in close proximity.
 
 This sort of dimensional reduction has been around for quite a while. One particularly popular method, PCA, has solved this sort of problem since 1901. However, t-SNE does something that may other schemes do not: it keeps maintains as much global and local structure as it can. As a result, the dimensional reduction is ideal for both clustering and visualization. This is done by explicitly trying to maintain the distance between points from before and after the algorithm has been applied.
 
@@ -36,9 +36,9 @@ Our t-SNE will reduce the number of dimensions to just two: which we will use as
 # The Visualization
 Without further ado, here is what our visualization looks like.
 
-Each movie in the visualization is represented as square and the color of the square represents the movie's genre. The position of each square is determined by the t-SNE algorithm which only takes movie ratings by users as an input; the algorithm is agnostic to the metadata of the movie itself such as genre, director and year of release. 
+Each movie in the visualization is represented as square and the color of the square represents the movie's genre. The position of each square is determined by the t-SNE algorithm which only takes movie ratings by users as an input; the algorithm is agnostic to the metadata of the movie itself such as genre, director and year of release.
 
-You can zoom into the visualization to get a more granular view of the clusters and hovering over a movie will give you more information about the movie (but you'll get a chance for a deeper dive in the sandbox section) 
+You can zoom into the visualization to get a more granular view of the clusters and hovering over a movie will give you more information about the movie (but you'll get a chance for a deeper dive in the sandbox section)
 
 # Guided Tour
 
