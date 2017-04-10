@@ -52,27 +52,35 @@ colorList.createList(["#a6cee3","#1f78b4","#b2df8a","#33a02c","#fb9a99","#e31a1c
 
 d3.queue()
   .defer(d3.json, 'movie_user_tsne.json')
-  .defer(d3.json, 'babyList.json')
+  .defer(d3.json, 'babyList1.json')
+  .defer(d3.json, 'babyList2.json')
+  .defer(d3.json, 'babyList3.json')
+  .defer(d3.json, 'babyList4.json')
+  .defer(d3.json, 'babyList5.json')
+  .defer(d3.json, 'babyList6.json')
   .await(makeList);
 
-function makeList(error, movieJSON,metaJSON){
+//if you know a better way to handle all these parameter/file loading mess please write to me
+
+function makeList(error, movieJSON,metaJSON_1,metaJSON_2,metaJSON_3,metaJSON_4,metaJSON_5,metaJSON_6){
   movieJSON["movie_ids"].forEach(function(movieID, point){
     movieObject = new Movie(movieID, movieJSON["movie_tsne"][point][0], movieJSON["movie_tsne"][point][1]);
     movieIDs.push(movieID);
     movieList.addMovie(movieID, movieObject);
   });
-  for(i in metaJSON){
-    for(key in metaJSON[i]){
-      movieList.getMovie(key).setMetaData(metaJSON[i][key]);
-    }
-  }
-  countryNames = new Set(movieIDs.map(function(movieID){return movieList.getCountryName(movieID);}));
-  countryNames.forEach(function(each){
+  makeData(metaJSON_1);
+  makeData(metaJSON_2);
+  makeData(metaJSON_3);
+  makeData(metaJSON_4);
+  makeData(metaJSON_5);
+  makeData(metaJSON_6);
+  countryNames = ["Argentina","Germany","Iran","France","UnitedStates","Belgium","Russia","Austria","UnitedKingdom","Japan","Portugal","Brazil","Turkey","China","Canada","Italy","Mexico","SouthKorea","HongKong","Thailand","Switzerland","Denmark","SovietUnion","Romania","Spain","Taiwan","WestGermany","Sweden","Czechoslovakia","Poland","Israel","Colombia","Uruguay","CzechRepublic","Malaysia","Hungary","NewZealand","Yugoslavia","Australia","Norway","Jamaica","Netherlands","India","Macedonia","Finland","PalestinianTerritory","Mauritania","Ireland","Singapore","Greece","Algeria","Iceland","Kyrgyzstan","Coted'Ivoire","Lebanon","Tajikistan","SouthAfrica","Croatia","Kazakhstan","Slovakia","Serbia","Vietnam","Morocco","Mali","Mongolia","Senegal","Ethiopia","Egypt","Cuba","Bhutan","Luxembourg","Philippines","Rwanda","undefined","Bulgaria","EastGermany","Ukraine","Chad","BurkinaFaso","SyrianArabRepublic","Chile","Lithuania","SriLanka","Tunisia","Haiti","Jordan","Indonesia","Armenia","Moldova","Estonia","Venezuela","Peru","Greenland","Pakistan","BosniaandHerzegovina","Slovenia","NorthKorea","Georgia","PuertoRico","Liberia","Cambodia","UnitedArabEmirates","Kenya","Bolivia","Latvia","Paraguay","Cyprus","Monaco","Cameroon","Liechtenstein","Albania","Guinea-Bissau","Nigeria","Zimbabwe","Uzbekistan","SaudiArabia","Iraq","LibyanArabJamahiriya","Scotland","Yemen","Azerbaijan","Angola","Belarus","Nepal","Panama","Tanzania","Sudan","Samoa","Bahamas","DominicanRepublic","Malta","Guatemala","Congo","Botswana","Aruba","Martinique"];
+  for(each in countryNames){
     var tempCountry = new Image();
     tempCountry.name = each;
     tempCountry.src = "flags/"+each+".png";
     countries[tempCountry.name]=tempCountry;
-  });
+  }
 
   d3.selectAll(".labelButton").selectAll(function(d,i){
 
@@ -84,14 +92,21 @@ function makeList(error, movieJSON,metaJSON){
 
   });
 
-
   makeHUD();
-
   zoomed();
   zoom.translateBy(canvas, 150, 200);
   d3.select(".loadingBar").style("display","none");
   window.requestAnimationFrame(drawPoints);
 }
+
+function makeData(metaJSON){
+  for(i in metaJSON){
+    for(key in metaJSON[i]){
+      movieList.getMovie(key).setMetaData(metaJSON[i][key])
+    }
+  }
+}
+
 //canvas draws itself
 function drawPoints() {
   mainContext.clearRect(0, 0, width, height);
