@@ -45,10 +45,11 @@ d3.selectAll(".labelButton").on("click",function(e){
       movieList.updateColors();
     }
     else{
-      //when over 12 elements
+      d3.select("#warning").style("display","block");
     }  
   }
   else{
+    d3.select("#warning").style("display","none");
     d3.select(this).attr("selected","false");
     d3.select(this).style("background","white");
     colorList.removeGenre(d3.select(this).text());

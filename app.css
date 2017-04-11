@@ -164,6 +164,14 @@ canvas{
     font-family: ChambersSansOT;
 }
 
+#warning{
+	display: block;
+	font-family: ChambersSansOT-Medium;
+	margin-top: 10px;
+	margin-bottom: 20px;
+	display: none;
+}
+
 .labelButton{
 	font-family: ChambersSansOT-Medium;
     padding: 5px;
