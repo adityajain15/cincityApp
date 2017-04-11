@@ -329,7 +329,10 @@ canvas{
 }
 
 #searchBar{
+	font-family: ChambersSansOT;
+	font-size: 20px;
 	width: 100%;
+	padding: 1% 2% 1% 2%;
 }
 
 #canvasContainer{
@@ -341,7 +344,7 @@ canvas{
 
 #canvasLabel{
 	text-align: center;
-	
+	margin-top: 10px;
 	font-family: ChambersSansOT;
 	opacity: 0;
 }

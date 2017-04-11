@@ -3,7 +3,7 @@ var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).at
     width = canvas.property("width"),
     height = canvas.property("height")
 
-var HUD = d3.select("#HUD").style("height",window.innerHeight/2 - 19).style("width",halfWidth());
+var HUD = d3.select("#HUD").style("height",window.innerHeight/2).style("width",halfWidth());
 
 var zoom = d3.zoom()
 .scaleExtent([1, 800])

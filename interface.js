@@ -94,6 +94,7 @@ window.onload = function(){
       if(direction==='down'){
         d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
+        d3.select("#canvasLabel").style("display","none");
         similarLines = [];
         similarNodeOrigin = null;
         d3.select("#canvasContainer").style('position','absolute');
@@ -214,6 +215,7 @@ window.onload = function(){
     element: document.getElementById('tour4'),
     handler: function(direction){
       if(direction==="up"){
+        d3.select("#canvasLabel").style("display","block");
         d3.select("#tour4").style("border-right","3px solid #00dcec");
         guidedZoom([movieList.getMovie(505),movieList.getMovie(505)],[1,1],"",["Stanley Kubrick's filmography denoted by a web of lines","Quentin Tarantino's filmography denoted by a web of lines. His most well known work, Pulp Fiction, is found at the extreme right of the visualization"],[movieList.getMovie(322),movieList.getMovie(161)]);
         d3.select(".tooltipAlert").style("display","none");
@@ -230,6 +232,7 @@ window.onload = function(){
         d3.select("#tour4").style("border-right","none");
         d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
+        d3.select("#canvasLabel").style("display","none");
         similarLines = [];
         similarNodeOrigin = null;
         d3.select(".tooltipAlert").style("display","block");
