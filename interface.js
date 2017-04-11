@@ -75,6 +75,7 @@ window.onload = function(){
         d3.select("#canvasContainer").style('top',scrollOffset+"px");
       }
       else if(direction==='up'){
+        d3.select("#tour1").style("border-right","none");
         stopZoom();
         d3.select("#canvasLabel").transition();
         d3.select("#canvasLabel").text("");
