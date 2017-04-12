@@ -1,31 +1,23 @@
 # Introduction
 
-As the internet becomes ubiquitous we are beginning to see the fruition of
-something that has its humble beginnings as USENET in the 80s; people from all
-walks of life are breaking barriers of the physical world and coming together
-on the internet to form large communities based on the ideas that resonate with
-them
+Social networks like Facebook and Twitter are created with communities in mind.
+But there are also passive, implict communities that are defined by their
+members’ interactions with the service (such as Netflix and Spotify)
 
-While some of these communities are explicitly created for social interaction
-between members (such as Facebook and Twitter), we also see the emergence of
-passive communities that arise due to implicit relationships between its
-members which are defined by the members’ interactions with the service (such
-as Netflix and Spotify)
+Defining such relationships and and analysing the communities the connections
+imply allows us to learn about both the community and the subject. For
+instance, users of a music streaming service can be grouped together based on
+the kind of music they like. These groups could be used to investigate shifting
+trends, and the emergence and decline of subcultures. 
 
-Defining such relationships enables us to gain cultural insight into the
-community and the subject that it is centered about. For instance, users of a
-music streaming service can be grouped together based on the kind of music they
-like. The behavior of such a group could be used to document shifting trends of
-the musical genre they’re interested in, and to note the emergence and decline
-of subcultures. These insights are not only culturally significant, but also
-valuable from a business perspective. Movie/music streaming companies spend
-millions of dollars each year to acquire content. Can we build tools that help
-them to study their userbase and optimize their catalogue for operational
-costs.
+These insights are not only culturally significant, but also valuable from a
+business perspective. Streaming services spend millions of dollars each year to
+acquire content. Can we build tools that help them to study their userbase and
+optimize their catalogue?
 
 In this post we are going to look at an interactive visualization that clusters
-movies together based on their ratings by a set of users. This visualization
-will give us a glimpse into the aesthetic tastes of a community of cinephiles.
+movies together based on user ratings. This visualization will give us a
+glimpse into a community of cinephiles.
 
 # The Dataset
 
