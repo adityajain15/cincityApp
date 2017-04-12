@@ -1,8 +1,5 @@
 # Introduction
 
-> NOTE: avoid "one" instead of "we"/"I", avoid passive voice, avoid verbiage.
-> Be concise, precise and, wherever possible, informal!
-
 Social networks like Facebook and Twitter are created with communities in mind.
 But there are also passive, implict communities that are defined by their
 members’ interactions with the service (such as Netflix and Spotify)
@@ -24,17 +21,17 @@ glimpse into a community of cinephiles.
 
 # MUBI
 
-MUBI is a streaming service similar to Netflix, but with a focus on arthouse,
-international and cult movies. Its 8 million users have collectively rated and
-reviewed thousands of movies present in its database. Given this dataset, how
-can we visualize the relationship between these users and the movies that they
-have rated? Let's take a look at a technique called t-SNE that can help us solve
-this problem.
+MUBI is an online service that integrates a subscription video-on-demand service 
+with a massive database. The service has a truly diverse selection of content from 
+underground cult classics to Tarantino blockbusters that attracts cinephiles from 
+all over the world. Its 8 million users have collectively rated and reviewed 
+thousands of movies present in its database.
+
+Given this dataset, how can we visualize the relationship between these users and
+the movies that they have rated? Let's take a look at a technique called t-SNE 
+that can help us solve this problem.
 
 # T-SNE
-
-> TODO: is there a less wordy phrase than "Data visualization designers" (which
-> I've never heard!)
 
 Data visualization designers use a number of techniques and tricks to show the
 relationship between items in a dataset. Of course the location in the 2D
@@ -43,11 +40,6 @@ shown by the size of the point, and categorical variables can be shown using
 colored labels.
 
 (This is where the table goes)
-
-> NOTE: these shapes all look the same size to me!!! And is it linear size or
-> area?!
-
-> NOTE: don't say "on the right", as it might not be, depending on screen size?
 
 This visualization shows a dataset with four dimensions. Each of these
 dimensions is visualized in a different way, using size, symbols and location. 
@@ -61,24 +53,19 @@ visualization would probably be incomprehensible to the user.
 This is where t-SNE can help us. t-SNE (t-distributed stochastic neighbor
 embedding) is a machine learning algorithm developed by Geoffrey Hinton and
 Laurens van der Maaten which reduces the dimensionality of a dataset. It is
-especially good at reducing very high dimensional data to two or three, which
+good at reducing very high dimensional data to two or three, which
 makes it much easier to visualize using simple techniques such as scatterplots.
 
 > TODO: citation needed for "1901"
 
 Dimensionality reduction is an old technique. Principal component analysis, for
-example, has been used to attak this problem since 1901. But t-SNE does
+example, has been used to attack this problem since 1901. But t-SNE does
 something that may other schemes do not: it maintains as much global and local
 structure as it can. This is done by explicitly trying to maintain the distance
 between points from before and after the algorithm has been applied. Its
 reduction is therefore ideal for both clustering and visualization. 
 
 # Process
-
-> TODO: is there a cartoon of an adjacency matrix? I think that would be useful!
-
-> NOTE: I deleted the transposition stuff. Why talk about the transposition if
-> you never use the original matrix?
 
 We selected a subset of MUBI users who had rated at least 20 movies. An
 adjacency matrix can be constructed for this subset of users, where each column is
@@ -90,17 +77,11 @@ interactive scatterplot.
 
 # The Visualization
 
-> NOTE: saying "without further ado" is further ado! Omit needless words!
-
 Each movie in the visualization is represented as square. The color of the
 square represents the movie's genre. The position of each square is determined
 by the t-SNE algorithm which only takes movie ratings by users as an input; the
 algorithm is agnostic to the metadata of the movie itself such as genre,
 director and year of release.
-
-You can zoom into the visualization to get a more granular view of the
-clusters, and hovering over a movie will give you more information about the
-movie.
 
 # Guided Tour
 
@@ -117,14 +98,9 @@ surprising that we see clusters of movies from different countries. You can see
 many such clusters from countries with strong cinematic traditions such as
 Italy, Iran, India, Turkey and Japan.
 
-> NOTE: "1900s" as in 1900-1999 or 1900-1909? You may need to say "first decade"
-> if you mean the latter.
 
 Sometimes clusters form around cinematic time periods, such as a cluster of
-short black-and-white movies from the 1900s.
-
-> NOTE: Deleted "it is observed" here, which is a good example of unnecessary
-> passive voice!
+short black-and-white movies from the early 20th century.
 
 As we go from the left to the right the number of reviews of a movie increases.
 As a result popular movies stand out by themselves, far away from the crowd.
@@ -134,9 +110,15 @@ side of the visualization.
 
 # Sandbox
 
-Time to get your hands dirty in the sandbox! You can play around with different
-settings to turn different genres on/off or search for your favorite movie. You
-can also click a movie to view some more information about it.
+Time to get your hands dirty in the sandbox! You can zoom into the visualization 
+to get a more granular view of the clusters. You can also play around with different
+settings to turn different genres on/off or search for your favorite movie. You can now
+also click on a movie to view more information about it and see more movies by the same
+director (depicted by lines)
+
+# Afterword
+
+
 
 # Footer
 
