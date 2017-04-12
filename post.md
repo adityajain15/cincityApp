@@ -1,5 +1,8 @@
 # Introduction
 
+> NOTE: avoid "one" instead of "we"/"I", avoid passive voice, avoid verbiage.
+> Be concise, precise and, wherever possible, informal!
+
 Social networks like Facebook and Twitter are created with communities in mind.
 But there are also passive, implict communities that are defined by their
 members’ interactions with the service (such as Netflix and Spotify)
@@ -28,36 +31,47 @@ can we visualize the relationship between these users and the movies that they
 have rated? Let's take a look at a technique called t-SNE that can help us solve
 this problem.
 
-# Introduction to t-SNEs
+# T-SNE
 
-Data-Visualization designers use a number of techniques and tricks to visualize
-the difference between two datums in a dataset. Datum can be sized as
-larger/smaller geometrical shapes depending on a quantifiable dimension, and
-can be assigned a color from a set of colors to signify a label.
+> TODO: is there a less wordy phrase than "Data visualization designers" (which
+> I've never heard!)
+
+Data visualization designers use a number of techniques and tricks to show the
+relationship between items in a dataset. Of course the location in the 2D
+visualization is an option, but scalar values such as rating or count can be
+shown by the size of the point, and categorical variables can be shown using
+colored labels.
 
 (This is where the table goes)
 
-For example, consider the graphic on the right based on the above data which
-has 4 dimensions. Each of these 4 dimensions are visualized in different ways
-by using size, symbols and coordinates. What if we have a thousand dimensions
-that need to be visualized? Not only would a designer start running out of ways
-to visualize dimensions, the resulting visualization would probably be
-cognitively taxing to say the least.
+> NOTE: these shapes all look the same size to me!!! And is it linear size or
+> area?!
 
-This is where a t-SNE can help us. t-SNE (t-distributed stochastic neighbor
+> NOTE: don't say "on the right", as it might not be, depending on screen size?
+
+This visualization shows a dataset with four dimensions. Each of these
+dimensions is visualized in a different way, using size, symbols and location. 
+
+What if we have a dataset with thousands of dimensions? The designer would
+start run out of ways to visualize each dimensions and the resulting
+visualization would probably be incomprehensible to the user.
+
+> TODO: link to TSNE paper
+
+This is where t-SNE can help us. t-SNE (t-distributed stochastic neighbor
 embedding) is a machine learning algorithm developed by Geoffrey Hinton and
-Laurens van der Maaten which helps one to reduce the dimensionality of one’s
-data. It is popularly used to reduce high dimensionality data to a fewer number
-of dimensions, usually two or three, that enables one to draw scatterplots in
-which similar datum are placed in close proximity.
+Laurens van der Maaten which reduces the dimensionality of a dataset. It is
+especially good at reducing very high dimensional data to two or three, which
+makes it much easier to visualize using simple techniques such as scatterplots.
 
-This sort of dimensional reduction has been around for quite a while. One
-particularly popular method, PCA, has solved this sort of problem since 1901.
-However, t-SNE does something that may other schemes do not: it keeps maintains
-as much global and local structure as it can. As a result, the dimensional
-reduction is ideal for both clustering and visualization. This is done by
-explicitly trying to maintain the distance between points from before and after
-the algorithm has been applied.
+> TODO: citation needed for "1901"
+
+Dimensionality reduction is an old technique. Principal component analysis, for
+example, has been used to attak this problem since 1901. But t-SNE does
+something that may other schemes do not: it maintains as much global and local
+structure as it can. This is done by explicitly trying to maintain the distance
+between points from before and after the algorithm has been applied. Its
+reduction is therefore ideal for both clustering and visualization. 
 
 # Process
 
