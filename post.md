@@ -19,19 +19,14 @@ In this post we are going to look at an interactive visualization that clusters
 movies together based on user ratings. This visualization will give us a
 glimpse into a community of cinephiles.
 
-# The Dataset
+# MUBI
 
-MUBI is an online service that integrates a subscription video-on-demand
-service with a massive database. The service has a truly diverse selection of
-content from underground cult classics to Tarantino blockbusters that attracts
-cinephiles from all over the world. Its 8 million users have collectively rated
-and reviewed thousands of movies present in its database. 
-
-Once we obtain a dataset of movie ratings from this community, we'd like to
-create the visualization that we desire but before we can do that we face a
-challenge&#8212How does one visually represent the relationship between
-thousands of users and the thousands of movies that they have rated? Lets take
-a look at a technique called t-SNE that can help us solve this problem.
+MUBI is a streaming service similar to Netflix, but with a focus on arthouse,
+international and cult movies. Its 8 million users have collectively rated and
+reviewed thousands of movies present in its database. Given this dataset, how
+can we visualize the relationship between these users and the movies that they
+have rated? Let's take a look at a technique called t-SNE that can help us solve
+this problem.
 
 # Introduction to t-SNEs
 
