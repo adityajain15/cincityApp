@@ -83,12 +83,11 @@ function makeList(error, movieJSON,metaJSON_1,metaJSON_2,metaJSON_3,metaJSON_4,m
   }
 
   d3.selectAll(".labelButton").selectAll(function(d,i){
-
     if(d3.select(this).attr("selected")=="true"){
       colorList.addGenre(d3.select(this).text());
-      d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
       movieList.updateColors();
     }
+    d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
 
   });
 
@@ -137,7 +136,7 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   if(transformedPoints[0]>width||transformedPoints[0]<0||transformedPoints[1]>height||transformedPoints[1]<0){
     return;
   }
-  if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"&&notInSimilarLines(movieIndex)){
+  if(labelCheckbox&&movieList.getMainColor(movieIndex)=="#D3D3D3"&&notInSimilarLines(movieIndex)&&notSimilarOrigin(movieIndex)){
     return;
   }
   if(movieList.getMainColor(movieIndex)!=undefined){
@@ -149,6 +148,18 @@ function drawPoint(movieIndex,transform,labelCheckbox,flagCheckbox){
   }
   else{
     mainContext.fillRect(transformedPoints[0],transformedPoints[1],8,8);
+  }
+}
+
+function notSimilarOrigin(movieIndex){
+  if(similarNodeOrigin==null){
+    return true;
+  }
+  else{
+    if(similarNodeOrigin.getID()==movieIndex){
+      return false;
+    }
+    else return true;
   }
 }
 
@@ -175,7 +186,7 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
   if(searchNode!=undefined){
     hoverNode=movieList.getMovie(searchNode[2]);
     console.log(hoverNode);
-    if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3"&&notInSimilarLines(searchNode[2]))){
+    if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3"&&notInSimilarLines(searchNode[2])&&notSimilarOrigin(searchNode[2]))){
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")
       .style("left",(20+mouseX)+"px")

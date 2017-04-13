@@ -2,7 +2,7 @@ document.getElementById("searchBar").addEventListener("input", logEvent, true);
 
 function logEvent(){
   d3.selectAll(".movieOption").selectAll(function(){
-    if((d3.select(this).text()).includes(document.getElementById("searchBar").value))
+    if((d3.select(this).text().toLowerCase()).includes(document.getElementById("searchBar").value.toLowerCase()))
     {
       d3.select(this).style("display","block");
     }
@@ -40,9 +40,9 @@ d3.select("#closebutton").on("click",function(){
 d3.selectAll(".labelButton").on("click",function(e){ 
   if(d3.select(this).attr("selected")==="false"){
     if(colorList.addGenre(d3.select(this).text())){
+      movieList.updateColors();
       d3.select(this).attr("selected","true");
       d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
-      movieList.updateColors();
     }
     else{
       d3.select("#warning").style("display","block");
@@ -51,11 +51,24 @@ d3.selectAll(".labelButton").on("click",function(e){
   else{
     d3.select("#warning").style("display","none");
     d3.select(this).attr("selected","false");
-    d3.select(this).style("background","white");
     colorList.removeGenre(d3.select(this).text());
     movieList.updateColors();
+    d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
   }
 });
+
+function resetGenres(){
+  d3.selectAll(".labelButton").selectAll(function(d,i){
+    d3.select(this).attr("selected","false");
+    colorList.removeGenre(d3.select(this).text());
+    if(d3.select(this).text()==="Animation"||d3.select(this).text()==="Action"||d3.select(this).text()==="Adventure"||d3.select(this).text()==="Avant-Garde"||d3.select(this).text()==="Crime"||d3.select(this).text()==="Documentary"||d3.select(this).text()==="Music Video"||d3.select(this).text()==="Romance"||d3.select(this).text()==="Short"||d3.select(this).text()==="Thriller"){
+      d3.select(this).attr("selected","true");
+      colorList.addGenre(d3.select(this).text());
+    }
+    d3.select(this).style("background",colorList.getColor(d3.select(this).text()));
+  });
+  movieList.updateColors();
+}
 
 var scrollOffset = window.innerHeight / 5; 
 
@@ -238,6 +251,9 @@ window.onload = function(){
         similarNodeOrigin = null;
         d3.select(".tooltipAlert").style("display","block");
         enableZoom();
+      }
+      else{
+        resetGenres();
       }
     },
     offset: ((document.getElementById('canvasContainer').clientHeight*0.5)+scrollOffset)
