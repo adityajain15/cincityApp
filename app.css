@@ -100,6 +100,13 @@ html{
 	line-height: 1.5;
 }
 
+#everythingWrapper{
+	max-width: 1300px;
+    margin-right: auto;
+    margin-left: auto;
+    position: relative;
+}
+
 .loadingBar{
 	position: fixed;
 	left:0;

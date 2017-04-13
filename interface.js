@@ -1,15 +1,17 @@
 document.getElementById("searchBar").addEventListener("input", logEvent, true);
 
 function logEvent(){
-  d3.selectAll(".movieOption").selectAll(function(){
-    if((d3.select(this).text().toLowerCase()).includes(document.getElementById("searchBar").value.toLowerCase()))
-    {
-      d3.select(this).style("display","block");
+  var searchValue = document.getElementById("searchBar").value.toLowerCase();
+  var movie_options = document.getElementsByClassName('movieOption');
+  for (var i=0; i<movie_options.length; i++) {
+    var movie_option = movie_options[i];
+    if(movie_option.textContent.toLowerCase().includes(searchValue)){
+      movie_option.style.display="block";
     }
     else{
-      d3.select(this).style("display","none");
+      movie_option.style.display="none";
     }
-  })
+  }
 }
 
 function makeHUD(){
