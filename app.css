@@ -100,7 +100,7 @@ html{
 	line-height: 1.5;
 }
 
-#everythingWrapper{
+.everythingWrapper{
 	max-width: 1300px;
     margin-right: auto;
     margin-left: auto;
@@ -364,9 +364,8 @@ canvas{
 	opacity: 0;
 }
 
-#textContainer{
+.textContainer{
 	width: 35%;
-	margin-top: 5%;
 	margin-left: 5%;
 }
 
@@ -482,34 +481,44 @@ td{
 footer{
 	width: 100%;
 	background-color:black;
+	margin-top: 4%;
 	color: white;
 	font-family: ChambersSansOT;
     font-size: 18px;
 }
 
 #footWrapper{
-	width: 80%;
-	margin-right: auto;
-	margin-left: auto;
-	padding-bottom: 30px;
-    padding-top: 30px;
+	position: relative;
+	width: 100%;
+    min-height: 175px;
 }
 
 .footBox{
 	display: inline-block;
 	width: 20%;
-	margin-left: auto;
-	margin-right: auto;
+	position: absolute;
+	top:30px;
+}
+
+#authors{
+	left:10%;
+}
+
+#thanks{
+	left: 30% 
+}
+
+#aboutff{
+	left: 55%;
+	display: inline-block;
+	width: 45%;
+	position: absolute;
+	top: 30px;
 }
 
 .footerHeadline{
 	font-size: 22px;
 	color: #00dcec;
-}
-
-.aboutBox{
-	display: inline-block;
-	width: 55%;
 }
 
 .logoContainer{
