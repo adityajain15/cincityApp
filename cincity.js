@@ -238,7 +238,14 @@ function zoomToNode(movieNode,zoomLevel){
     .translate(-movieNode.getX(),-movieNode.getY()));
 }
 
-function guidedZoom(movieNodes,zoomLevels,description,labels,similarNodes=[],current=0){
+function guidedZoom(movieNodes,zoomLevels,description,labels,similarNodes,current){
+  if(similarNodes===undefined){
+    similarNodes=[];
+  }
+  if(current===undefined){
+    current=0;
+  }
+
   if(current<movieNodes.length){
 
     canvas.transition().duration(3500).call(zoom.transform, d3.zoomIdentity

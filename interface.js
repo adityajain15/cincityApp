@@ -16,9 +16,9 @@ function logEvent(){
 
 function makeHUD(){
   divNames = [];
-  for(let each of movieIDs){
-    if(movieList.getMovie(each).getName()!=undefined){
-      divNames.push([each,movieList.getMovie(each).getName().trim()]);
+  for(var i=0;i<movieIDs.length;i++){
+    if(movieList.getMovie(movieIDs[i]).getName()!=undefined){
+      divNames.push([movieIDs[i],movieList.getMovie(movieIDs[i]).getName().trim()]);
     }
   }
   divNames.sort(function(a,b){
@@ -26,8 +26,8 @@ function makeHUD(){
     else if(a[1]<b[1]){return -1;}
     else return 0;
   });
-  for(let each of divNames){
-    d3.select("#HUDcontent").append("div").text(each[1]).attr("movieid",each[0]).attr("class","movieOption")
+  for(var i=0;i<divNames.length;i++){
+    d3.select("#HUDcontent").append("div").text(divNames[i][1]).attr("movieid",divNames[i][0]).attr("class","movieOption")
     .on("click",function(){
       getInfo(d3.select(this).attr("movieid"),true);
     });

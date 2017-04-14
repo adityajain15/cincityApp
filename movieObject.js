@@ -78,9 +78,9 @@ function getGenre(){
 		return;
 	}
 	tempHandle = this;
-	for(let each of genrePreferences){
-		if((tempHandle.movieData["genres"].indexOf(each)>=0)||(tempHandle.movieData["genres"].indexOf(" "+each)>=0)){
-			return each;
+	for(var i=0;i<genrePreferences.length;i++){
+		if((tempHandle.movieData["genres"].indexOf(genrePreferences[i])>=0)||(tempHandle.movieData["genres"].indexOf(" "+genrePreferences[i])>=0)){
+			return genrePreferences[i];
 		}
 	}
 }
