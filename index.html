@@ -3,18 +3,18 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta property="og:image" content="http://www.fastforwardlabs.com/cinephile_tsne/images/Cover.png" />
     <meta property="og:url" content="http://www.fastforwardlabs.com/cinephile_tsne/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Visualizing The Taste of a Community of Cinephiles using t-SNE" />
     <meta property="og:description" content="Exploring a community of cinephiles with an interactive visualization that clusters movies based on user ratings" />
-    <meta name="twitter:image" content="http://www.fastforwardlabs.com/cinephile_tsne/images/Cover.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:site" content="@FastForwardLabs">
-    <meta name="twitter:title" content="Visualizing The Taste of a Community of Cinephiles using t-SNE">
-    <meta name="twitter:description" content="Exploring a community of cinephiles with an interactive visualization that clusters movies based on user ratings">
-    <link rel="stylesheet" type="text/css" href="app.css">
+    <meta name="twitter:image" content="http://www.fastforwardlabs.com/cinephile_tsne/images/Cover.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@FastForwardLabs" />
+    <meta name="twitter:title" content="Visualizing The Taste of a Community of Cinephiles using t-SNE" />
+    <meta name="twitter:description" content="Exploring a community of cinephiles with an interactive visualization that clusters movies based on user ratings" />
+    <link rel="stylesheet" type="text/css" href="app.css" />
     <link rel="shortcut icon" type="image/png" href="favicon.png"/>
     <script src="d3-min.js"></script>
     <script src="d3-color.js"></script>
@@ -24,7 +24,8 @@
     <title>Visualizing the Taste of a Community of Cinephiles Using t-SNE</title>
 </head>
 <body>
-    <div class="loadingBar">Loading the visualization, your screen may lock up. Patience is a virtue. Global warming is real.</div>
+    <div class="mobileWarning">This visualization requires a larger screen. Please view it on a desktop or a laptop for the best experience!</div>
+    <div class="loadingBar">Loading the visualization, your screen may lock up</div>
     <div class="everythingWrapper">
         <div class="coverImageWrapper"><img src="images/Cover.png" class="coverImage"><span id="coverTitle">Visualizing the Taste of a Community of Cinephiles Using t-SNE</span></img></div>
         <div class="textContainer">
@@ -311,7 +312,7 @@ director (depicted by lines).
             <div class="para">
                 <div class="headline">Afterword</div>
                 <p class="paragraphText">
-                    t-SNEs are not deterministic algorithms, they involve several hyper-parameters that affect the result. This visualization is an interpretation of the underlying data but is by no means the only interpretation. If you would like to learn more about the limitations of a t-SNE, we highly recommend <a href="http://distill.pub/2016/misread-tsne/">this paper by Martin Wattenberg et. al</a>
+                    t-SNE is not a deterministic algorithm. It has hyperparameters that affect the result. This visualization is an interpretation of the underlying data but is by no means the only interpretation. If you would like to learn more about the limitations of a t-SNE, we highly recommend <a href="http://distill.pub/2016/misread-tsne/">this paper by Martin Wattenberg et al.</a>
                 </p>
             </div>
         </div>

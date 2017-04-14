@@ -540,3 +540,40 @@ footer{
   	top: 50%;
   	transform: translateY(-50%);
 }
+
+.mobileWarning{
+	background: #00dcec;
+	color: white;
+	text-align: center;
+	font-size: 28px;
+	font-family: ChambersSansOT-Medium;
+	align-items:center;
+	width: 100%;
+	height: 100%;
+	display: none;
+}
+
+@media screen and (max-width: 600px){
+	.everythingWrapper{
+		display: none;
+	}
+	#canvasContainer{
+		display: none;
+	}
+	#demo{
+		display: none;
+	}
+	footer{
+		display: none;
+	}
+	canvas{
+		display: none;
+	}
+	.loadingBar{
+		display: none;
+	}
+	.mobileWarning{
+		display: flex;
+	}
+
+}
