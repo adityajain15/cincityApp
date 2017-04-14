@@ -4,12 +4,12 @@
 <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta property="og:image" content="http://www.sigri.com/images/Cover.png" />
-    <meta property="og:url" content="http://www.sigri.com/tsne.html" />
+    <meta property="og:image" content="http://www.fastforwardlabs.com/cinephile_tsne/images/Cover.png" />
+    <meta property="og:url" content="http://www.fastforwardlabs.com/cinephile_tsne/" />
     <meta property="og:type" content="article" />
     <meta property="og:title" content="Visualizing The Taste of a Community of Cinephiles using t-SNE" />
     <meta property="og:description" content="Exploring a community of cinephiles with an interactive visualization that clusters movies based on user ratings" />
-    <meta name="twitter:image" content="http://www.sigri.com/images/Cover.png">
+    <meta name="twitter:image" content="http://www.fastforwardlabs.com/cinephile_tsne/images/Cover.png">
     <meta name="twitter:card" content="summary_large_image">
     <meta name="twitter:site" content="@FastForwardLabs">
     <meta name="twitter:title" content="Visualizing The Taste of a Community of Cinephiles using t-SNE">
@@ -33,7 +33,7 @@
                 <p class="paragraphText">
                     Social networks like Facebook and Twitter are created with communities in mind.
                     But there are also passive, implict communities that are defined by their
-                    members’ interactions with the service (such as Netflix and Spotify)                
+                    members’ interactions with the service (such as Netflix and Spotify)
                 </p>
                 <p class="paragraphText">
                     Defining such relationships and and analysing the communities the connections
@@ -62,7 +62,7 @@
                 </p>
                 <p class="paragraphText">
                     Given this dataset, how can we visualize the relationship between these users and
-                    the movies that they have rated? Let's take a look at a technique called t-SNE 
+                    the movies that they have rated? Let's take a look at a technique called t-SNE
                     that can help us solve this problem.
                 </p>
             </div>
@@ -111,7 +111,7 @@
                         </tr>
                     </table>
                     <p class="paragraphText">This visualization shows a dataset with four dimensions. Each of these
-dimensions is visualized in a different way, using size, symbols and location. 
+dimensions is visualized in a different way, using size, symbols and location.
                     </p>
                     <p class="paragraphText">
                         What if we have a dataset with thousands of dimensions? The designer would
@@ -129,7 +129,7 @@ example, has been used to attack this problem <a href="http://stat.smmu.edu.cn/h
 something that may other schemes do not: it maintains as much global and local
 structure as it can. This is done by explicitly trying to maintain the distance
 between points from before and after the algorithm has been applied. Its
-reduction is therefore ideal for both clustering and visualization. 
+reduction is therefore ideal for both clustering and visualization.
                     </p>
 
             </div>
@@ -139,7 +139,7 @@ reduction is therefore ideal for both clustering and visualization.
                 <p class="paragraphText" id="process">
                     We selected a subset of MUBI users who had rated at least 20 movies. An
 adjacency matrix can be constructed for this subset of users, where each column is
-a user and each row is a user’s rating for a particular movie. 
+a user and each row is a user’s rating for a particular movie.
 </p>
                     <p class="paragraphText">
                         This multidimensional matrix will be t-SNE’s input. t-SNE will reduce the
@@ -190,7 +190,7 @@ side of the visualization.
             <div class="para">
                 <div class="headline" id="sandbox">Sandbox</div>
                 <p class="paragraphText">
-                    Time to get your hands dirty in the sandbox! You can zoom into the visualization 
+                    Time to get your hands dirty in the sandbox! You can zoom into the visualization
 to get a more granular view of the clusters. You can also play around with different
 settings to turn different genres on/off or search for your favorite movie. You can now
 also click on a movie to view more information about it and see more movies by the same
