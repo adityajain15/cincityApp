@@ -1,4 +1,10 @@
-var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
+function isMobile() {
+return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+}
+
+if (!isMobile()) {
+//place script you don't want to run on mobile here
+  var canvas = d3.select("#mainCanvas").attr("height",window.innerHeight/2 - 8).attr("width", halfWidth() - 8),
     mainContext = canvas.node().getContext("2d"),
     width = canvas.property("width"),
     height = canvas.property("height")
@@ -63,6 +69,7 @@ d3.queue()
 //if you know a better way to handle all these parameter/file loading mess please write to me
 
 function makeList(error, movieJSON,metaJSON_1,metaJSON_2,metaJSON_3,metaJSON_4,metaJSON_5,metaJSON_6){
+  
   movieJSON["movie_ids"].forEach(function(movieID, point){
     movieObject = new Movie(movieID, movieJSON["movie_tsne"][point][0], movieJSON["movie_tsne"][point][1]);
     movieIDs.push(movieID);
@@ -338,3 +345,6 @@ function makeResponsive(){
   d3.select("#graph").style('top',document.getElementById('graphpara').getBoundingClientRect().top+document.body.scrollTop);
   d3.select("#admatrix").style('top',document.getElementById('process').getBoundingClientRect().top+document.body.scrollTop);
 } 
+
+}
+
