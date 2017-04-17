@@ -1,5 +1,5 @@
 function isMobile() {
-return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+  return /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent); 
 }
 
 if (!isMobile()) {
@@ -192,7 +192,6 @@ document.getElementById("mainCanvas").addEventListener("mousemove", function(e){
   searchNode = movieList.quadtree.find(mouseX-8,mouseY-8,8);
   if(searchNode!=undefined){
     hoverNode=movieList.getMovie(searchNode[2]);
-    console.log(hoverNode);
     if(!(document.getElementById("hideUnlabeled").checked&&movieList.getMainColor(searchNode[2])==="#D3D3D3"&&notInSimilarLines(searchNode[2])&&notSimilarOrigin(searchNode[2]))){
       d3.select(".tooltip")
       .style("top",(mouseY)+"px")

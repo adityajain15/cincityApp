@@ -1,17 +1,21 @@
 document.getElementById("searchBar").addEventListener("input", logEvent, true);
 
+
+var divNames;
+var filtered_divNames;
+var divHeight;
+
 function logEvent(){
   var searchValue = document.getElementById("searchBar").value.toLowerCase();
-  var movie_options = document.getElementsByClassName('movieOption');
-  for (var i=0; i<movie_options.length; i++) {
-    var movie_option = movie_options[i];
-    if(movie_option.textContent.toLowerCase().includes(searchValue)){
-      movie_option.style.display="block";
-    }
-    else{
-      movie_option.style.display="none";
+  filtered_divNames = [];
+  if(searchValue!=""){
+    for(var i=0;i<divNames.length;i++){
+      if(divNames[i][1].toLowerCase().includes(searchValue)){
+        filtered_divNames.push(divNames[i]);
+      }
     }
   }
+  makeOptiondivs_wrapper();
 }
 
 function makeHUD(){
@@ -26,17 +30,55 @@ function makeHUD(){
     else if(a[1]<b[1]){return -1;}
     else return 0;
   });
-  for(var i=0;i<divNames.length;i++){
+  for(var i=0;i<15;i++){
     d3.select("#HUDcontent").append("div").text(divNames[i][1]).attr("movieid",divNames[i][0]).attr("class","movieOption")
-    .on("click",function(){
+    
+  }
+  divHeight = document.getElementsByClassName('movieOption')[0].clientHeight;
+  d3.selectAll(".movieOption").on("click",function(){
+      getInfo(d3.select(this).attr("movieid"),true);
+  });
+}
+
+document.getElementById('HUD').addEventListener('scroll', function(e) {
+  makeOptiondivs_wrapper();
+});
+
+function makeOptiondivs_wrapper(){
+  if(document.getElementById("searchBar").value==""){
+    makeOptiondivs(divNames);
+  }
+  else{
+    makeOptiondivs(filtered_divNames);
+  }
+}
+
+function makeOptiondivs(theArray){
+  var HUDcontent = document.getElementById('HUDcontent');
+  var start = Math.floor(document.getElementById('HUD').scrollTop/divHeight);
+  while (HUDcontent.hasChildNodes()) {
+    HUDcontent.removeChild(HUDcontent.lastChild);
+  }
+  d3.select("#HUDcontent").append("div").attr("id","fillerOption1").style("height",divHeight*start+"px");
+  d3.select("#HUDcontent").append("div").attr("id","fillerOption2").style("height",divHeight*(theArray.length-(start+15)));
+
+  for(var i=0;(i<15)&&(start<theArray.length);i++){
+      var newNode = document.createElement("div");
+      newNode.className='movieOption';
+      newNode.innerHTML=theArray[start][1];      
+      newNode.setAttribute('movieid',theArray[start][0]);
+      document.getElementById('HUDcontent').insertBefore(newNode, document.getElementById('fillerOption2'));
+      start+=1;
+    }
+  d3.selectAll(".movieOption").on("click",function(){
       getInfo(d3.select(this).attr("movieid"),true);
     });
-  }
 }
 
 d3.select("#closebutton").on("click",function(){
   d3.select("#movieInfo").style("display","none");
   d3.select("#HUDcontent").style("display","block");
+  //makeOptiondivs_wrapper();
 });
 
 d3.selectAll(".labelButton").on("click",function(e){ 
